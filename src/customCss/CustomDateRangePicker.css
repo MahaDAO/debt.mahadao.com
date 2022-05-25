@@ -1,0 +1,117 @@
+:root{
+  --currentColor: rgb(255, 127, 87) !important;
+}
+
+.rdrDateRangePickerWrapper {
+  flex-direction: row-reverse;
+}
+
+.rdrDefinedRangesWrapper{
+  background: transparent !important;
+  width: 150px !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.04) !important;
+  border-right: none !important;
+}
+
+.rdrInputRanges {
+  display: none;
+}
+
+.rdrStaticRange {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+.rdrStaticRangeLabel {
+  font-family: Inter !important;
+  font-style: normal !important;
+  font-weight: 300 !important;
+  font-size: 14px !important;
+  color: rgba(255, 255, 255, 0.64) !important;
+}
+
+.rdrStaticRange:hover .rdrStaticRangeLabel {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 6px;
+}
+
+.rdrDefinedRangesWrapper .rdrStaticRangeSelected {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 6px;
+}
+
+.rdrDateDisplayWrapper {
+  background: transparent !important;
+}
+
+.rdrCalendarWrapper {
+  background: transparent !important;
+}
+
+.rdrDayNumber span {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.rdrDayDisabled {
+  background: transparent !important;
+}
+
+.rdrDayDisabled .rdrDayNumber span {
+  color: rgba(255,255,255, 0.2) !important;
+}
+
+.rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge {
+  background: #FF7F57 !important;
+}
+
+.rdrDayDisabled .rdrInRange {
+  filter: grayscale(100%) opacity(0%);
+}
+
+.rdrDateDisplayItemActive {
+  border-color: #F47F57;
+}
+
+.rdrDateDisplayItem {
+  background: #1F1E1E !important;
+}
+
+.rdrDateDisplayItem input {
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+.rdrMonthAndYearPickers select {
+  color: white !important;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rdrMonthAndYearPickers select:hover {
+  background: none !important;
+}
+
+.rdrCalendarWrapper:not(.rdrDateRangeWrapper) .rdrDayHovered .rdrDayNumber:after {
+  border: 1px solid var(--currentColor) !important;
+}
+
+.rdrDateDisplayItemActive{
+  border-color: var(--currentColor) !important;
+}
+
+.rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge {
+  background: var(--currentColor) !important;
+}
+
+.rdrDayStartPreview, .rdrDayInPreview, .rdrDayEndPreview {
+  border: 0 solid var(--currentColor) !important;
+}
+
+.rdrDefinedRangesWrapper .rdrStaticRangeSelected {
+  color: var(--currentColor) !important;
+}
+
+.rdrDayPassive .rdrDayNumber span {
+  color: #FFFFFF40 !important;
+}
