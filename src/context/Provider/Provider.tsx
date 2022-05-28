@@ -10,6 +10,9 @@ export const Context = createContext<ProtocolContext>({ core: new Protocol(confi
 export const ProtocolProvider = ({ children }: any) => {
   const [core, setCore] = useState<Protocol>(new Protocol(config));
 
+  console.log('core', core);
+  
+
   const { ethereum, account } = useWallet();
 
   useEffect(() => {

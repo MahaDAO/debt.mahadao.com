@@ -21,7 +21,6 @@ import useCore from "./hooks/useCore";
 import Updaters from "./state/Updaters";
 // import { isProduction } from "./analytics/Mixpanel";
 import { useMediaQuery } from "react-responsive";
-import Home from './views/Home';
 // import { isProduction } from "./analytics/Mixpanel";
 
 const Providers = ({ children }: any) => {
@@ -65,6 +64,7 @@ const App: React.FC = () => {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   isMobileGlobal = isMobile;
 
+  console.log('App core', core)
   // useEffect(() => {
   //   // @ts-ignore
   //   if (window.ethereum)
@@ -80,10 +80,8 @@ const App: React.FC = () => {
   return (
     <Providers>
       <Router>
-        {/* <TopBar /> */}
-        {/* <Navigation /> */}
-        <Home />
-
+        <TopBar />
+        <Navigation />
       </Router>
     </Providers>
   );

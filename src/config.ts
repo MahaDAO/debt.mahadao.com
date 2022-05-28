@@ -26,6 +26,27 @@ const configurations: { [env: string]: Configuration } = {
       USDC: 6,
     },
   },
+  rinkeby: {
+    networkName: 'Rinkeby Testnet',
+    networkDisplayName: 'Rinkeby testnet',
+    chainId: 4,
+    etherscanUrl: 'https://rinkeby.etherscan.io/',
+    defaultProvider:
+      'https://rinkeby.infura.io/v3/',
+    deployments: require('./protocol/deployments/rinkeby.json'),
+    refreshInterval: 10000,
+    gasLimitMultiplier: 1.1,
+    blockchainToken: 'ETH',
+    blockchainTokenName: 'ETH',
+    blockchainTokenDecimals: 18,
+    networkSetupDocLink: 'https://www.rinkeby.io/',
+    supportedTokens: [
+      'ARTH-DP',
+    ],
+    decimalOverrides: {
+      USDC: 6,
+    },
+  },
   /*matic: {
     networkName: 'Matic Mainnet',
     networkDisplayName: 'Polygon',
@@ -43,4 +64,4 @@ const configurations: { [env: string]: Configuration } = {
   }*/
 };
 
-export default configurations['maticMumbai'|| 'matic'];
+export default configurations['rinkeby'];

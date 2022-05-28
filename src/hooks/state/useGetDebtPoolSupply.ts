@@ -16,10 +16,12 @@ const useGetDebtPoolSupply = (symbol: string | null) => {
   const [state, setState] = useState<BasicState>(LOADING_DEFAULT_BASIC_STATE);
 
   const action = useCallback(async () => {
-    const contract =
-      symbol === "ARTH"
-        ? core.contracts["ARTH-StakingMaster"]
-        : core.contracts["ARTHX-StakingMaster"];
+    let contract;
+      if(symbol === "ARTH")
+        contract = core.contracts["ARTH-StakingMaster"]
+      else if(symbol === "ARTHX")
+        contract = core.contracts["ARTHX-StakingMaster"]
+      else contract = core.contracts["ARTH-DP-Staking"]
 
     const totalSupply: BigNumber = await contract.totalSupply();
 

@@ -35,11 +35,11 @@ export default class Multicall extends EventEmitter {
     data.forEach((d) => this.calls.push(d));
     this._recreateWatcher();
     this.watcher.tap(() => this._getMutlicallCalls(data));
-    return data.map((d) => d.key);
+    return data?.map((d) => d.key);
   };
 
   private _getMutlicallCalls = (calls: IMulticallInput[]) => {
-    return calls.map((c) => ({
+    return calls?.map((c) => ({
       target: c.target,
       call: c.call,
       returns: [[c.key, c.convertResult]],

@@ -1,11 +1,11 @@
 import { Redirect, Route, Switch } from "react-router-dom";
-import Home from './views/Home';
+import DebtPool from './views/DebtPool';
 
 const Navigation = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <Home />
+        <DebtPool />
       </Route>
       <Redirect to="/" />
     </Switch>

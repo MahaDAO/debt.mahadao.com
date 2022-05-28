@@ -9,7 +9,7 @@ export default function Popups() {
   return (
     <>
       {
-        activePopups.map((p, i) => (
+        activePopups?.map((p, i) => (
           <TransactionSnackbar
             key={i}
             index={i}

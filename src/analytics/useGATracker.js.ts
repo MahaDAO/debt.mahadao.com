@@ -9,10 +9,10 @@ const useGaTracker = () => {
 
   useEffect(() => {
     if (isProduction) {
-      ReactGA.initialize("");
+      ReactGA.initialize("UA-179419220-5");
       setInitialized(true);
     } else {
-      ReactGA.initialize("");
+      ReactGA.initialize("UA-179419220-6");
       setInitialized(true);
     }
   }, []);

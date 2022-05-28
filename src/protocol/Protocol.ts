@@ -96,11 +96,4 @@ export class Protocol {
     };
   };
 
-  getTokenRewardPool(pool: string, token: string) {
-    return this.contracts[`${pool}-${token}StakingChild`];
-  }
-
-  getVestingContract(): Contract {
-    return this.contracts['VotingEscrow']
-  }
 }

@@ -1,0 +1,9 @@
+[
+  "function callable() view returns (bool)",
+  "function getCurrentEpoch() view returns (uint256)",
+  "function getLastEpoch() view returns (uint256)",
+  "function getNextEpoch() view returns (uint256)",
+  "function getPeriod() view returns (uint256)",
+  "function getStartTime() view returns (uint256)",
+  "function nextEpochPoint() view returns (uint256)"
+]

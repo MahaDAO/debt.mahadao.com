@@ -76,7 +76,7 @@ const TxModal: React.FC<props> = ({ openModal, onDismiss }) => {
           </div>
         )}
         <StyledTransactionList>
-          {sortedRecentTransactions.map((tx) => (
+          {sortedRecentTransactions?.map((tx) => (
             <SingleTransaction key={tx.hash} tx={tx} />
           ))}
         </StyledTransactionList>

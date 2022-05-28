@@ -9,36 +9,37 @@ import {
   NON_LOADING_DEFAULT_BASIC_STATE,
 } from "../../utils/constants";
 
-const useGetMAHAXBalance = (address: string | null) => {
-  const [state, setState] = useState<BasicState>(LOADING_DEFAULT_BASIC_STATE);
 
+const useGetCirculatingSupply = () => {
   const core = useCore();
   const blockNumber = useBlockNumber();
 
-  const fetchValue = useCallback(async () => {
-    const gasOptions = core.gasOptions();
-    const balance: BigNumber = await core.contracts.VotingEscrow[
-      "balanceOf(address)"
-    ](address, gasOptions);
+  const [state, setState] = useState<BasicState>(LOADING_DEFAULT_BASIC_STATE);
+
+  const action = useCallback(async () => {
+    const contract = core.contracts["ARTH-DP-Staking"];
+    const totalCirculatingSupply: BigNumber = await contract.getTotalCirculatingSupply();
+
     const newState: BasicState = {
       isLoading: false,
-      value: balance,
+      value: totalCirculatingSupply,
     };
+
     setState(newState);
-  }, [core, address]);
+  }, [core]);
 
   useEffect(() => {
-    if (core && address) {
-      fetchValue().catch((err) => {
+    if (core) {
+      action().catch((err) => {
         setState(NON_LOADING_DEFAULT_BASIC_STATE);
-        console.error(`Failed to fetch MAHAX Balance: ${err.stack}`);
+        console.error(`Failed to locked state: ${err.stack}`);
       });
     } else {
       setState(NON_LOADING_DEFAULT_BASIC_STATE);
     }
-  }, [blockNumber, core, fetchValue, address]);
+  }, [core, action, blockNumber]);
 
   return state;
-};
+}
 
-export default useGetMAHAXBalance;
+export default useGetCirculatingSupply;

@@ -16,7 +16,7 @@ import ConfirmationModal from "../../../../ConfirmationModal";
 import useTokenBalanceOf from "../../../../../hooks/useTokenBalanceOf";
 import useCore from "../../../../../hooks/useCore";
 import DataField from "../../../../DataField";
-import useGetVotingPower from "../../../../../hooks/state/useGetVotingPower";
+// import useGetVotingPower from "../../../../../hooks/state/useGetVotingPower";
 import ChooseWallet from "./ChooseWallet";
 import Grid from "@material-ui/core/Grid";
 
@@ -27,7 +27,7 @@ const WalletInfo = () => {
 
   const core = useCore();
   const { account } = useWallet();
-  const votingPower = useGetVotingPower(account);
+  // const votingPower = useGetVotingPower(account);
   const mahaErc20 = core.tokens['MAHA'];
   const { isLoading: isMAHABalanceLoading, value: mahaBalance } = useTokenBalanceOf(mahaErc20, account || "");
 
@@ -96,7 +96,7 @@ const WalletInfo = () => {
         </div>
       </WalletHeader>
       <WalletBody>
-        <MAHAXContain className={"bottom-divider"}>
+        {/* <MAHAXContain className={"bottom-divider"}>
           <DataField
             label={"Your MAHAX"}
             value={`${Number(getDisplayBalance(votingPower.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })}`}
@@ -109,7 +109,7 @@ const WalletInfo = () => {
             valueFontSize={16}
             valueFontColor={theme.color.transparent[100]}
           />
-        </MAHAXContain>
+        </MAHAXContain> */}
         <div className="single-line-center-between m-b-20">
           <div className="single-line-center-start">
             <IconLoader iconName={'MAHA'} iconType="tokenSymbol" className="m-r-12" height={44} width={44} />
