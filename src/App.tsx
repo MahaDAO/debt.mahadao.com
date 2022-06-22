@@ -74,8 +74,14 @@ const App: React.FC = () => {
   //     });
   // }, []);
 
-  if (!window.ethereum) return <NoMetamaskNotice />;
-  if (!core) return <div />;
+  if (!window.ethereum) {
+    console.log('no window ethereum')
+    return <NoMetamaskNotice />
+  };
+  if (!core){
+    console.log('no core');
+    return <div />
+  };
 
   return (
     <Providers>

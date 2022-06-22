@@ -38,11 +38,14 @@ const TopBar: React.FC = () => {
   const [showProjectModal, setShowProjectModal] = useState<boolean>(false);
   const [isHomePage, setIsHomePage] = useState<boolean>(location.pathname === "/");
 
+  console.log('isHomePage', isHomePage)
   useGaTracker();
   const { account, connect } = useWallet();
   const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
+  console.log('Topbar account', account)
+  console.log('Topbar showWarning', showWarning)
   const processNetwork = useCallback(async () => {
     const provider: any = await detectEthereumProvider();
 
@@ -62,10 +65,10 @@ const TopBar: React.FC = () => {
     const shouldBeDisconnected = localStorage.getItem('disconnectWallet');
     if (!shouldBeDisconnected && !!!account) connect('injected');
 
-    if (account) {
-      Mixpanel.identify(account);
-      Mixpanel.people.set({ walletId: account });
-    }
+    // if (account) {
+    //   Mixpanel.identify(account);
+    //   Mixpanel.people.set({ walletId: account });
+    // }
 
     processNetwork();
   }, [account, processNetwork, core, connect]);
@@ -103,7 +106,7 @@ const TopBar: React.FC = () => {
         title={'Wrong Network!'}
         subTitle={`You are on the wrong network, switch/add ${config.networkName} Network to use the app.`}
       />
-      {/*{!account && <WarningMsg id={"WarningMsg"}>
+      {!account && <WarningMsg id={"WarningMsg"}>
         <div className={"single-line-center-center mo-single-line-column"}>
           <TextWrapper
             text={`Please make sure you are connected to a wallet on ${config.networkName}.`}
@@ -123,7 +126,7 @@ const TopBar: React.FC = () => {
             </div>
           }
         </div>
-      </WarningMsg>}*/}
+      </WarningMsg>}
       <StyledTopBar>
         <StyledTopBarInner>
           <HideonPhone>
@@ -131,7 +134,7 @@ const TopBar: React.FC = () => {
               <div className="dialog-class">
                 <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'} />
               </div>
-              {isHomePage && <div className="single-line-center-start">
+              {/* {isHomePage && <div className="single-line-center-start">
                 <Button
                   onClick={() => {
                     window.location.href = '/#/locker'
@@ -139,10 +142,10 @@ const TopBar: React.FC = () => {
                   text="Open Governance"
                   tracking_id="Topbar_OpenGovernance"
                 />
-              </div>}
-              {!isHomePage && <div className="single-line-center-start">
-              <IconLoader className={"pointer m-r-24"} iconName={'BentoMenu'} iconType={'misc'} onClick={() => {setShowProjectModal(true)}}/>
-                {
+              </div>} */}
+                <div className="single-line-center-start">
+                  <IconLoader className={"pointer m-r-24"} iconName={'BentoMenu'} iconType={'misc'} onClick={() => {setShowProjectModal(true)}}/>
+                    {
                   !!account &&
                   <IconLoader
                     iconName={'Transaction'}
@@ -151,7 +154,7 @@ const TopBar: React.FC = () => {
                   />
                 }
                 <AccountButton showWarning={showWarning} />
-              </div>}
+              </div>
             </div>
           </HideonPhone>
           <HideOnBigScreen>

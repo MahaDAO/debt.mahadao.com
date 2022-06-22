@@ -27,9 +27,11 @@ const WalletInfo = () => {
 
   const core = useCore();
   const { account } = useWallet();
+
+  console.log('account', account)
   // const votingPower = useGetVotingPower(account);
-  const mahaErc20 = core.tokens['MAHA'];
-  const { isLoading: isMAHABalanceLoading, value: mahaBalance } = useTokenBalanceOf(mahaErc20, account || "");
+  // const mahaErc20 = core.tokens['MAHA'];
+  // const { isLoading: isMAHABalanceLoading, value: mahaBalance } = useTokenBalanceOf(mahaErc20, account || "");
 
   useEffect(() => {
     if (isCopied) {
@@ -110,7 +112,7 @@ const WalletInfo = () => {
             valueFontColor={theme.color.transparent[100]}
           />
         </MAHAXContain> */}
-        <div className="single-line-center-between m-b-20">
+        {/* <div className="single-line-center-between m-b-20">
           <div className="single-line-center-start">
             <IconLoader iconName={'MAHA'} iconType="tokenSymbol" className="m-r-12" height={44} width={44} />
             {
@@ -129,7 +131,7 @@ const WalletInfo = () => {
             fontWeight={600}
             Fcolor={theme.color.transparent[100]}
           />
-        </div>
+        </div> */}
         <Grid container spacing={1}>
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <Button variant={'transparent'} onClick={() => setShowWalletOption(true)}>Change</Button>

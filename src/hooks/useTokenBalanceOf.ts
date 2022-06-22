@@ -13,8 +13,12 @@ const useTokenBalanceOf = (token: ERC20 | Contract, address: string) => {
   const core = useCore();
   const blockNumber = useBlockNumber();
 
+  console.log('tokenbal token', token)
+
   const fetchBalance = useCallback(async () => {
     const bal: BigNumber = await token.balanceOf(address);
+    console.log('tokenbal bal', bal)
+
     setBalance({ isLoading: false, value: bal });
   }, [token, address]);
 

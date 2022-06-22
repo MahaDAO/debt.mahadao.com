@@ -18,8 +18,8 @@ import useGetCirculatingSupply from '../../../hooks/state/useGetCirculatingSuppl
 
 const ContractBalanceContainer = () => {
   
-  const totalCirculatingSupply = useGetCirculatingSupply();
-  const totalSupply = useGetDebtPoolSupply('ARTH-DP')
+  const totalCirculatingSupply = useGetDebtPoolSupply('ARTH-DP')
+  const totalSupply = useGetCirculatingSupply();
 
   // useEffect(() => {
   //   fetch('https://api.coingecko.com/api/v3/coins/mahadao?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false')
@@ -39,8 +39,8 @@ const ContractBalanceContainer = () => {
       value: BigNumber.from(0)
     }
 
-    let val = ((Number(ethers.utils.formatEther(totalCirculatingSupply.value)) - Number(ethers.utils.formatEther(totalSupply.value))) / Number(ethers.utils.formatEther(totalCirculatingSupply.value)))
-    let bigval = ethers.utils.parseEther(`${val}`)
+    let val = ((Number(ethers.utils.formatEther(totalSupply.value)) - Number(ethers.utils.formatEther(totalCirculatingSupply.value))) / Number(ethers.utils.formatEther(totalSupply.value)))
+    let bigval = ethers.utils.parseEther(`0`)
 
     return {
       isLoading: false,

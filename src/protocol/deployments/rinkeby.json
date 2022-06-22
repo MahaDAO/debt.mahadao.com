@@ -1,6 +1,10 @@
 {
-  "ARTH-DP-Staking": {
+  "ARTH-DP-Staking":{
     "abi": "ArthDebtPool",
     "address": "0x2057d85f2eA34a3ff78E4fE092979DBF4dd32766"
+  },
+  "Staking-RewardsV2": {
+    "abi": "StakingRewardsV2",
+    "address": "0xd03785C2F0399bdAcACd2F3F85eD1C8D1141b42b"
   }
 }

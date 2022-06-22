@@ -9,11 +9,11 @@ const LockDeposit = () => {
   return (
     <div className='custom-container' style={{marginTop: '150px', }}>
       <div className="m-b-40">
-        <PageHeading>{'DEBT POOL'}</PageHeading>
+        {/* <PageHeading>{'DEBT POOL'}</PageHeading> */}
       </div>
       <ContractBalanceContainer />
       <DeptCard price={1} symbol={'ARTH-DP'} />
-      <LockerGraph />
+      {/* <LockerGraph /> */}
     </div>
   )
 }

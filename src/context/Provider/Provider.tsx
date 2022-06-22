@@ -10,9 +10,6 @@ export const Context = createContext<ProtocolContext>({ core: new Protocol(confi
 export const ProtocolProvider = ({ children }: any) => {
   const [core, setCore] = useState<Protocol>(new Protocol(config));
 
-  console.log('core', core);
-  
-
   const { ethereum, account } = useWallet();
 
   useEffect(() => {
@@ -21,10 +18,12 @@ export const ProtocolProvider = ({ children }: any) => {
       if (account) {
         // Wallet was unlocked at initialization.
         newCore.unlockWallet(ethereum, account);
+        console.log('unlockWallet newCore')
       }
       setCore(newCore);
     } else if (account) {
       core.unlockWallet(ethereum, account);
+      console.log('unlockWallet oldCore')
     }
   }, [account, core, ethereum]);
 

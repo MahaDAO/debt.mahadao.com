@@ -17,7 +17,7 @@ export class Protocol {
   contracts: { [name: string]: Contract };
   provider: ethers.providers.BaseProvider;
 
-  // MAHA: ERC20;
+  // 'ARTH-DP': ERC20;
   // ARTH: ERC20;
   // USDC: ERC20;
   // SCLP: ERC20;
@@ -45,18 +45,6 @@ export class Protocol {
       }
     }
 
-
-    // this.MAHA = new ERC20(deployments.MAHA.address, provider, 'MAHA', 18);
-    // this.ARTH = new ERC20(deployments.ARTH.address, provider, 'ARTH', 18);
-    // this.SCLP = new ERC20(deployments.SCLP.address, provider, 'SCLP', 18);
-    // this.USDC = new ERC20(deployments.USDC.address, provider, 'USDC', 6);
-
-    // this.tokens = {
-    //   MAHA: this.MAHA,
-    //   ARTH: this.ARTH,
-    //   USDC: this.USDC
-    // };
-
     this.config = cfg;
     this.provider = provider;
   };
@@ -65,20 +53,20 @@ export class Protocol {
    * @param provider From an unlocked wallet. (e.g. Metamask)
    * @param account An address of unlocked wallet account.
    */
-  unlockWallet(provider: any, account: string) {
+  async unlockWallet(provider: any, account: string) {
     const newProvider = new ethers.providers.Web3Provider(provider, this.config.chainId);
-
-    this.signer = newProvider.getSigner(0);
+    await newProvider.send("eth_requestAccounts", []);
+    this.signer = newProvider.getSigner()
     this.myAccount = account;
+
+    console.log('window.ethereum', window.ethereum)
+    console.log('newProvider', newProvider)
+    console.log('this.signer', this.signer)
+    console.log("Account:", await this.signer.getAddress());
+
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-
-    /*const tokens = [
-      this.MAHA,
-      this.ARTH,
-      this.USDC
-    ];*/
 
     for (const token of Object.values(this.tokens)) {
       if (token && token.address) token.connect(this.signer);

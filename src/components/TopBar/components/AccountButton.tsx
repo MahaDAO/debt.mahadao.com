@@ -22,8 +22,9 @@ const AccountButton: React.FC<AccountButtonProps> = ({
   const [showWalletInfo, setShowWalletInfo] = useState<boolean>(false);
   const [showWalletOption, setShowWalletOption] = useState<boolean>(false);
 
-  const { account, ethereum }: { account: any, ethereum?: any } = useWallet();
-
+  const { account, ethereum } = useWallet();
+  console.log('AccountButton account', account)
+  
   const switchMetamaskChain = () => {
     // @ts-ignore
     if (window.ethereum) {

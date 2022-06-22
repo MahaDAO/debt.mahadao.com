@@ -23,6 +23,7 @@ function useApprove(token: ERC20, spender: string): [ApprovalState, () => Promis
   const pendingApproval = useHasPendingApproval(token?.address, spender);
   const currentAllowance = useAllowance(token, spender, pendingApproval);
 
+  // console.log('token', token)
   // Check the current approval status.
   const approvalState: ApprovalState = useMemo(() => {
     // We might not have enough data to know whether or not we need to approve.
@@ -43,15 +44,24 @@ function useApprove(token: ERC20, spender: string): [ApprovalState, () => Promis
       console.error('Approve was called unnecessarily');
       return;
     }
+    console.log('inside approve', token, spender)
 
-    const response = await token.approve(spender, APPROVE_AMOUNT);
-    addTransaction(response, {
-      summary: `Approve ${token.symbol}`,
-      approval: {
-        tokenAddress: token.address,
-        spender: spender,
-      },
-    });
+    try {
+      const response = await token.approve(spender, APPROVE_AMOUNT);
+      console.log('response', response)
+
+      addTransaction(response, {
+        summary: `Approve ${token.symbol}`,
+        approval: {
+          tokenAddress: token.address,
+          spender: spender,
+        },
+      });
+      
+    } catch (error) {
+      console.log('approve error', error)
+    }
+
   }, [approvalState, token, spender, addTransaction]);
 
   return [approvalState, approve];

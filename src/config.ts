@@ -32,7 +32,7 @@ const configurations: { [env: string]: Configuration } = {
     chainId: 4,
     etherscanUrl: 'https://rinkeby.etherscan.io/',
     defaultProvider:
-      'https://rinkeby.infura.io/v3/',
+      'https://rinkeby.infura.io/v3/3a9a6018905e45669f505505420d81d6',
     deployments: require('./protocol/deployments/rinkeby.json'),
     refreshInterval: 10000,
     gasLimitMultiplier: 1.1,
@@ -44,7 +44,7 @@ const configurations: { [env: string]: Configuration } = {
       'ARTH-DP',
     ],
     decimalOverrides: {
-      USDC: 6,
+      ARTH: 18,
     },
   },
   /*matic: {

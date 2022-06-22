@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, {useState, useMemo } from 'react';
 import styled from 'styled-components';
 import Loader from "react-spinners/PulseLoader";
 
@@ -6,11 +6,14 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import useClaimReward from '../../../hooks/callbacks/useClaimReward';
 import useGetDebtPoolSupply from '../../../hooks/state/useGetDebtPoolSupply';
 import useGetBalanceOfDebtPool from '../../../hooks/state/useGetBalanceOfDebtPool';
-
+import ArthDebtPool from "../../../protocol/deployments/abi/ArthDebtPool.json"
 import Button from "../../../components/Button";
 import InfoTip from "../../../components/InfoTip";
 import IconLoader from "../../../components/IconLoader";
-import useGetDebtPoolTokenRewards from "../../../hooks/state/useGetDebtPoolTokenRewards";
+import DepositModal from '../modal/DepositModal';
+import useCore from '../../../hooks/useCore';
+import { ethers } from 'ethers';
+import WithdrawModal from '../modal/WithdrawModal';
 // import DataField from "../../../components/DataField";
 // import theme from "../../../theme";
 
@@ -20,12 +23,13 @@ interface DeptCardProps {
 }
 
 const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
+  const core = useCore();
+
+  const [openDepositModal, setOpenDepositModal] = useState<boolean>(false);
+  const [openWithdrawModal, setWithdrawModal] = useState<boolean>(false);
+
   const arthTotalSupply = useGetDebtPoolSupply(symbol);
   const arthBalanceOf = useGetBalanceOfDebtPool(symbol);
-
-  const arthEarned = useGetDebtPoolTokenRewards(symbol, 'ARTH');
-  const mahaEarned = useGetDebtPoolTokenRewards(symbol, 'MAHA');
-  const usdcEarned = useGetDebtPoolTokenRewards(symbol, 'USDC');
 
   const claimCallback = useClaimReward(symbol);
 
@@ -34,13 +38,15 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
     [arthBalanceOf, arthTotalSupply]
   );
 
-  const hasClaimableAmount = useMemo(() => {
-    if (arthEarned.isLoading || mahaEarned.isLoading || usdcEarned.isLoading) {
-      return false
-    } else if (arthEarned.value.gt(0) || mahaEarned.value.gt(0) || usdcEarned.value.gt(0)) {
-      return true
-    }
-  }, [arthEarned.isLoading, arthEarned.value, mahaEarned.isLoading, mahaEarned.value, usdcEarned.isLoading, usdcEarned.value])
+  const arthdptoken = new ethers.Contract('0x2057d85f2eA34a3ff78E4fE092979DBF4dd32766', ArthDebtPool, core.signer)
+  console.log('arthdptoken', arthdptoken);
+
+  const selectedData = {
+    address: "0x2057d85f2eA34a3ff78E4fE092979DBF4dd32766",
+    displayName: "ARTH-DP",
+  }
+
+  console.log('deptCard')
 
   return (
     <Wrapper>
@@ -72,7 +78,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
               {depositShare.toFixed(2)}%
             </StyledValue>
           </CardSection>
-          <CardSection>
+          {/* <CardSection>
             <TextWithIcon>Your Rewards</TextWithIcon>
             <StyledValue>
               {
@@ -82,8 +88,8 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
                     { minimumFractionDigits: 5, maximumFractionDigits: 8 })
               } ARTH
             </StyledValue>
-          </CardSection>
-          <CardSection className="m-t-4 m-b-4">
+          </CardSection> */}
+          {/* <CardSection className="m-t-4 m-b-4">
             <TextWithIcon></TextWithIcon>
             <StyledValue>
               {
@@ -93,8 +99,8 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
                     { minimumFractionDigits: 5, maximumFractionDigits: 8 })
               } MAHA
             </StyledValue>
-          </CardSection>
-          <CardSection className="m-t-4 m-b-4">
+          </CardSection> */}
+          {/* <CardSection className="m-t-4 m-b-4">
             <TextWithIcon></TextWithIcon>
             <StyledValue>
               {
@@ -104,7 +110,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
                     { minimumFractionDigits: 5, maximumFractionDigits: 8 })
               } USDC
             </StyledValue>
-          </CardSection>
+          </CardSection> */}
           <div className={"m-b-8 m-t-40"}>
             <InfoTip
               type={'Info'}
@@ -124,14 +130,34 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
           </div>
           <ButtonToBottom>
             <Button
-              loading={arthEarned.isLoading || mahaEarned.isLoading || usdcEarned.isLoading}
-              disabled={!hasClaimableAmount}
-              text="Claim"
-              onClick={claimCallback}
+              // loading={arthEarned.isLoading || mahaEarned.isLoading || usdcEarned.isLoading}
+              // disabled={!hasClaimableAmount}
+              text="Deposit"
+              onClick={() => {
+                setOpenDepositModal(true)}}
+            />
+            <div style={{width: '100px'}}></div>
+             <Button
+              // loading={arthEarned.isLoading || mahaEarned.isLoading || usdcEarned.isLoading}
+              // disabled={!hasClaimableAmount}
+              text="Withdraw"
+              onClick={
+                () => setWithdrawModal(true)
+              }
             />
           </ButtonToBottom>
         </CardContent>
       </Card>
+      <DepositModal
+        openModal={openDepositModal}
+        onModalClose={() => setOpenDepositModal(false)}
+        selectedData={arthdptoken}
+      />
+      <WithdrawModal
+        openModal={openWithdrawModal}
+        onModalClose={() => setWithdrawModal(false)}
+        selectedData={arthdptoken}
+      />
     </Wrapper>
   );
 };
