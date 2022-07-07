@@ -14,30 +14,36 @@ import {
   LOADING_DEFAULT_BASIC_STATE,
   NON_LOADING_DEFAULT_BASIC_STATE,
 } from "../../utils/constants";
+import { parseUnits } from 'ethers/lib/utils';
 
 
-const useDeposit = (amount: BigNumber) => {
+const useDeposit = (amount: string) => {
+  let bnAmount: BigNumber
+  if(amount.length){
+    bnAmount = BigNumber.from(parseUnits(amount))
+  } else {
+    bnAmount = BigNumber.from(parseUnits('0'))
+  }
+
   const core = useCore();
   const addTransaction = useTransactionAdder();
   const addPopup = useAddPopup();
   const contract = core.contracts["Staking-RewardsV2"];
 
-  console.log('useDeposit contract', contract)
-
   const action = useCallback(
     async (callback?: () => void): Promise<void> => {
-     
 
       try {
-        const response = await contract.stake(amount)
+        const response = await contract.stake(bnAmount)
         addTransaction(response, {
-          summary: `Stake ${Numeral(getDisplayBalance(amount, 18, 3)).format(
+          summary: `Stake ${Numeral(getDisplayBalance(bnAmount, 18, 3)).format(
             '0,0.00a',
           )} ARTH-DP`,
         });
 
         if (callback) callback();
       } catch (e: any) {
+        console.log('useDeposit e', e)
        
         addPopup({
           error: {
@@ -47,7 +53,7 @@ const useDeposit = (amount: BigNumber) => {
         });
       }
     },
-    [core, amount],
+    [core, bnAmount],
   )
   
   return action;

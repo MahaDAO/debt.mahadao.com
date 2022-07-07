@@ -34,9 +34,9 @@ const DepositModal = (props: any) => {
 
   const core = useCore();
 
-  useEffect(() => {
-    setValue('0')
-  }, [])
+  // useEffect(() => {
+  //   setValue('0')
+  // }, [])
  
   console.log('core.signer', core)
 
@@ -61,11 +61,12 @@ const DepositModal = (props: any) => {
     "0xd03785C2F0399bdAcACd2F3F85eD1C8D1141b42b"
   );
 
-  const depositAction = useDeposit(BigNumber.from(parseUnits(val)));
+  const depositAction = useDeposit(val)  
 
-  const handleDeposit = () => {
+  function handleDeposit() {
+
     depositAction(() => {
-      props.onCancel();
+      // props.onCancel();
     })
   };
 
@@ -106,7 +107,7 @@ const DepositModal = (props: any) => {
                     setValue(Number(getDisplayBalance(balance.value, 18, 3)).toString())
                   }}
                 />
-                <CollateralDropDown selectedSymbol={selectedData.displayName}/>
+                {/* <CollateralDropDown selectedSymbol={'ARTH-DP'}/> */}
               </div>
             </States>
           </InputContainer>

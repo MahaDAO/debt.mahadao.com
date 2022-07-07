@@ -43,11 +43,11 @@ const WithdrawModal = (props: any) => {
 
   const balance = useTokenBalanceOf(selectedData, '0x61837551968B5496c63EbCC82cBfE2C8e1Fe798c');
 
-  const withdrawAction = useWithdraw(BigNumber.from(parseUnits(val)));
+  const withdrawAction = useWithdraw(val);
 
   const handleWithdraw = () => {
     withdrawAction(() => {
-      props.onCancel();
+      // props.onCancel();
     })
   };
 
@@ -84,7 +84,7 @@ const WithdrawModal = (props: any) => {
                     setValue(Number(getDisplayBalance(balance.value, 18, 3)).toString())
                   }}
                 />
-                <CollateralDropDown selectedSymbol={selectedData.displayName}/>
+                {/* <CollateralDropDown selectedSymbol={selectedData.displayName}/> */}
               </div>
             </States>
           </InputContainer>
