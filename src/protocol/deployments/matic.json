@@ -1,70 +1,14 @@
 {
-  "DebtPoolToken": {
+  "MatchingMarket": {
+    "abi": "MatchingMarket",
+    "address": "0x2b363218a27DF57C655a5E4e6f8DE8A9Bcf5B9a9"
+  },
+  "ARTH-DP": {
     "abi": "IERC20",
-    "address": "0x7518eBe3e2a9FC8464C82062467799F9808bcA13"
+    "address": "0x2da2874F40c4c5DF7D80aBABe016d915fd8A9355"
   },
-  "DebtPoolArth": {
-    "abi": "DebtPool",
-    "address": "0x8c0eB2dEE0596EF58c2b7C47e81B8b41F39a7BDE"
-  },
-  "DebtPoolArthX": {
-    "abi": "DebtPool",
-    "address": "0xCF9cCC08D0FE8f31c29617B89c3a4CB845ae694A"
-  },
-  "PoolToken": {
+  "USDC": {
     "abi": "IERC20",
-    "address": "0x48202b3f81e345c8F72aae88cC386dD1fbBeab97"
-  },
-  "StakingMaster": {
-    "abi": "StakingMaster",
-    "address": "0x2A959e264BC4eAFB844A38474121C06750008E8c"
-  },
-  "MAHAX-MAHAStakingChild": {
-    "abi": "StakingChild",
-    "address": "0x63e47D50711E877167dfE465083E37C4ac53055a"
-  },
-  "MAHAX-SCLPStakingChild": {
-    "abi": "StakingChild",
-    "address": "0xc1fCf0c56D52875d473811ff0A1C00E21c51b1B5"
-  },
-  "MAHAX-ARTHStakingChild": {
-    "abi": "StakingChild",
-    "address": "0x7fD234901B1E5D475a7d3B275dd7c61CABE10E97"
-  },
-  "MAHAX-USDCStakingChild": {
-    "abi": "StakingChild",
-    "address": "0xe4d3751eC968C032FD1eAD222f34707e7f031E72"
-  },
-  "ARTHX-StakingMaster": {
-    "abi": "StakingMaster",
-    "address": "0xf9db266eaf02D3F891687588B10D1cF92CC44047"
-  },
-  "ARTH-StakingMaster": {
-    "abi": "StakingMaster",
-    "address": "0xA6dBd9048b81E36aD25E503129CE226E1AbCfde0"
-  },
-  "ARTHX-MAHAStakingChild": {
-    "abi": "StakingChild",
-    "address": "0x721Cf2d20A475Ce03b117De7277149c3f8dddB80"
-  },
-  "ARTHX-ARTHStakingChild": {
-    "abi": "StakingChild",
-    "address": "0xCA5c195f36C36AFe6ed4a60352C032501b8eC3B5"
-  },
-  "ARTHX-USDCStakingChild": {
-    "abi": "StakingChild",
-    "address": "0xCfe883DE240bB4f3E07b21021BEF09D71a8386C8"
-  },
-  "ARTH-MAHAStakingChild": {
-    "abi": "StakingChild",
-    "address": "0x4F9266BA55C885d3DFF6e67cbBe9f8d3b5cd9926"
-  },
-  "ARTH-ARTHStakingChild": {
-    "abi": "StakingChild",
-    "address": "0xE4CE793c5F27f0ab33e1fd373D7A800E2556722F"
-  },
-  "ARTH-USDCStakingChild": {
-    "abi": "StakingChild",
-    "address": "0xf4102bB8Ea5d994890bb25968DCdc04796bDe4E0"
+    "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
   }
 }

@@ -45,7 +45,7 @@ const IconLoader = (props: IconLoaderProps) => {
       console.log('IconLoader catch error', err)
     })
 
-
+ if(Icon?.length)
   return (
     <img
       src={Icon}
@@ -58,6 +58,10 @@ const IconLoader = (props: IconLoaderProps) => {
       }}
     />
   )
+
+  return null
+
+  
 }
 
 export default IconLoader;

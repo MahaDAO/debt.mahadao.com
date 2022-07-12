@@ -472,7 +472,6 @@ body {
 
 .single-line-center-center {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
 }
@@ -579,4 +578,12 @@ body {
 /* *** Custom *** */
 .p-6 {
   padding: 6px !important;
+}
+
+.p10V5H {
+  padding: 10px 5px;
+}
+
+.table-border{
+  border: 1px solid #333;
 }

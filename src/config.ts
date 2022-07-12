@@ -21,9 +21,10 @@ const configurations: { [env: string]: Configuration } = {
       'DAI',
       'USDC',
       'SCLP'
-    ],
+    ], 
     decimalOverrides: {
-      USDC: 6,
+      'ARTH-DP': 18,
+      USDC: 6
     },
   },
   rinkeby: {
@@ -42,12 +43,14 @@ const configurations: { [env: string]: Configuration } = {
     networkSetupDocLink: 'https://www.rinkeby.io/',
     supportedTokens: [
       'ARTH-DP',
+      'USDC'
     ],
     decimalOverrides: {
-      ARTH: 18,
+      'ARTH-DP': 18,
+      USDC: 6
     },
   },
-  /*matic: {
+  matic: {
     networkName: 'Matic Mainnet',
     networkDisplayName: 'Polygon',
     chainId: 137,
@@ -60,8 +63,16 @@ const configurations: { [env: string]: Configuration } = {
     blockchainToken: 'MATIC',
     blockchainTokenName: 'MATIC',
     blockchainTokenDecimals: 18,
-    networkSetupDocLink: 'https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/'
-  }*/
+    networkSetupDocLink: 'https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/',
+    supportedTokens: [
+      'ARTH-DP',
+      'USDC'
+    ],
+    decimalOverrides: {
+      'ARTH-DP': 18,
+      USDC: 6
+    },
+  }
 };
 
-export default configurations['rinkeby'];
+export default configurations['matic'];

@@ -146,13 +146,13 @@ const TopBar: React.FC = () => {
                 <div className="single-line-center-start">
                   <IconLoader className={"pointer m-r-24"} iconName={'BentoMenu'} iconType={'misc'} onClick={() => {setShowProjectModal(true)}}/>
                     {
-                  !!account &&
-                  <IconLoader
-                    iconName={'Transaction'}
-                    className={'pointer m-r-12'}
-                    onClick={() => setShowTxModal(true)}
-                  />
-                }
+                      !!account &&
+                      <IconLoader
+                        iconName={'Transaction'}
+                        className={'pointer m-r-12'}
+                        onClick={() => setShowTxModal(true)}
+                      />
+                    }
                 <AccountButton showWarning={showWarning} />
               </div>
             </div>

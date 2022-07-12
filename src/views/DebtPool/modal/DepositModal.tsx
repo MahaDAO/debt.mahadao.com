@@ -112,9 +112,6 @@ const DepositModal = (props: any) => {
             </States>
           </InputContainer>
         </div>
-        <div>
-          <InfoTip type={'Warning'} msg={'Selecting an NFT will make you eligible for boost'} className={'m-b-16'}/>
-        </div>
         <Grid
           container
           spacing={2}

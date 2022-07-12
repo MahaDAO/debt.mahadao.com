@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import ContractBalanceContainer from './components/ContractBalanceContainer';
-
 import DeptCard from './components/DeptCard';
-import LockerGraph from './components/LockerGraph';
 
+// import LockerGraph from './components/LockerGraph';
 
 const LockDeposit = () => {
   return (
@@ -11,8 +10,8 @@ const LockDeposit = () => {
       <div className="m-b-40">
         {/* <PageHeading>{'DEBT POOL'}</PageHeading> */}
       </div>
-      <ContractBalanceContainer />
-      <DeptCard price={1} symbol={'ARTH-DP'} />
+      {/* <ContractBalanceContainer />
+      <DeptCard price={1} symbol={'ARTH-DP'} /> */}
       {/* <LockerGraph /> */}
     </div>
   )

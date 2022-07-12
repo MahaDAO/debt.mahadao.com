@@ -14,6 +14,7 @@ export interface InputProps {
   onMaxClick?: () => void;
   border?: string;
   className?: string;
+  alignInput?: any
 };
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`);
@@ -29,6 +30,7 @@ const Input = (props: InputProps) => {
     onMaxClick,
     border = '6px 0 0 6px',
     className = '',
+    alignInput = 'left'
   } = props;
 
   const onValueChange = (value: string) => {
@@ -43,6 +45,14 @@ const Input = (props: InputProps) => {
 
   return (
     <InputContainer style={{ borderRadius: border }} className={className}>
+      {maxTag && (
+        <MaxTagConatiner
+          onClick={() => {
+            if (onMaxClick) onMaxClick()
+          }}>
+          MAX
+        </MaxTagConatiner>
+      )}
       <CustomInput
         inputMode={inputMode}
         placeholder={placeholder}
@@ -52,15 +62,9 @@ const Input = (props: InputProps) => {
         onChange={(event) => {
           enforcer(event.target.value)
         }}
+       style={{textAlign: alignInput || 'left'}}
       />
-      {maxTag && (
-        <MaxTagConatiner
-          onClick={() => {
-            if (onMaxClick) onMaxClick()
-          }}>
-          MAX
-        </MaxTagConatiner>
-      )}
+      
     </InputContainer>
   )
 }
@@ -72,6 +76,8 @@ const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
   flex: 1;
+
+
 `;
 
 const CustomInput = styled.input`

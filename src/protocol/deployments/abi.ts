@@ -4,14 +4,15 @@ import { IABIS } from "../../utils/interface";
 import DebtPool from "./abi/DebtPool.json";
 import ArthDebtPool from "./abi/ArthDebtPool.json";
 import StakingRewardsV2 from "./abi/StakingRewardsV2.json"
-
+import MatchingMarket from "./abi/MatchingMarket.json"
 
 const abis: IABIS = {
   IERC20,
   MockERC20,
   DebtPool,
   ArthDebtPool,
-  StakingRewardsV2
+  StakingRewardsV2,
+  MatchingMarket
 };
 
 export default abis;
