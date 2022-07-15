@@ -1,8 +1,6 @@
-import { useState, useContext, useEffect, useMemo } from 'react';
-import styled from 'styled-components';
+import { useState, useEffect, useMemo } from 'react';
 import {useMediaQuery} from "react-responsive";
 import {Grid} from "@material-ui/core";
-import { BigNumber } from "ethers";
 
 import Modal from "../../../components/Modal";
 import InputContainer from "../../../components/InputContainer";
@@ -16,7 +14,6 @@ import useCore from '../../../hooks/useCore';
 import useBuyOffer from '../../../hooks/state/useBuyOffer';
 import { formatToBN } from '../../../utils/formatBalance';
 import useSellOffer from '../../../hooks/state/useSellOffer';
-
 
 function BuySellOffer(props: any) {
 
@@ -47,17 +44,21 @@ function BuySellOffer(props: any) {
     "0x2b363218a27DF57C655a5E4e6f8DE8A9Bcf5B9a9"
   );
 
-  const buyOfferAction = useBuyOffer(formatToBN(quoteToken, 6), formatToBN(baseToken), action) 
+  console.log('tableData.total', tableData.total)
+
+  const buyOfferAction = useBuyOffer(formatToBN(tableData.total, 6), formatToBN(baseToken), action) 
 
   function handleBuyOffer() {
+    console.log('buyoffer')
     buyOfferAction(() => {
       // props.onCancel();
     })
   };
-
-  const sellOfferAction = useSellOffer(formatToBN(baseToken), formatToBN(quoteToken, 6), action) 
+ 
+  const sellOfferAction = useSellOffer(formatToBN(baseToken), formatToBN(tableData.total, 6), action) 
 
   function handleSellOffer() {
+    console.log('selloffer')
     sellOfferAction(() => {
       // props.onCancel();
     })
@@ -65,8 +66,6 @@ function BuySellOffer(props: any) {
 
   const isApproved = approveStatus === ApprovalState.APPROVED;
   const isApproving = approveStatus === ApprovalState.PENDING;
-
-  console.log('isApproved', isApproved, tokenToApprove)
 
   const isAmountGreaterThanBalance = false
 

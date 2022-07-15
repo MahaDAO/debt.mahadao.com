@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import {useMediaQuery} from "react-responsive";
+import _ from 'underscore'
 
 import BuySellTable from './components/BuySellTable';
 import useTokenBalance from '../../hooks/useTokenBalance';
 import useCore from '../../hooks/useCore';
 import { getDisplayBalance } from '../../utils/formatBalance';
+import BuyOrdersCard from './components/BuyOrdersCard';
+import SellOrdersCard from './components/SellOrdersCard';
 
 function Dex() {
 
@@ -12,6 +15,8 @@ function Dex() {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const baseTokenBalance = useTokenBalance(core.tokens['ARTH-DP'])
   const quoteTokenBalance = useTokenBalance(core.tokens['USDC'])
+
+  console.log('quoteTokenBalance', quoteTokenBalance)
 
   return (
     <div className='custom-container'>
@@ -46,27 +51,35 @@ function Dex() {
         <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>Buy Orders</CardHeader>
+            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
+            <BuyOrdersCard />
           </Card>
         </Wrapper>
         <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>Sell Orders</CardHeader>
+            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
+            <SellOrdersCard />
           </Card>
         </Wrapper>
       </div>
 
-      <div style={{display: 'flex'}}>
+      {/* <div style={{display: 'flex'}}>
         <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>My Orders</CardHeader>
+            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
+            <MyOrders />
           </Card>
         </Wrapper>
         <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>Market History</CardHeader>
+            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
+            <MyOrders />
           </Card>
         </Wrapper>
-      </div>
+      </div> */}
 
     </div>
     

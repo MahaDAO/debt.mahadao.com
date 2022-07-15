@@ -39,15 +39,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   );
 
   const arthdptoken = new ethers.Contract('0x2057d85f2eA34a3ff78E4fE092979DBF4dd32766', ArthDebtPool, core.signer)
-  console.log('arthdptoken', arthdptoken);
-
-  const selectedData = {
-    address: "0x2057d85f2eA34a3ff78E4fE092979DBF4dd32766",
-    displayName: "ARTH-DP",
-  }
-
-  console.log('deptCard')
-
+  
   return (
     <Wrapper>
       <Card className={'material-primary'}>

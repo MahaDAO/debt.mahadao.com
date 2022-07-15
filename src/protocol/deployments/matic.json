@@ -10,5 +10,13 @@
   "USDC": {
     "abi": "IERC20",
     "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+  },
+  "Staking-RewardsV2": {
+    "abi": "StakingRewardsV2",
+    "address": "0x062256948f75e767d5446692eBFD2033f61Bfbb6"
+  },
+  "ARTH-DP-Staking":{
+    "abi": "ArthDebtPool",
+    "address": "0x2da2874F40c4c5DF7D80aBABe016d915fd8A9355"
   }
 }

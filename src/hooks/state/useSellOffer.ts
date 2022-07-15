@@ -27,7 +27,7 @@ const useSellOffer = (pay_amt: BigNumber, buy_amt: BigNumber, txAction: string) 
         const response = await contract.offer(pay_amt, pay_gem , buy_amt, buy_gem , 0, true)
         console.log('response', response)
         addTransaction(response, {
-          summary: `${txAction} ${Numeral(getDisplayBalance(buy_amt, 18, 3)).format(
+          summary: `${txAction} ${Numeral(getDisplayBalance(buy_amt, 6, 3)).format(
             '0,0.00a',
           )}`,
         });

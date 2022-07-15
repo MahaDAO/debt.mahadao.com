@@ -15,12 +15,11 @@ const useGetBalanceOfDebtPool = (symbol: string | null) => {
   const { account } = useWallet();
 
   const action = useCallback(async () => {
-    const contract =
-      symbol === "ARTH"
-        ? core.contracts.DebtPoolArth
-        : core.contracts.DebtPoolArthX;
+    const contract = 
+      symbol === "ARTH-DP" ?
+      core.contracts['ARTH-DP'] : null
 
-    const balanceOf: BigNumber = await contract.balanceOf(account);
+    const balanceOf: BigNumber = await contract?.balanceOf(account);
 
     const newState: BasicState = {
       isLoading: false,
