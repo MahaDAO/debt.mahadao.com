@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useWallet } from "use-wallet";
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useMediaQuery } from "react-responsive";
 
 import Button from "../../Button";
@@ -72,58 +72,26 @@ const MobileNav = (props: props) => {
               <IconLoader iconName={'Wallet'} width={24} height={24} className="m-r-8" />
             </Button>
               </div>
-            
-            <Button
-              onClick={() => {setShowTxModal(true)}}
-              variant={'transparent'}
-              text={'Transactions'}
-            >
-              <IconLoader iconName={'Transaction'} width={24} height={24} className="m-r-8" />
-            </Button>
+            <div className={'m-b-12'}>
+              <Button
+                onClick={() => {setShowTxModal(true)}}
+                variant={'transparent'}
+                text={'Transactions'}
+              >
+                <IconLoader iconName={'Transaction'} width={24} height={24} className="m-r-8" />
+              </Button>
+            </div>
+            <Link to={'/form'} >
+              <Button
+                
+                onClick={() => {}}
+                variant={'transparent'}>Register User</Button>
+            </Link>
             </div>
               )
           }
         </WalletButton>
-        <TopMenu className="bottom-divider">
-          <StyledLink exact activeClassName="activeSidebar" onClick={props.onClick} to="/locker">
-            Lock MAHA
-          </StyledLink>
-          <StyledLinkHref href="https://vote.mahadao.com" target={"_blank"}>
-            <div className={"single-line-center-start"}>
-              <p>Vote</p>
-              <IconLoader iconName={"ArrowLinkColored"} iconType={"arrow"} />
-            </div>
-          </StyledLinkHref>
-          {/*<StyledLink
-            exact
-            activeClassName="activeSidebar"
-            to="/vote"
-            isActive={(match, location) => {
-              if (match || location.pathname.includes('/vote')) return true;
-              else return false
-            }}
-            onClick={props.onClick}
-          >
-            Vote
-          </StyledLink>*/}
-          {/*<StyledLink exact activeClassName="activeSidebar" onClick={props.onClick} to="/gaugeWeightVote">
-            Inflation Vote
-          </StyledLink>
-          <StyledLink exact activeClassName="activeSidebar" onClick={props.onClick} to="/gauge-boost">
-            Reward Calculator
-          </StyledLink>
-          <StyledLink exact activeClassName="activeSidebar" onClick={props.onClick} to="/minter">
-            Minter
-          </StyledLink>*/}
-          <StyledLink exact activeClassName="activeSidebar" onClick={props.onClick} to="/rewards">
-            Rewards
-          </StyledLink>
-          {/*<StyledLink exact activeClassName="activeSidebar" onClick={props.onClick} to="/reward-vesting">
-            Reward Vesting
-          </StyledLink> */}
-          <StyledLink exact activeClassName="activeSidebar" onClick={props.onClick} to="/debt-pool">
-            Debt Pool
-          </StyledLink>
+        {/* <TopMenu className="bottom-divider">
           <StyledLinkHref href="https://discuss.mahadao.com" target={"_blank"}>
             <div className={"single-line-center-start"}>
               <p>Forum</p>
@@ -136,7 +104,7 @@ const MobileNav = (props: props) => {
               Faucet
             </StyledLink>
           }
-        </TopMenu>
+        </TopMenu> */}
         <BottomMenu className="bottom-divider">
           <StyledLinkHref href="https://docs.mahadao.com/governance/governance-portal" target={'_blank'}>
             Documentation

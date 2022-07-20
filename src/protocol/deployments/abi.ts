@@ -5,6 +5,7 @@ import DebtPool from "./abi/DebtPool.json";
 import ArthDebtPool from "./abi/ArthDebtPool.json";
 import StakingRewardsV2 from "./abi/StakingRewardsV2.json"
 import MatchingMarket from "./abi/MatchingMarket.json"
+import Snapshot from "./abi/Snapshot.json"
 
 const abis: IABIS = {
   IERC20,
@@ -12,7 +13,8 @@ const abis: IABIS = {
   DebtPool,
   ArthDebtPool,
   StakingRewardsV2,
-  MatchingMarket
+  MatchingMarket,
+  Snapshot
 };
 
 export default abis;

@@ -1,27 +1,14 @@
 import Modal from "../../../components/Modal";
-import {IModalProps} from "../../../utils/interface";
 import {useMediaQuery} from "react-responsive";
-import styled from "styled-components";
-import { parseUnits } from 'ethers/lib/utils';
-import React, {useEffect, useMemo, useState} from "react";
-import useApprove, {ApprovalState} from "../../../hooks/callbacks/useApprove";
-import {BigNumber, Contract} from "ethers";
+import {useEffect, useMemo, useState} from "react";
 import InputContainer from "../../../components/InputContainer";
 import Input from "../../../components/Input";
-import CollateralDropDown from "../../../components/CollateralDropDown";
 import {Grid} from "@material-ui/core";
 import Button from "../../../components/Button";
-import ABIS from "../../../protocol/deployments/abi";
-import TextWrapper from "../../../components/TextWrapper";
-import Selector from "../../../components/Selector";
 import ERC20 from "../../../protocol/ERC20";
-import {getDefaultProvider} from "../../../utils/provider";
 import useTokenBalanceOf from "../../../hooks/useTokenBalanceOf";
-import {useWallet} from "use-wallet";
 import {formatToBN, getDisplayBalance} from "../../../utils/formatBalance";
-import theme from "../../../theme";
 import States from "../../../components/States";
-import useDeposit from '../../../hooks/callbacks/useDeposit';
 import useCore from "../../../hooks/useCore";
 import useWithdraw from '../../../hooks/callbacks/useWithdraw';
 
@@ -41,7 +28,7 @@ const WithdrawModal = (props: any) => {
     return selectedData;
   }, [core, selectedData])
 
-  const balance = useTokenBalanceOf(selectedData, '0x61837551968B5496c63EbCC82cBfE2C8e1Fe798c');
+  const balance = useTokenBalanceOf(selectedData, core.myAccount);
 
   const withdrawAction = useWithdraw(val);
 

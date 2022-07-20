@@ -47,7 +47,7 @@ function Dex() {
         </Wrapper>
       </div>
 
-      <div style={{display: 'flex'}}>
+      <div style={{display: 'flex', flexDirection: isMobile? 'column' : 'row'}}>
         <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>Buy Orders</CardHeader>

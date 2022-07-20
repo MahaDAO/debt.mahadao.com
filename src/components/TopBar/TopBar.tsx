@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import {useWallet } from "use-wallet";
 import React, { useEffect, useState, useCallback } from 'react';
@@ -143,7 +143,14 @@ const TopBar: React.FC = () => {
                   tracking_id="Topbar_OpenGovernance"
                 />
               </div>} */}
+              
                 <div className="single-line-center-start">
+                  <Link to={'/form'} className={'m-r-8'}>
+                    <Button
+                      onClick={() => {}}
+                      variant={'transparent'}>Register User</Button>
+                  </Link>
+                  
                   <IconLoader className={"pointer m-r-24"} iconName={'BentoMenu'} iconType={'misc'} onClick={() => {setShowProjectModal(true)}}/>
                     {
                       !!account &&
@@ -160,7 +167,7 @@ const TopBar: React.FC = () => {
           <HideOnBigScreen>
             <div className="single-line-center-between">
               {
-                !isHomePage && <IconLoader
+                isHomePage && <IconLoader
                   iconName={!showMobileMenu ? 'Menu' : 'Cross'}
                   onClick={() => toggleMobileMenu(!showMobileMenu)}
                   className={'pointer'}

@@ -2,6 +2,7 @@
   "name": "debt.mahadao.com",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mahadao.github.io/debt.mahadao.com/",
   "dependencies": {
     "@ethereumjs/common": "^2.6.4",
     "@ethersproject/providers": "^5.6.8",
@@ -28,6 +29,7 @@
     "copy-to-clipboard": "^3.3.1",
     "date-fns": "^2.23.0",
     "ethers": "^5.4.6",
+    "gh-pages": "^4.0.0",
     "highcharts": "^9.1.2",
     "highcharts-react-official": "^3.0.0",
     "mixpanel-browser": "^2.41.0",
@@ -58,7 +60,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

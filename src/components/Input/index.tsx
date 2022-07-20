@@ -14,7 +14,8 @@ export interface InputProps {
   onMaxClick?: () => void;
   border?: string;
   className?: string;
-  alignInput?: any
+  alignInput?: any;
+  isNum?: boolean
 };
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`);
@@ -30,7 +31,8 @@ const Input = (props: InputProps) => {
     onMaxClick,
     border = '6px 0 0 6px',
     className = '',
-    alignInput = 'left'
+    alignInput = 'left',
+    isNum = true
   } = props;
 
   const onValueChange = (value: string) => {
@@ -60,7 +62,9 @@ const Input = (props: InputProps) => {
         disabled={disabled}
         type={'string'}
         onChange={(event) => {
+          isNum ? 
           enforcer(event.target.value)
+          : onValueChange(event.target.value)
         }}
        style={{textAlign: alignInput || 'left'}}
       />

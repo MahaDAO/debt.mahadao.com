@@ -1,27 +1,17 @@
 import Modal from "../../../components/Modal";
-import {IModalProps} from "../../../utils/interface";
 import {useMediaQuery} from "react-responsive";
-import styled from "styled-components";
-import { parseUnits } from 'ethers/lib/utils';
 import React, {useEffect, useMemo, useState} from "react";
 import useCore from "../../../hooks/useCore";
 import useApprove, {ApprovalState} from "../../../hooks/callbacks/useApprove";
-import {BigNumber} from "ethers";
 import InputContainer from "../../../components/InputContainer";
 import Input from "../../../components/Input";
-import CollateralDropDown from "../../../components/CollateralDropDown";
 import {Grid} from "@material-ui/core";
 import Button from "../../../components/Button";
-import {BNZERO} from "../../../utils/constants";
-import TextWrapper from "../../../components/TextWrapper";
-import Selector from "../../../components/Selector";
 import ERC20 from "../../../protocol/ERC20";
 import useTokenBalanceOf from "../../../hooks/useTokenBalanceOf";
 import {useWallet} from "use-wallet";
 import {formatToBN, getDisplayBalance} from "../../../utils/formatBalance";
 import States from "../../../components/States";
-import theme from "../../../theme";
-import InfoTip from "../../../components/InfoTip";
 import useDeposit from '../../../hooks/callbacks/useDeposit'
 
 const DepositModal = (props: any) => {
@@ -34,31 +24,16 @@ const DepositModal = (props: any) => {
 
   const core = useCore();
 
-  // useEffect(() => {
-  //   setValue('0')
-  // }, [])
- 
-  console.log('core.signer', core)
-
-  // const token: ERC20 = useMemo(() => {
-  //   return new ERC20(
-  //     selectedData.address,
-  //     core.signer || core.provider,
-  //     selectedData.displayName,
-  //     18,
-  //   );
-  // }, [core, selectedData.displayName, selectedData.address])
-
   const token: ERC20 = useMemo(() => {
     return selectedData;
   }, [core, selectedData])
 
 
-  const balance = useTokenBalanceOf(token, '0x61837551968B5496c63EbCC82cBfE2C8e1Fe798c');
+  const balance = useTokenBalanceOf(token, core.myAccount);
 
   const [approveStatus, approve] = useApprove(
     token,
-    "0xd03785C2F0399bdAcACd2F3F85eD1C8D1141b42b"
+    core.contracts['Staking-RewardsV2'].address
   );
 
   const depositAction = useDeposit(val)  

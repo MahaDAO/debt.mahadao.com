@@ -230,7 +230,7 @@
         "type": "uint256"
       }
     ],
-    "name": "burnDPToken",
+    "name": "burn",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -426,7 +426,7 @@
         "type": "uint256"
       }
     ],
-    "name": "mintDPToken",
+    "name": "mint",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

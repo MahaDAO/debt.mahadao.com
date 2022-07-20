@@ -140,7 +140,7 @@ body {
   margin-top: 4px;
 }
 .m-t-8 {
-  margin-top: 8px;
+  margin-top: 8px !important;
 }
 .m-t-12 {
   margin-top: 12px;
@@ -380,7 +380,7 @@ body {
 }
 
 .custom-mahadao-container-content {
-  padding: 24px 32px 32px 32px;
+  padding: 24px 32px 32px 32px !important;
 }
 
 @media (max-width: 600px) {

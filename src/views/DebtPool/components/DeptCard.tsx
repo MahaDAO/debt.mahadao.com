@@ -1,6 +1,7 @@
 import React, {useState, useMemo } from 'react';
 import styled from 'styled-components';
 import Loader from "react-spinners/PulseLoader";
+import {useMediaQuery} from "react-responsive";
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useClaimReward from '../../../hooks/callbacks/useClaimReward';
@@ -12,7 +13,7 @@ import InfoTip from "../../../components/InfoTip";
 import IconLoader from "../../../components/IconLoader";
 import DepositModal from '../modal/DepositModal';
 import useCore from '../../../hooks/useCore';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import WithdrawModal from '../modal/WithdrawModal';
 // import DataField from "../../../components/DataField";
 // import theme from "../../../theme";
@@ -24,6 +25,7 @@ interface DeptCardProps {
 
 const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   const core = useCore();
+  const isMobile = useMediaQuery({ maxWidth: '600px' });
 
   const [openDepositModal, setOpenDepositModal] = useState<boolean>(false);
   const [openWithdrawModal, setWithdrawModal] = useState<boolean>(false);
@@ -34,11 +36,11 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   const claimCallback = useClaimReward(symbol);
 
   const depositShare = useMemo(() =>
-    (Number(getDisplayBalance(arthBalanceOf.value, 18, 3)) / Number(getDisplayBalance(arthTotalSupply.value, 18, 3))) * 100,
+    ((Number(getDisplayBalance(arthTotalSupply.value, 18, 3)) - Number(getDisplayBalance(arthBalanceOf.value, 18, 3))) / Number(getDisplayBalance(arthBalanceOf.value, 18, 3)))  * 100,
     [arthBalanceOf, arthTotalSupply]
   );
 
-  const arthdptoken = new ethers.Contract('0x2057d85f2eA34a3ff78E4fE092979DBF4dd32766', ArthDebtPool, core.signer)
+  const arthdptoken = new ethers.Contract(core.tokens['ARTH-DP'].address, ArthDebtPool, core.signer)
   
   return (
     <Wrapper>
@@ -120,7 +122,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
               </div>}
             />
           </div>
-          <ButtonToBottom>
+          <ButtonToBottom style={{flexDirection: isMobile? 'column' : 'row'}}>
             <Button
               // loading={arthEarned.isLoading || mahaEarned.isLoading || usdcEarned.isLoading}
               // disabled={!hasClaimableAmount}
@@ -128,7 +130,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
               onClick={() => {
                 setOpenDepositModal(true)}}
             />
-            <div style={{width: '100px'}}></div>
+            <div style={{width: '100px', marginTop: isMobile ? '15px' : ''}}></div>
              <Button
               // loading={arthEarned.isLoading || mahaEarned.isLoading || usdcEarned.isLoading}
               // disabled={!hasClaimableAmount}

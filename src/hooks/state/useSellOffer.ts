@@ -10,11 +10,11 @@ import formatErrorMessage from '../../utils/formatErrorMessage';
 import { formatToBN, getDisplayBalance } from '../../utils/formatBalance';
 
 const useSellOffer = (pay_amt: BigNumber, buy_amt: BigNumber, txAction: string) => {
-
-  const pay_gem = txAction === "Buy" ? '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174' : '0x2da2874F40c4c5DF7D80aBABe016d915fd8A9355'
-  const buy_gem = txAction === "Buy" ? '0x2da2874F40c4c5DF7D80aBABe016d915fd8A9355' : '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
-
   const core = useCore();
+
+  const pay_gem = txAction === "Buy" ? core.tokens['USDC'].address : core.tokens['ARTH-DP'].address
+  const buy_gem = txAction === "Buy" ? core.tokens['ARTH-DP'].address : core.tokens['USDC'].address 
+  
   const addTransaction = useTransactionAdder();
   const addPopup = useAddPopup();
   const contract = core.contracts["MatchingMarket"];

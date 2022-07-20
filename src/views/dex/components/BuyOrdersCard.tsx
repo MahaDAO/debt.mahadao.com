@@ -39,7 +39,7 @@ function BuySellOrderCard() {
       const testoffer = await core.contracts['MatchingMarket'].offers(i)
 
       if(testoffer[5]._hex !== "0x00"){
-        if(testoffer.buy_gem === "0x2da2874F40c4c5DF7D80aBABe016d915fd8A9355"){
+        if(testoffer.buy_gem === core.tokens['ARTH-DP'].address){
           // console.log('testoffer', testoffer)
           buyOrderArr.push({testoffer, i})
           setBuyOrderData(buyOrderArr)

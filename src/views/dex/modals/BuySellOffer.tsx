@@ -41,7 +41,7 @@ function BuySellOffer(props: any) {
 
   const [approveStatus, approve] = useApprove(
     tokenToApprove,
-    "0x2b363218a27DF57C655a5E4e6f8DE8A9Bcf5B9a9"
+    core.contracts['MatchingMarket'].address
   );
 
   console.log('tableData.total', tableData.total)

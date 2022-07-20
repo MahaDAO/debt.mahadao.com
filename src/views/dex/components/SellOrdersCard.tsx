@@ -38,7 +38,7 @@ function SellOrdersCard() {
       const testoffer = await core.contracts['MatchingMarket'].offers(i)
       // console.log('testoffer', testoffer, i)
       if(testoffer[5]._hex !== "0x00"){
-        if(testoffer.buy_gem === "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174") {
+        if(testoffer.pay_gem === core.tokens['ARTH-DP'].address) {
           sellOrderArr.push({testoffer, i})
   
           setSellOrderData(sellOrderArr)
