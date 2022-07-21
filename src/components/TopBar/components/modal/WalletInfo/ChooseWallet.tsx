@@ -22,7 +22,7 @@ const ChooseWallet = (props: Iprops) => {
 
   const onWalletConnectClick = () => {
     if (connector === 'walletconnect') return;
-    Mixpanel.track(`buttonClick:walletConnect_connect`)
+    // Mixpanel.track(`buttonClick:walletConnect_connect`)
 
     connect("walletconnect")
       .then(() => {
@@ -69,7 +69,7 @@ const ChooseWallet = (props: Iprops) => {
             : <IconLoader iconName={"ArrowTailRight"} iconType={"arrow"} />
         }
       </Option>
-      <Option
+      {/* <Option
         onClick={connector === 'walletconnect' ? () => { } : onWalletConnectClick}
         className={`m-t-16 single-line-center-between ${connector === 'walletconnect' ? "" : "pointer"}`}
       >
@@ -86,7 +86,7 @@ const ChooseWallet = (props: Iprops) => {
             ? < IconLoader iconName={'Copied'} />
             : <IconLoader iconName={"ArrowTailRight"} iconType={"arrow"} />
         }
-      </Option>
+      </Option> */}
       {/*<div className="bottom-divider" />
       <div className="p-t-32 single-line-center-center">
         <div className="single-line-center-center">
