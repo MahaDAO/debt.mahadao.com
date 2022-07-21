@@ -33,17 +33,22 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   const arthTotalSupply = useGetDebtPoolSupply(symbol);
   const arthBalanceOf = useGetBalanceOfDebtPool(symbol);
 
+
   const claimCallback = useClaimReward(symbol);
 
   const depositShare = useMemo(() =>
-    ((Number(getDisplayBalance(arthTotalSupply.value, 18, 3)) - Number(getDisplayBalance(arthBalanceOf.value, 18, 3))) / Number(getDisplayBalance(arthBalanceOf.value, 18, 3)))  * 100,
+    {
+      if(arthBalanceOf.value.isZero() || arthTotalSupply.value.isZero() || arthTotalSupply.value.sub(arthBalanceOf.value).isZero()) return 0
+
+      return arthTotalSupply.value.sub(arthBalanceOf.value).mul(10000).div(arthBalanceOf.value).toNumber() / 100
+    },
     [arthBalanceOf, arthTotalSupply]
   );
 
   const arthdptoken = new ethers.Contract(core.tokens['ARTH-DP'].address, ArthDebtPool, core.signer)
   
   return (
-    <Wrapper>
+    <Wrapper style={{marginRight: isMobile ? '' : '16px'}}>
       <Card className={'material-primary'}>
         <CardHeader>
           <IconLoader iconName={symbol} iconType="tokenSymbol" width={44} className="m-r-4" />
@@ -157,7 +162,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
 };
 
 const Wrapper = styled.div`
-  min-width: 200px;
+  flex: 2;
   width: 100%;
   border-radius: 6px;
   height: 100%;
@@ -165,7 +170,7 @@ const Wrapper = styled.div`
   border-image-source: linear-gradient(180deg,
   rgba(255, 116, 38, 0.1) 0%,
   rgba(255, 255, 255, 0) 100%);
-  margin-bottom: 50px;
+  // margin-bottom: 50px;
   @media (max-width: 768px) {
     margin-top: 0;
     margin-bottom: 8px;

@@ -1,14 +1,13 @@
-import { BigNumber } from 'ethers';
-import { parseUnits } from 'ethers/lib/utils';
-import React from 'react'
+import { useMediaQuery } from 'react-responsive';
 import { useState } from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import InputContainer from '../../components/InputContainer';
 import useUploadUser from '../../hooks/state/useUploadUser';
-import { formatToBN } from '../../utils/formatBalance';
+import styled from 'styled-components';
 
 function Form() {
+  const isMobile = useMediaQuery({maxWidth: '680px'})
   const [amount, setAmount] = useState<string>('0')
   const [address, setAddress] = useState<string>('')
   
@@ -19,10 +18,10 @@ function Form() {
   }
 
   return (
-    <div className='custom-container' style={{marginTop: '150px', color: 'white', padding: '0 200px'}}>
-      <h1 
+    <div className='custom-container' style={{marginTop: '150px', color: 'white', padding: isMobile ? '0 16px' : '0 200px'}}>
+      <CardHeader 
         className={'m-b-32'}
-        >Register User</h1>
+        >Register User</CardHeader>
       <InputContainer
         label={'Enter Amount and Address'}
         className={'custom-mahadao-container-content'}
@@ -56,3 +55,18 @@ function Form() {
 }
 
 export default Form
+
+const CardHeader = styled.h2`
+  color: #fff;
+  display: flex;
+  font-weight: 600;
+  font-size: 18px;
+  justify-content: start;
+  align-items: center;
+  text-align: center;
+  padding: 32px;
+  border-bottom: 1px solid #FFFFFF20;
+  @media (max-width: 600px) {
+    padding: 16px;
+  }
+`;

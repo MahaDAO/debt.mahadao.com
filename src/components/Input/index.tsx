@@ -47,14 +47,7 @@ const Input = (props: InputProps) => {
 
   return (
     <InputContainer style={{ borderRadius: border }} className={className}>
-      {maxTag && (
-        <MaxTagConatiner
-          onClick={() => {
-            if (onMaxClick) onMaxClick()
-          }}>
-          MAX
-        </MaxTagConatiner>
-      )}
+      
       <CustomInput
         inputMode={inputMode}
         placeholder={placeholder}
@@ -68,7 +61,14 @@ const Input = (props: InputProps) => {
         }}
        style={{textAlign: alignInput || 'left'}}
       />
-      
+      {maxTag && (
+        <MaxTagConatiner
+          onClick={() => {
+            if (onMaxClick) onMaxClick()
+          }}>
+          MAX
+        </MaxTagConatiner>
+      )}
     </InputContainer>
   )
 }

@@ -192,6 +192,10 @@ body {
   margin-bottom: 40px;
 }
 
+.m-b-50 {
+  margin-bottom: 50px;
+}
+
 /* Paddings */
 
 .p-l-2 {
@@ -304,6 +308,10 @@ body {
 }
 .p-b-40 {
   padding-bottom: 40px;
+}
+
+.p9 {
+  padding: 8px;
 }
 
 /* *** MATERIALS *** */

@@ -67,6 +67,7 @@ function SellOrdersCard() {
         <CardColumn1 className='text-center'>Price</CardColumn1>
         <CardColumn2 className='text-center'>USDC</CardColumn2>
         <CardColumn3 className='text-center'>ARTH-DP</CardColumn3>
+        <div style={{padding: '13px'}}></div>
       </CardSection>
       {
         sellOrderData?.map((order: any) => {

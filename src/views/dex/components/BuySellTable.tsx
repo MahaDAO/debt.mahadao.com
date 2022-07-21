@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../../components/Button';
+import InfoTip from '../../../components/InfoTip';
 import Input from '../../../components/Input';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import BuySellOffer from '../modals/BuySellOffer';
@@ -31,12 +32,19 @@ function BuySellTable(props: IProps) {
   console.log('first', buyTotal, sellTotal)
 
   useEffect(() => {
-    if(quoteToken.length && baseToken.length && action === 'Buy'){
-      setBuyTotal((Number(quoteToken) * Number(baseToken)).toString())
+    if(quoteToken.length && baseToken.length){
+      if(action === 'Buy'){
+        setBuyTotal((Number(quoteToken) * Number(baseToken)).toString())
+      }
+      if(action === 'Sell'){
+        setSellTotal((Number(quoteToken) * Number(baseToken)).toString())
+      }
+      
+    }else{
+      setBuyTotal('0')
+      setSellTotal('0')
     }
-    if(quoteToken.length && baseToken.length && action === 'Sell'){
-      setSellTotal((Number(quoteToken) * Number(baseToken)).toString())
-    }
+
   }, [quoteToken, baseToken])
 
   return (
@@ -83,12 +91,12 @@ function BuySellTable(props: IProps) {
         </CardColumn2>
         <CardColumn3 className={'table-border single-line-center-center'}>USDC</CardColumn3>
       </CardSection>
-      <CardSection>
+      <CardSection style={{alignItems: 'center' }}>
         <CardColumn2>
           {
             Number(availableToken.balance) < Number(quoteToken) || Number(availableToken.balance) < Number(baseToken) || Number(availableToken.balance) < Number(buyTotal)|| Number(availableToken.balance) < Number(sellTotal)
-            ? `You don't have enough ${availableToken.name} tokens`
-            : 'Enter a price to unlock amount'
+            ? <InfoTip type={'Error'} msg={`You don't have enough ${availableToken.name} tokens`} />
+            : <InfoTip type={'Warning'} msg={'Enter a price to unlock amount'} />
           }
           </CardColumn2>
         <CardColumn1></CardColumn1>

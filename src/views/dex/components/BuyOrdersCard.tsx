@@ -73,6 +73,7 @@ function BuySellOrderCard() {
         <CardColumn1 className='text-center'>Price</CardColumn1>
         <CardColumn2 className='text-center'>USDC</CardColumn2>
         <CardColumn3 className='text-center'>ARTH-DP</CardColumn3>
+        <div style={{padding: '13px'}}></div>
       </CardSection>
       {
         buyOrderData?.map((order: any) => {
@@ -92,7 +93,7 @@ function BuySellOrderCard() {
               <CardColumn3 className={'table-border single-line-center-center'}>
                 { Numeral(buyAmt).format('0.000') }
               </CardColumn3>
-              <div className={'single-line-center-center pointer'} onClick={() => {handleCancelOrder(order.i)}} style={{padding: '9px'}}>
+              <div className={'single-line-center-center pointer p9'} onClick={() => {handleCancelOrder(order.i)}} >
                 <CancelIcon />
               </div>
             </CardSection>

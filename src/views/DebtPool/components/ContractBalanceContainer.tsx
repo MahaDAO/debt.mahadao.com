@@ -50,82 +50,76 @@ const ContractBalanceContainer = () => {
 
 
   return (
-    <div style={{marginBottom: '50px'}}>
-      <Grid container spacing={2} alignItems={'center'}>
-        <Grid item lg={7} md={7} sm={12} xs={12} >
-          <div className="material-primary">
-            <div className="m-b-8">
-              {
-                totalCirculatingSupply.isLoading
-                  ? <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
-                  : (
-                    <TextWrapper
-                      text={
-                        Number(getDisplayBalance(totalCirculatingSupply.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) +
-                        ' ARTH-DP'
-                      }
-                      fontSize={24}
-                      fontWeight={'bold'}
-                      Fcolor={'#FFFFFF'}
-                      align="center"
-                    />
-                  )
-              }
-              {
-                percentOfMAHACirculatingSupplyLocked.isLoading
-                  ? <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
-                  : (
-                    <TextWrapper
-                      text={
-                        '(' +
-                        Number(getDisplayBalance(percentOfMAHACirculatingSupplyLocked.value.mul(100), 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) +
-                        ' % debt burned)'
-                      }
-                      fontSize={24}
-                      fontWeight={'bold'}
-                      Fcolor={'#FFFFFF'}
-                      align="center"
-                    />
-                  )
-              }
-            </div>
-            {/* <div className="single-line-center-center">
-              <TextWrapper text={'Total MAHA locked:'} Fcolor={theme.color.transparent[100]} align="center" />
-              <ToolTip toolTipText={'The total MAHA locked by all users.'} className='m-l-4' />
-            </div> */}
-          </div>
-        </Grid>
-        <Grid item lg={5} md={5} sm={12} xs={12}>
-          <div className="material-primary single-line-center-center">
-            <div>
-              {
-                totalSupply.isLoading
-                  ? <div className="single-line-center-center">
-                    <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
-                  </div>
-                  : (
-                    <TextWrapper
-                      text={`$ ${
-                        Number(getDisplayBalance(totalSupply.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
-                      }`}
-                      fontSize={18}
-                      Fcolor={'#FFFFFF'}
-                      fontWeight={'bold'}
-                      className="m-b-2"
-                      align="center"
-                    />
-                  )
-              }
-              <div className="single-line-center-center m-b-16">
-                <TextWrapper text={'Total debt issued'} Fcolor={theme.color.transparent[100]} />
+   <div style={{flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+     <div className="material-primary m-b-16 single-line-center-center" style={{flex: 1}}>
+        <div className="m-b-8">
+          {
+            totalCirculatingSupply.isLoading
+              ? <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
+              : (
+                <TextWrapper
+                  text={
+                    Number(getDisplayBalance(totalCirculatingSupply.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) +
+                    ' ARTH-DP'
+                  }
+                  fontSize={24}
+                  fontWeight={'bold'}
+                  Fcolor={'#FFFFFF'}
+                  align="center"
+                  className='m-b-16'
+                />
+              )
+          }
+          {
+            percentOfMAHACirculatingSupplyLocked.isLoading
+              ? <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
+              : (
+                <TextWrapper
+                  text={
+                    '(' +
+                    Number(getDisplayBalance(percentOfMAHACirculatingSupplyLocked.value.mul(100), 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) +
+                    ' % debt burned)'
+                  }
+                  fontSize={24}
+                  // fontWeight={'bold'}
+                  Fcolor={theme.color.transparent[100]}
+                  align="center"
+                />
+              )
+          }
+        </div>
+        {/* <div className="single-line-center-center">
+          <TextWrapper text={'Total MAHA locked:'} Fcolor={theme.color.transparent[100]} align="center" />
+          <ToolTip toolTipText={'The total MAHA locked by all users.'} className='m-l-4' />
+        </div> */}
+      </div>
+      <div className="material-primary single-line-center-center" style={{flex: 1}}>
+        <div>
+          {
+            totalSupply.isLoading
+              ? <div className="single-line-center-center">
+                <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
               </div>
-              
-            </div>
-
+              : (
+                <TextWrapper
+                  text={`$ ${
+                    Number(getDisplayBalance(totalSupply.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
+                  }`}
+                  fontSize={24}
+                  fontWeight={'bold'}
+                  Fcolor={'#FFFFFF'}
+                  align="center"
+                  className='m-b-16'
+                />
+              )
+          }
+          <div className="single-line-center-center m-b-16">
+            <TextWrapper fontSize={24} text={'Total debt issued'} Fcolor={theme.color.transparent[100]} />
           </div>
-        </Grid>
-      </Grid>
-    </div>
+          
+        </div>
+      </div>
+   </div>
   )
 }
 

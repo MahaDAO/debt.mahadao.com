@@ -1,23 +1,33 @@
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import ContractBalanceContainer from './components/ContractBalanceContainer';
 import DeptCard from './components/DeptCard';
 
 // import LockerGraph from './components/LockerGraph';
 
 const LockDeposit = () => {
+  const isMobile = useMediaQuery({maxWidth: '680px'})
+
   return (
     <div className='custom-container' style={{marginTop: '150px', }}>
       <div className="m-b-40">
         <PageHeading>{'DEBT POOL'}</PageHeading>
       </div>
-      <ContractBalanceContainer />
-      <DeptCard price={1} symbol={'ARTH-DP'} />
+      <DebtContainer style={{flexDirection: isMobile ? 'column' : 'row'}}>
+        <DeptCard price={1} symbol={'ARTH-DP'} />
+        <ContractBalanceContainer />
+      </DebtContainer>
       {/* <LockerGraph /> */}
     </div>
   )
 }
 
 export default LockDeposit;
+
+const DebtContainer = styled.div`
+  display: flex;
+  margin-bottom: 50px;
+`
 
 const PageHeading = styled.p`
   font-family: Syne;
