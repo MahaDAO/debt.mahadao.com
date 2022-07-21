@@ -18,6 +18,7 @@ function BuySellOrderCard() {
   const [buyOrderData, setBuyOrderData] = useState<any[]>([])
   const [sellOrderData, setSellOrderData] = useState<any[]>([])
   const [cancelId, setCancelId] = useState<number>(0)
+  const owner = core.myAccount
 
   let allOfers: any = []
 
@@ -93,9 +94,14 @@ function BuySellOrderCard() {
               <CardColumn3 className={'table-border single-line-center-center'}>
                 { Numeral(buyAmt).format('0.000') }
               </CardColumn3>
-              <div className={'single-line-center-center pointer p9'} onClick={() => {handleCancelOrder(order.i)}} >
-                <CancelIcon />
-              </div>
+              {
+                owner === order.testoffer.owner ? 
+                <div className={'single-line-center-center pointer p9'} onClick={() => {handleCancelOrder(order.i)}} >
+                  <CancelIcon />
+                </div>
+                : <div style={{padding: '13px'}}></div>
+              }
+              
             </CardSection>
           )
         } )
