@@ -1,0 +1,27 @@
+.MuiTabs-root{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.MuiTab-root {
+  min-width: max-content !important;
+  max-width: max-content !important;
+  font-family: Inter !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  color: rgba(255, 255, 255, 0.32) !important;
+  text-transform: unset !important;
+}
+
+.MuiTab-textColorInherit.Mui-selected {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+button:focus {
+  outline: unset !important;
+}
+
+.MuiTabs-indicator {
+  background: linear-gradient(81.26deg, #F47F57 14.65%, #FD5656 83.88%);
+  border-radius: 6px 6px 0 0;
+}

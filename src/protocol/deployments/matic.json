@@ -1,0 +1,26 @@
+{
+  "MatchingMarket": {
+    "abi": "MatchingMarket",
+    "address": "0x2b363218a27DF57C655a5E4e6f8DE8A9Bcf5B9a9"
+  },
+  "ARTH-DP": {
+    "abi": "IERC20",
+    "address": "0xa994aA888a004aA9AB0c5f7283B00053e7C2b365"
+  },
+  "USDC": {
+    "abi": "IERC20",
+    "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+  },
+  "Staking-RewardsV2": {
+    "abi": "StakingRewardsV2",
+    "address": "0x906F2690d0456dBDe24dbCF3f2e86Eb7864E6095"
+  },
+  "ARTH-DP-Staking":{
+    "abi": "ArthDebtPool",
+    "address": "0xa994aA888a004aA9AB0c5f7283B00053e7C2b365"
+  },
+  "Snapshot": {
+    "abi": "Snapshot",
+    "address": "0xc8a6975f516D5146af1E251f9461C9C75B4f9B6B"
+  }
+}

@@ -1,0 +1,19 @@
+[
+  "constructor(uint256,uint256,uint256)",
+  "event OperatorTransferred(address indexed,address indexed)",
+  "event OwnershipTransferred(address indexed,address indexed)",
+  "function callable() view returns (bool)",
+  "function getCurrentEpoch() view returns (uint256)",
+  "function getLastEpoch() view returns (uint256)",
+  "function getNextEpoch() view returns (uint256)",
+  "function getPeriod() view returns (uint256)",
+  "function getStartTime() view returns (uint256)",
+  "function isOperator() view returns (bool)",
+  "function nextEpochPoint() view returns (uint256)",
+  "function operator() view returns (address)",
+  "function owner() view returns (address)",
+  "function renounceOwnership()",
+  "function setPeriod(uint256)",
+  "function transferOperator(address)",
+  "function transferOwnership(address)"
+]

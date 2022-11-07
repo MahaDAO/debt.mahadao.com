@@ -1,0 +1,15 @@
+[
+  "function balanceOf(address) view returns (uint256)",
+  "function changeRewardsDuration(uint256)",
+  "function changeStakingCollector(address)",
+  "function changeStakingMaster(address)",
+  "function earned(address) view returns (uint256)",
+  "function getRewardFor(address)",
+  "function getRewardForDuration() view returns (uint256)",
+  "function lastTimeRewardApplicable() view returns (uint256)",
+  "function notifyRewardAmount(uint256)",
+  "function refundTokens(address)",
+  "function rewardPerToken() view returns (uint256)",
+  "function totalSupply() view returns (uint256)",
+  "function updateReward(address)"
+]

@@ -1,0 +1,10 @@
+[
+  "event OperatorTransferred(address indexed,address indexed)",
+  "event OwnershipTransferred(address indexed,address indexed)",
+  "function isOperator() view returns (bool)",
+  "function operator() view returns (address)",
+  "function owner() view returns (address)",
+  "function renounceOwnership()",
+  "function transferOperator(address)",
+  "function transferOwnership(address)"
+]

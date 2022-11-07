@@ -1,0 +1,94 @@
+{
+  "DAI":{
+    "abi":"MockERC20",
+    "address":"0x544380B5EE3d1a8485671537a553F61f3c7190f1"
+  },
+  "MAHA":{
+    "abi":"MockERC20",
+    "address":"0x7aF163582b3ebAAbB7bce03aaDa8C1d76d655a5c"
+  },
+  "ARTH": {
+    "abi": "IERC20",
+    "address": "0x4bca4453b32824BF888967661E5b3d8F3b428142"
+  },
+  "USDC": {
+    "abi": "IERC20",
+    "address": "0x9b11128b37b90A5cFFB1d19132f924Bcf33A8289"
+  },
+  "SCLP": {
+    "abi": "IERC20",
+    "address": "0xC29E6A747D885196Df95B4CeD2Da0d8661C7D05c"
+  },
+  "VotingEscrow":{
+    "abi":"MAHAX",
+    "address":"0x59bbf85776dB53429653559F4dF8078c045a8266"
+  },
+  "Voter":{
+    "abi":"BaseV1Voter",
+    "address":"0xc6d343567C6A5095E83912eE419281cC989A53Fd"
+  },
+  "DebtPoolToken": {
+    "abi": "IERC20",
+    "address": "0x7518eBe3e2a9FC8464C82062467799F9808bcA13"
+  },
+  "DebtPoolArth": {
+    "abi": "DebtPool",
+    "address": "0x8c0eB2dEE0596EF58c2b7C47e81B8b41F39a7BDE"
+  },
+  "DebtPoolArthX": {
+    "abi": "DebtPool",
+    "address": "0xCF9cCC08D0FE8f31c29617B89c3a4CB845ae694A"
+  },
+  "StakingMaster": {
+    "abi": "StakingMaster",
+    "address": "0x61F020d84f6dfec3bd61fF8D5d250d94E3F61CF2"
+  },
+  "MAHAX-MAHAStakingChild": {
+    "abi": "StakingChild",
+    "address": "0xCaD79d1a13A4c5290f5a6103043Bcf3129f6A5ed"
+  },
+  "MAHAX-SCLPStakingChild": {
+    "abi": "StakingChild",
+    "address": "0xCAdB73289F350E474744f9c930E988FB24B10e1e"
+  },
+  "MAHAX-ARTHStakingChild": {
+    "abi": "StakingChild",
+    "address": "0x1Beb8b4911365EabEC68459ecfe9172f174BF0DB"
+  },
+  "MAHAX-USDCStakingChild": {
+    "abi": "StakingChild",
+    "address": "0xdA9a5111ddcD4DFAD977843Bede4F7ce1B46be4D"
+  },
+  "ARTHX-MAHAStakingChild": {
+    "abi": "StakingChild",
+    "address": "0xCaD79d1a13A4c5290f5a6103043Bcf3129f6A5ed"
+  },
+  "ARTHX-SCLPStakingChild": {
+    "abi": "StakingChild",
+    "address": "0xCAdB73289F350E474744f9c930E988FB24B10e1e"
+  },
+  "ARTHX-ARTHStakingChild": {
+    "abi": "StakingChild",
+    "address": "0x1Beb8b4911365EabEC68459ecfe9172f174BF0DB"
+  },
+  "ARTHX-USDCStakingChild": {
+    "abi": "StakingChild",
+    "address": "0xdA9a5111ddcD4DFAD977843Bede4F7ce1B46be4D"
+  },
+  "ARTH-MAHAStakingChild": {
+    "abi": "StakingChild",
+    "address": "0xCaD79d1a13A4c5290f5a6103043Bcf3129f6A5ed"
+  },
+  "ARTH-SCLPStakingChild": {
+    "abi": "StakingChild",
+    "address": "0xCAdB73289F350E474744f9c930E988FB24B10e1e"
+  },
+  "ARTH-ARTHStakingChild": {
+    "abi": "StakingChild",
+    "address": "0x1Beb8b4911365EabEC68459ecfe9172f174BF0DB"
+  },
+  "ARTH-USDCStakingChild": {
+    "abi": "StakingChild",
+    "address": "0xdA9a5111ddcD4DFAD977843Bede4F7ce1B46be4D"
+  }
+}
