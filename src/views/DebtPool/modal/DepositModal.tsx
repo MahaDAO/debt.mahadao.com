@@ -1,22 +1,22 @@
 import Modal from "../../../components/Modal";
-import {useMediaQuery} from "react-responsive";
-import React, {useEffect, useMemo, useState} from "react";
+import { useMediaQuery } from "react-responsive";
+import React, { useEffect, useMemo, useState } from "react";
 import useCore from "../../../hooks/useCore";
-import useApprove, {ApprovalState} from "../../../hooks/callbacks/useApprove";
+import useApprove, { ApprovalState } from "../../../hooks/callbacks/useApprove";
 import InputContainer from "../../../components/InputContainer";
 import Input from "../../../components/Input";
-import {Grid} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Button from "../../../components/Button";
 import ERC20 from "../../../protocol/ERC20";
 import useTokenBalanceOf from "../../../hooks/useTokenBalanceOf";
-import {useWallet} from "use-wallet";
-import {formatToBN, getDisplayBalance} from "../../../utils/formatBalance";
+import { useWallet } from "use-wallet";
+import { formatToBN, getDisplayBalance } from "../../../utils/formatBalance";
 import States from "../../../components/States";
 import useDeposit from '../../../hooks/callbacks/useDeposit'
 
 const DepositModal = (props: any) => {
-  const {openModal, onModalClose, selectedData} = props;
-  const {account} = useWallet();
+  const { openModal, onModalClose, selectedData } = props;
+  const { account } = useWallet();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const [val, setValue] = useState<string>('0');
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
@@ -36,7 +36,7 @@ const DepositModal = (props: any) => {
     core.contracts['Staking-RewardsV2'].address
   );
 
-  const depositAction = useDeposit(val)  
+  const depositAction = useDeposit(val)
 
   function handleDeposit() {
 
@@ -70,7 +70,7 @@ const DepositModal = (props: any) => {
             className={'m-b-32'}
           >
             <States
-              state={isAmountGreaterThanBalance? 'error': 'default'}
+              state={isAmountGreaterThanBalance ? 'error' : 'default'}
               msg={'Amount cannot be greater than your balance'}
             >
               <div className={'single-line-center-between'}>
@@ -142,5 +142,3 @@ const DepositModal = (props: any) => {
 };
 
 export default DepositModal;
-
-

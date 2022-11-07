@@ -1,7 +1,7 @@
-import React, {useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import Loader from "react-spinners/PulseLoader";
-import {useMediaQuery} from "react-responsive";
+import { useMediaQuery } from "react-responsive";
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import useClaimReward from '../../../hooks/callbacks/useClaimReward';
@@ -36,19 +36,18 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
 
   const claimCallback = useClaimReward(symbol);
 
-  const depositShare = useMemo(() =>
-    {
-      if(arthBalanceOf.value.isZero() || arthTotalSupply.value.isZero() || arthTotalSupply.value.sub(arthBalanceOf.value).isZero()) return 0
+  const depositShare = useMemo(() => {
+    if (arthBalanceOf.value.isZero() || arthTotalSupply.value.isZero() || arthTotalSupply.value.sub(arthBalanceOf.value).isZero()) return 0
 
-      return arthTotalSupply.value.sub(arthBalanceOf.value).mul(10000).div(arthBalanceOf.value).toNumber() / 100
-    },
+    return arthTotalSupply.value.sub(arthBalanceOf.value).mul(10000).div(arthBalanceOf.value).toNumber() / 100
+  },
     [arthBalanceOf, arthTotalSupply]
   );
 
   const arthdptoken = new ethers.Contract(core.tokens['ARTH-DP'].address, ArthDebtPool, core.signer)
-  
+
   return (
-    <Wrapper style={{marginRight: isMobile ? '' : '16px'}}>
+    <Wrapper style={{ marginRight: isMobile ? '' : '16px' }}>
       <Card className={'material-primary'}>
         <CardHeader>
           <IconLoader iconName={symbol} iconType="tokenSymbol" width={44} className="m-r-4" />
@@ -127,16 +126,17 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
               </div>}
             />
           </div>
-          <ButtonToBottom style={{flexDirection: isMobile? 'column' : 'row'}}>
+          <ButtonToBottom style={{ flexDirection: isMobile ? 'column' : 'row' }}>
             <Button
               // loading={arthEarned.isLoading || mahaEarned.isLoading || usdcEarned.isLoading}
               // disabled={!hasClaimableAmount}
               text="Deposit"
               onClick={() => {
-                setOpenDepositModal(true)}}
+                setOpenDepositModal(true)
+              }}
             />
-            <div style={{width: '100px', marginTop: isMobile ? '15px' : ''}}></div>
-             <Button
+            <div style={{ width: '100px', marginTop: isMobile ? '15px' : '' }}></div>
+            <Button
               // loading={arthEarned.isLoading || mahaEarned.isLoading || usdcEarned.isLoading}
               // disabled={!hasClaimableAmount}
               text="Withdraw"

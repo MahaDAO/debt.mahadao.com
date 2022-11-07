@@ -1,5 +1,5 @@
 import { Redirect, Route, Switch } from "react-router-dom";
-import DebtPool from './views/debtPool';
+import DebtPool from './views/DebtPool';
 import Dex from './views/dex';
 import Form from './views/form';
 
