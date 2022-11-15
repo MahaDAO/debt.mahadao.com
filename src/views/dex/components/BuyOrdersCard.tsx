@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {ethers} from 'ethers'
+import {BigNumber, ethers} from 'ethers'
 import Numeral from 'numeral';
 import CancelIcon from '@material-ui/icons/Cancel';
 
@@ -43,24 +43,19 @@ function BuySellOrderCard(props: IProps) {
     // console.log('testLastOfferId', testLastOfferId);
     
     for(let i = 1; i <= testLastOfferId.toString(); i++){
-      const testoffer = await core.contracts['MatchingMarket'].offers(i)
+      const offer = await core.contracts['MatchingMarket'].offers(i)
 
-      if(testoffer[5]._hex !== "0x00"){
-        if(testoffer.buy_gem === core.tokens['ARTH-DP'].address){
-          // console.log('testoffer', testoffer)
-          buyOrderArr.push({testoffer, i})
+      if(offer[5]._hex !== "0x00"){
+        if(offer.buy_gem === core.tokens['ARTH-DP'].address){
+          if(offer.pay_gem === core.tokens['USDC'].address)
+            buyOrderArr.push({offer, i, exchangeToken: 'USDC'})
+          if(offer.pay_gem === core.tokens['MAHA'].address)
+            buyOrderArr.push({offer, i, exchangeToken: 'MAHA'})
+
           setBuyOrderData(buyOrderArr)
         }
-        else{
-          sellOrderArr.push({testoffer, i})
-          setSellOrderData(sellOrderArr)
-        }
-
-        // allOfers.push(testoffer)
       }
     }
-  // console.log('allOfers', allOfers)
-
   }
 
   console.log('buyOrderData', buyOrderData)
@@ -83,10 +78,10 @@ function BuySellOrderCard(props: IProps) {
         <div style={{padding: '13px'}}></div>
       </CardSection>
       {
-        buyOrderData?.map((order: any) => {
+        buyOrderData?.filter((a) => a.exchangeToken == selectQuoteToken).map((order: any) => {
 
-          const payAmt = getDisplayBalance(order.testoffer.pay_amt, 6, 3)
-          const buyAmt = getDisplayBalance(order.testoffer.buy_amt)
+          const payAmt = getDisplayBalance(order.offer.pay_amt, 6, 3)
+          const buyAmt = getDisplayBalance(order.offer.buy_amt)
           const price = Number(payAmt) / Number(buyAmt)
   
           return(
@@ -101,7 +96,7 @@ function BuySellOrderCard(props: IProps) {
                 { Numeral(buyAmt).format('0.000') }
               </CardColumn3>
               {
-                owner === order.testoffer.owner ? 
+                owner === order.offer.owner ? 
                 <div className={'single-line-center-center pointer p9'} onClick={() => {handleCancelOrder(order.i)}} >
                   <CancelIcon />
                 </div>

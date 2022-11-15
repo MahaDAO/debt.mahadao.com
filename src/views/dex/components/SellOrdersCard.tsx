@@ -40,16 +40,19 @@ function SellOrdersCard(props: IProps) {
     // console.log('testLastOfferId', testLastOfferId.toString());
     
     for(let i = 1; i <= testLastOfferId.toString(); i++){
-      const testoffer = await core.contracts['MatchingMarket'].offers(i)
-      // console.log('testoffer', testoffer, i)
-      if(testoffer[5]._hex !== "0x00"){
-        if(testoffer.pay_gem === core.tokens['ARTH-DP'].address) {
-          sellOrderArr.push({testoffer, i})
+      const offer = await core.contracts['MatchingMarket'].offers(i)
+      // console.log('offer', offer, i)
+      if(offer[5]._hex !== "0x00"){
+        if(offer.pay_gem === core.tokens['ARTH-DP'].address) {
+          if(offer.buy_gem === core.tokens['USDC'].address)
+            buyOrderArr.push({offer, i, exchangeToken: 'USDC'})
+          if(offer.buy_gem === core.tokens['MAHA'].address)
+            buyOrderArr.push({offer, i, exchangeToken: 'MAHA'})
   
           setSellOrderData(sellOrderArr)
         }
 
-        // allOfers.push({testoffer, i})
+        // allOfers.push({offer, i})
       }
     }
   // console.log('allOfers', allOfers)
@@ -75,10 +78,10 @@ function SellOrdersCard(props: IProps) {
         <div style={{padding: '13px'}}></div>
       </CardSection>
       {
-        sellOrderData?.map((order: any) => {
+        sellOrderData?.filter((a) => a.exchangeToken == selectQuoteToken).map((order: any) => {
 
-          const payAmt = getDisplayBalance(order.testoffer.pay_amt, 18, 3)
-          const buyAmt = getDisplayBalance(order.testoffer.buy_amt, 6, 3)
+          const payAmt = getDisplayBalance(order.offer.pay_amt, 18, 3)
+          const buyAmt = getDisplayBalance(order.offer.buy_amt, 6, 3)
           const price = Number(buyAmt) / Number(payAmt)
   
           return(
@@ -93,7 +96,7 @@ function SellOrdersCard(props: IProps) {
                 { Numeral(payAmt).format('0.000')}
               </CardColumn3>
               {
-                owner === order.testoffer.owner ?
+                owner === order.offer.owner ?
                   <div className={'single-line-center-center pointer'} onClick={() => {handleCancelOrder(order.i)}} style={{padding: '9px'}}>
                     <CancelIcon />
                   </div>
