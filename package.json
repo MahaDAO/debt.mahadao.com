@@ -2,7 +2,7 @@
   "name": "debt.mahadao.com",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://debt.mahadao.com/",
+  "homepage": "https://mahadao.github.io/debt.mahadao.com/",
   "dependencies": {
     "@ethereumjs/common": "^2.6.4",
     "@ethersproject/providers": "^5.6.8",
