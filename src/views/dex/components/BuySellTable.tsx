@@ -26,8 +26,8 @@ interface IProps{
 function BuySellTable(props: IProps) {
   const core = useCore()
   const {action, selectQuoteToken, baseTokenBalance} = props;
-  const [quoteToken, setQuoteToken] = useState<string>('0')
-  const [baseToken, setBaseToken] = useState<string>('0')
+  const [quoteToken, setQuoteToken] = useState<string>('')
+  const [baseToken, setBaseToken] = useState<string>('')
   const [buyTotal, setBuyTotal] = useState<string>('0')
   const [sellTotal, setSellTotal] = useState<string>('0')
   const [openOfferModal, setOpenOfferModal] = useState<boolean>(false)

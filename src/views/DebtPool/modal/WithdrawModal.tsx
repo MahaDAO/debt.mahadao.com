@@ -11,12 +11,13 @@ import {formatToBN, getDisplayBalance} from "../../../utils/formatBalance";
 import States from "../../../components/States";
 import useCore from "../../../hooks/useCore";
 import useWithdraw from '../../../hooks/callbacks/useWithdraw';
+import useGetDepositBalance from "../../../hooks/useGetDepositBalance";
 
 const WithdrawModal = (props: any) => {
   const {openModal, onModalClose, selectedData} = props;
   const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
-  const [val, setValue] = useState<string>('0');
+  const [val, setValue] = useState<string>('');
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const [withdrawing, setWithdrawing] = useState<boolean>(false);
 
@@ -28,7 +29,7 @@ const WithdrawModal = (props: any) => {
     return selectedData;
   }, [core, selectedData])
 
-  const balance = useTokenBalanceOf(selectedData, core.myAccount);
+  const balance = useGetDepositBalance(core.myAccount);
 
   const withdrawAction = useWithdraw(val);
 

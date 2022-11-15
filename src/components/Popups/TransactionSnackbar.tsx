@@ -45,6 +45,11 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
 
   useEffect(() => {
     setOpen(true)
+
+    if(isScucess){
+      setTimeout(() => {window.location.reload()}, 7000)
+
+    }
   }, [isScucess, isLoading])
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {

@@ -15,6 +15,8 @@ import DepositModal from '../modal/DepositModal';
 import useCore from '../../../hooks/useCore';
 import { BigNumber, ethers } from 'ethers';
 import WithdrawModal from '../modal/WithdrawModal';
+import useTokenBalanceOf from '../../../hooks/useTokenBalanceOf';
+import useGetDepositBalance from '../../../hooks/useGetDepositBalance';
 // import DataField from "../../../components/DataField";
 // import theme from "../../../theme";
 
@@ -26,31 +28,32 @@ interface DeptCardProps {
 const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
+  const arthdptoken = new ethers.Contract(core.tokens['ARTH-DP'].address, DebtToken, core.signer)
 
   const [openDepositModal, setOpenDepositModal] = useState<boolean>(false);
   const [openWithdrawModal, setWithdrawModal] = useState<boolean>(false);
 
   const arthTotalSupply = useGetDebtPoolSupply(symbol);
-  const arthBalanceOf = useGetBalanceOfDebtPool(symbol);
-
+  const arthBalanceOf = useTokenBalanceOf(arthdptoken, core.myAccount);
+  const totalDeposited = useGetDepositBalance(core.myAccount);
 
   const claimCallback = useClaimReward(symbol);
 
   const depositShare = useMemo(() => {
     if (arthBalanceOf.value.isZero() || arthTotalSupply.value.isZero() || arthTotalSupply.value.sub(arthBalanceOf.value).isZero()) return 0
 
-    return arthTotalSupply.value.sub(arthBalanceOf.value).mul(10000).div(arthBalanceOf.value).toNumber() / 100
+    return arthTotalSupply.value.sub(arthBalanceOf.value).mul(10000).div(arthTotalSupply.value).toNumber() / 100
+
   },
     [arthBalanceOf, arthTotalSupply]
   );
 
-  const arthdptoken = new ethers.Contract(core.tokens['ARTH-DP'].address, DebtToken, core.signer)
 
   return (
     <Wrapper style={{ marginRight: isMobile ? '' : '16px' }}>
       <Card className={'material-primary'}>
         <CardHeader>
-          <IconLoader iconName={symbol} iconType="tokenSymbol" width={44} className="m-r-4" />
+          <IconLoader iconName={symbol} iconType="brandLogo" width={44} className="m-r-4" />
           <div
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline', textAlign: 'left' }}
           >
@@ -61,7 +64,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
           <CardSection>
             <TextWithIcon>Total Deposited</TextWithIcon>
             <StyledValue>
-              {Number(getDisplayBalance(arthTotalSupply.value, 18, 3)).toLocaleString() || 0} {symbol}
+              {Number(getDisplayBalance(totalDeposited.value, 18, 3)).toLocaleString() || 0} {symbol}
             </StyledValue>
           </CardSection>
           <CardSection>

@@ -4,6 +4,7 @@ import { useCallback, useMemo } from 'react';
 import ERC20 from '../../protocol/ERC20';
 import useAllowance from '../state/useAllowance';
 import { useHasPendingApproval, useTransactionAdder } from '../../state/transactions/hooks';
+import useCore from '../useCore';
 
 const APPROVE_AMOUNT = ethers.constants.MaxUint256;
 const APPROVE_BASE_AMOUNT = BigNumber.from('1000000000000000000000000');
@@ -20,10 +21,10 @@ export enum ApprovalState {
  * approves if necessary or early returns.
  */
 function useApprove(token: ERC20, spender: string): [ApprovalState, () => Promise<void>] {
+  const core = useCore()
   const pendingApproval = useHasPendingApproval(token?.address, spender);
   const currentAllowance = useAllowance(token, spender, pendingApproval);
 
-  // console.log('token', token)
   // Check the current approval status.
   const approvalState: ApprovalState = useMemo(() => {
     // We might not have enough data to know whether or not we need to approve.
@@ -44,14 +45,14 @@ function useApprove(token: ERC20, spender: string): [ApprovalState, () => Promis
       console.error('Approve was called unnecessarily');
       return;
     }
-    console.log('inside approve', token, spender)
+
+    // @ts-ignore
+    let symbol = token.symbol || await token.symbol()
 
     try {
       const response = await token.approve(spender, APPROVE_AMOUNT);
-      console.log('response', response)
-
       addTransaction(response, {
-        summary: `Approve ${token.symbol}`,
+        summary: `Approve ${symbol}`,
         approval: {
           tokenAddress: token.address,
           spender: spender,

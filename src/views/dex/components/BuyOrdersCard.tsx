@@ -14,7 +14,7 @@ interface IProps {
 }
 
 
-function BuySellOrderCard(props: IProps) {
+function BuyOrdersCard(props: IProps) {
 
   const {selectQuoteToken} = props
 
@@ -31,7 +31,7 @@ function BuySellOrderCard(props: IProps) {
   useEffect(() => {
     getBuyOrderData()
   
-  }, [])
+  }, [selectQuoteToken])
   
 
   const getBuyOrderData = async() => {
@@ -40,16 +40,16 @@ function BuySellOrderCard(props: IProps) {
     let sellOrderArr: any = []
 
     const testLastOfferId = await core.contracts['MatchingMarket'].last_offer_id()
-    // console.log('testLastOfferId', testLastOfferId);
     
     for(let i = 1; i <= testLastOfferId.toString(); i++){
       const offer = await core.contracts['MatchingMarket'].offers(i)
 
       if(offer[5]._hex !== "0x00"){
-        if(offer.buy_gem === core.tokens['ARTH-DP'].address){
-          if(offer.pay_gem === core.tokens['USDC'].address)
+        if(offer.buy_gem.toLowerCase() === core.tokens['ARTH-DP'].address.toLowerCase()){
+          console.log("offer", offer, i)
+          if(offer.pay_gem.toLowerCase() === core.tokens['USDC'].address.toLowerCase())
             buyOrderArr.push({offer, i, exchangeToken: 'USDC'})
-          if(offer.pay_gem === core.tokens['MAHA'].address)
+          if(offer.pay_gem.toLowerCase() === core.tokens['MAHA'].address.toLowerCase())
             buyOrderArr.push({offer, i, exchangeToken: 'MAHA'})
 
           setBuyOrderData(buyOrderArr)
@@ -100,7 +100,7 @@ function BuySellOrderCard(props: IProps) {
                 <div className={'single-line-center-center pointer p9'} onClick={() => {handleCancelOrder(order.i)}} >
                   <CancelIcon />
                 </div>
-                : <div style={{padding: '13px'}}></div>
+                : <div className={'single-line-center-center pointer p9'}><CancelIcon style={{color: '#1A1919'}} /></div>
               }
               
             </CardSection>
@@ -113,7 +113,7 @@ function BuySellOrderCard(props: IProps) {
   )
 }
 
-export default BuySellOrderCard
+export default BuyOrdersCard
 
 
 const CardContent = styled.div`

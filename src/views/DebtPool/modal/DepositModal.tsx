@@ -18,7 +18,7 @@ const DepositModal = (props: any) => {
   const { openModal, onModalClose, selectedData } = props;
   const { account } = useWallet();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
-  const [val, setValue] = useState<string>('0');
+  const [val, setValue] = useState<string>('');
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const [depositing, setDepositing] = useState<boolean>(false);
 

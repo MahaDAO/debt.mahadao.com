@@ -81,7 +81,7 @@ function BuySellOffer(props: any) {
       closeButton
       handleClose={onModalClose}
       open={openModal}
-      title={`${action} Offer`}
+      title={`${action} Order`}
     >
       {/* <Card > */}
         <CardContent>
@@ -126,12 +126,12 @@ function BuySellOffer(props: any) {
                 />
               ) : (
                 <Button
-                  disabled={isInputFieldError || !Number(quoteToken) || depositing}
+                  disabled={isInputFieldError || !Number(quoteToken) || !Number(baseToken) || depositing}
                   text={`${action}`}
                   loading={depositing}
                   size={'lg'}
                   onClick={action === 'Buy' ? handleBuyOffer : handleSellOffer}
-                  tracking_id={'stake_deposit'}
+                  // tracking_id={'stake_deposit'}
                   // tracking_params={{
                   //   action: 'confirm',
                   //   collateral: selectedData.displayName,

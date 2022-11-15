@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 function Form() {
   const isMobile = useMediaQuery({maxWidth: '680px'})
-  const [amount, setAmount] = useState<string>('0')
+  const [amount, setAmount] = useState<string>('')
   const [address, setAddress] = useState<string>('')
   
   const uploadAction = useUploadUser(amount, address)

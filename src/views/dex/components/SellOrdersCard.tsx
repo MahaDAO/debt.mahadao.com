@@ -27,36 +27,30 @@ function SellOrdersCard(props: IProps) {
 
   useEffect(() => {
     getSellOrderData()
+
+    console.log("getSellOrderData", selectQuoteToken)
   
-  }, [])
+  }, [selectQuoteToken])
   
 
   const getSellOrderData = async() => {
-    
-    let buyOrderArr: any = []
-    let sellOrderArr: any = []
+        let sellOrderArr: any = []
 
     const testLastOfferId = await core.contracts['MatchingMarket'].last_offer_id()
-    // console.log('testLastOfferId', testLastOfferId.toString());
     
     for(let i = 1; i <= testLastOfferId.toString(); i++){
       const offer = await core.contracts['MatchingMarket'].offers(i)
-      // console.log('offer', offer, i)
       if(offer[5]._hex !== "0x00"){
-        if(offer.pay_gem === core.tokens['ARTH-DP'].address) {
-          if(offer.buy_gem === core.tokens['USDC'].address)
-            buyOrderArr.push({offer, i, exchangeToken: 'USDC'})
-          if(offer.buy_gem === core.tokens['MAHA'].address)
-            buyOrderArr.push({offer, i, exchangeToken: 'MAHA'})
-  
+        if(offer.pay_gem.toLowerCase() === core.tokens['ARTH-DP'].address.toLowerCase()) {
+          if(offer.buy_gem.toLowerCase() === core.tokens['USDC'].address.toLowerCase())
+            sellOrderArr.push({offer, i, exchangeToken: 'USDC'})
+          if(offer.buy_gem.toLowerCase() == core.tokens['MAHA'].address.toLowerCase())
+            sellOrderArr.push({offer, i, exchangeToken: 'MAHA'})
+          
           setSellOrderData(sellOrderArr)
         }
-
-        // allOfers.push({offer, i})
       }
     }
-  // console.log('allOfers', allOfers)
-
   }
 
   console.log('sellOrderData', sellOrderData)
@@ -100,7 +94,7 @@ function SellOrdersCard(props: IProps) {
                   <div className={'single-line-center-center pointer'} onClick={() => {handleCancelOrder(order.i)}} style={{padding: '9px'}}>
                     <CancelIcon />
                   </div>
-                :  <div style={{padding: '13px'}}></div>
+                :  <div className={'single-line-center-center pointer'}><CancelIcon style={{color: '#1A1919'}} /></div>
               }
               
             </CardSection>
