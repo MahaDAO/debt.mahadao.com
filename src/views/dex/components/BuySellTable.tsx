@@ -1,32 +1,46 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 import Button from '../../../components/Button';
 import InfoTip from '../../../components/InfoTip';
 import Input from '../../../components/Input';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import BuySellOffer from '../modals/BuySellOffer';
+import Selector from '../../../components/Selector';
+import useCore from '../../../hooks/useCore';
+import useTokenBalance from '../../../hooks/useTokenBalance';
 
 interface IProps{
-  quoteTokenBalance: any,
   baseTokenBalance: any,
   action: string,
-  availableToken: {
+  selectQuoteToken: {
     name: string,
-    balance: string,
+    balance: any
   }
 }
 
 function BuySellTable(props: IProps) {
- 
-  const {action, availableToken, quoteTokenBalance, baseTokenBalance} = props;
+  const core = useCore()
+  const {action, selectQuoteToken, baseTokenBalance} = props;
   const [quoteToken, setQuoteToken] = useState<string>('0')
   const [baseToken, setBaseToken] = useState<string>('0')
   const [buyTotal, setBuyTotal] = useState<string>('0')
   const [sellTotal, setSellTotal] = useState<string>('0')
   const [openOfferModal, setOpenOfferModal] = useState<boolean>(false)
 
+  const usdcbal = useTokenBalance(core.tokens['USDC'])
+  const mahabal = useTokenBalance(core.tokens['MAHA'])
+
   let actionButton: boolean = false
-  actionButton =  Number(availableToken.balance) < Number(quoteToken) || Number(availableToken.balance) < Number(baseToken) || Number(availableToken.balance) < Number(buyTotal)|| Number(availableToken.balance) < Number(sellTotal)
+  actionButton =  
+    Number(selectQuoteToken.balance) < Number(quoteToken) || 
+    Number(selectQuoteToken.balance) < Number(baseToken) || 
+    Number(selectQuoteToken.balance) < Number(buyTotal) ||
+    Number(selectQuoteToken.balance) < Number(sellTotal)
   
   // console.log('totalQuoteToken', totalQuoteToken, Number(getDisplayBalance(quoteTokenBalance.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }), Number(getDisplayBalance(baseTokenBalance.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }));
   console.log('first', buyTotal, sellTotal)
@@ -49,11 +63,6 @@ function BuySellTable(props: IProps) {
 
   return (
     <CardContent>
-      <CardSection style={{marginBottom: '20px', fontWeight: 'bold',}}>
-        <CardColumn1 className='text-center'>AVAILABLE</CardColumn1>
-        <CardColumn2 className='text-right'>{availableToken.balance}</CardColumn2>
-        <CardColumn3 className='text-center'>{availableToken.name}</CardColumn3>
-      </CardSection>
       <CardSection>
         <CardColumn1 
           className={'table-border single-line-center-center'}>Price</CardColumn1>
@@ -65,8 +74,8 @@ function BuySellTable(props: IProps) {
               alignInput={'right'}
             />
         </CardColumn2>
-        <CardColumn3 
-          className={'table-border single-line-center-center'}>USDC</CardColumn3>
+        <CardColumn3
+          className={'table-border single-line-center-center'}>{selectQuoteToken.name}</CardColumn3>
       </CardSection>
       <CardSection>
         <CardColumn1 className={'table-border single-line-center-center'}>Amount</CardColumn1>
@@ -80,7 +89,7 @@ function BuySellTable(props: IProps) {
         <CardColumn3 className={'table-border single-line-center-center'}>ARTH-DP</CardColumn3>
       </CardSection>
       <CardSection style={{marginBottom: '40px'}}>
-        <CardColumn1 className={'table-border single-line-center-center'} >Total</CardColumn1>
+        <CardColumn1 className={'table-border single-line-center-center'}>Total</CardColumn1>
         <CardColumn2 className={'table-border text-right'}>
           <Input
             disabled={true}
@@ -89,13 +98,13 @@ function BuySellTable(props: IProps) {
             alignInput={'right'}
           />
         </CardColumn2>
-        <CardColumn3 className={'table-border single-line-center-center'}>USDC</CardColumn3>
+        <CardColumn3 className={'table-border single-line-center-center'}>{selectQuoteToken.name}</CardColumn3>
       </CardSection>
       <CardSection style={{alignItems: 'center' }}>
         <CardColumn2>
           {
-            Number(availableToken.balance) < Number(quoteToken) || Number(availableToken.balance) < Number(baseToken) || Number(availableToken.balance) < Number(buyTotal)|| Number(availableToken.balance) < Number(sellTotal)
-            ? <InfoTip type={'Error'} msg={`You don't have enough ${availableToken.name} tokens`} />
+            Number(selectQuoteToken.balance) < Number(quoteToken) || Number(selectQuoteToken.balance) < Number(baseToken) || Number(selectQuoteToken.balance) < Number(buyTotal)|| Number(selectQuoteToken.balance) < Number(sellTotal)
+            ? <InfoTip type={'Error'} msg={`You don't have enough ${selectQuoteToken.name} tokens`} />
             : <InfoTip type={'Warning'} msg={'Enter a price to unlock amount'} />
           }
           </CardColumn2>
@@ -116,7 +125,8 @@ function BuySellTable(props: IProps) {
           quote: quoteToken,
           base: baseToken,
           total: action === 'Buy' ? buyTotal.toString() : sellTotal.toString(),
-          quoteTokenBalance
+          quoteTokenBalance: selectQuoteToken.name == "USDC" ? usdcbal : mahabal , 
+          selectQuoteToken
         }}
       />
     </CardContent>
@@ -141,7 +151,6 @@ const CardSection = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-
   &:last-child {
     margin-bottom: 0;
   }
@@ -154,8 +163,8 @@ const CardColumn1 = styled.div`
   flex-basis: 20%; 
 `
 const CardColumn2 = styled.div`
-  flex-basis: 60%; 
+  flex-basis: 55%; 
 `
 const CardColumn3 = styled.div`
-  flex-basis: 20%; 
+  flex-basis: 25%;
 `

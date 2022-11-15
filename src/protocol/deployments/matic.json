@@ -1,26 +1,28 @@
 {
   "MatchingMarket": {
     "abi": "MatchingMarket",
-    "address": "0x2b363218a27DF57C655a5E4e6f8DE8A9Bcf5B9a9"
-  },
-  "ARTH-DP": {
-    "abi": "IERC20",
-    "address": "0xa994aA888a004aA9AB0c5f7283B00053e7C2b365"
+    "verified": true,
+    "address": "0xa07687f03AFaC082e8A42b88a5239b9a2D5FAbB6"
   },
   "USDC": {
     "abi": "IERC20",
     "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
   },
-  "Staking-RewardsV2": {
-    "abi": "StakingRewardsV2",
-    "address": "0x906F2690d0456dBDe24dbCF3f2e86Eb7864E6095"
-  },
-  "ARTH-DP-Staking":{
-    "abi": "ArthDebtPool",
-    "address": "0xa994aA888a004aA9AB0c5f7283B00053e7C2b365"
+  "MAHA": {
+    "abi": "IERC20",
+    "verified": true,
+    "address": "0xedd6ca8a4202d4a36611e2fff109648c4863ae19"
   },
   "Snapshot": {
     "abi": "Snapshot",
     "address": "0xc8a6975f516D5146af1E251f9461C9C75B4f9B6B"
+  },
+  "ARTH-DP": {
+    "abi": "DebtToken",
+    "address": "0xC2D23a14d5F93C28Db6a9e6Afdee98279519c7f8"
+  },  
+  "Staking-RewardsV2": {
+    "abi": "StakingRewardsV2",
+    "address": "0x3B9cCf5f9E890fB3F78274cB6d76b12a8De94F61"
   }
 }

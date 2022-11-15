@@ -9,8 +9,12 @@ import { useState } from 'react';
 import { formatToBN, getDisplayBalance } from '../../../utils/formatBalance';
 import useCancelOffer from '../../../hooks/state/useCancelOffer';
 
+interface IProps {
+  selectQuoteToken: string
+}
 
-function SellOrdersCard() {
+function SellOrdersCard(props: IProps) {
+  const {selectQuoteToken} = props
 
   const core = useCore()
 
@@ -58,7 +62,7 @@ function SellOrdersCard() {
 
   const handleCancelOrder = (id: number) => {
     setCancelId(id)
-    sellOrderAction(() => {})
+    sellOrderAction(id)
   }
 
   return (
@@ -66,7 +70,7 @@ function SellOrdersCard() {
       
       <CardSection style={{marginBottom: '20px', fontWeight: 'bold',}}>
         <CardColumn1 className='text-center'>Price</CardColumn1>
-        <CardColumn2 className='text-center'>USDC</CardColumn2>
+        <CardColumn2 className='text-center'>{selectQuoteToken}</CardColumn2>
         <CardColumn3 className='text-center'>ARTH-DP</CardColumn3>
         <div style={{padding: '13px'}}></div>
       </CardSection>

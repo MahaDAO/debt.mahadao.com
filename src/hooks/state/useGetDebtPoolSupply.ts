@@ -21,7 +21,7 @@ const useGetDebtPoolSupply = (symbol: string | null) => {
         contract = core.contracts["ARTH-StakingMaster"]
       else if(symbol === "ARTHX")
         contract = core.contracts["ARTHX-StakingMaster"]
-      else contract = core.contracts["ARTH-DP-Staking"]
+      else contract = core.contracts["ARTH-DP"]
 
     const totalSupply: BigNumber = await contract.totalSupply();
 

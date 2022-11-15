@@ -177,7 +177,7 @@ body {
   margin-bottom: 16px;
 }
 .m-b-20 {
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
 }
 .m-b-24 {
   margin-bottom: 24px;
@@ -594,4 +594,12 @@ body {
 
 .table-border{
   border: 1px solid #333;
+}
+
+.alignItemsCenter{
+  align-items: center;
+}
+
+.textWhite{
+  color: #fff;
 }

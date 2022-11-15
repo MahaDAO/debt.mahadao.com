@@ -17,8 +17,8 @@ const useGetCirculatingSupply = () => {
   const [state, setState] = useState<BasicState>(LOADING_DEFAULT_BASIC_STATE);
 
   const action = useCallback(async () => {
-    const contract = core.contracts["ARTH-DP-Staking"];
-    const totalCirculatingSupply: BigNumber = await contract.getTotalCirculatingSupply();
+    const contract = core.contracts["ARTH-DP"];
+    const totalCirculatingSupply: BigNumber = await contract.mintedSupply();
 
     const newState: BasicState = {
       isLoading: false,

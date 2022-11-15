@@ -34,8 +34,13 @@ function BuySellOffer(props: any) {
     setQuoteToken(tableData.quote)
     setBaseToken(tableData.base)
     setTotalQuoteToken(tableData.total)
-    if(action === 'Buy')
-      setTokenToApprove(core.tokens.USDC)
+    if(action === 'Buy'){
+      if(tableData.selectQuoteToken.name == "USDC"){
+        setTokenToApprove(core.tokens.USDC)
+      }else{
+        setTokenToApprove(core.tokens.MAHA)
+      }
+    }
     if(action === 'Sell') 
       setTokenToApprove(core.tokens['ARTH-DP'])
 
@@ -48,7 +53,7 @@ function BuySellOffer(props: any) {
 
   console.log('tableData.total', tableData.total)
 
-  const buyOfferAction = useBuyOffer(formatToBN(tableData.total, 6), formatToBN(baseToken), action) 
+  const buyOfferAction = useBuyOffer(formatToBN(tableData.total, 6), formatToBN(baseToken), action, tableData.selectQuoteToken.name) 
 
   function handleBuyOffer() {
     console.log('buyoffer')
@@ -57,7 +62,7 @@ function BuySellOffer(props: any) {
     })
   };
  
-  const sellOfferAction = useSellOffer(formatToBN(baseToken), formatToBN(tableData.total, 6), action) 
+  const sellOfferAction = useSellOffer(formatToBN(baseToken), formatToBN(tableData.total, 6), action, tableData.selectQuoteToken.name) 
 
   function handleSellOffer() {
     console.log('selloffer')
@@ -83,7 +88,7 @@ function BuySellOffer(props: any) {
           <CardSection>
             <TextWithIcon>Price</TextWithIcon>
             <StyledValue>
-              {tableData.quote} USDC
+              {tableData.quote} {tableData.selectQuoteToken.name}
             </StyledValue>
           </CardSection>
           <CardSection>
@@ -95,7 +100,7 @@ function BuySellOffer(props: any) {
           <CardSection className={'m-b-40'}>
             <TextWithIcon>Total</TextWithIcon>
             <StyledValue>
-              {tableData.total} USDC
+              {tableData.total} {tableData.selectQuoteToken.name}
             </StyledValue>
           </CardSection>
           <Grid

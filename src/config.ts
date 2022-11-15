@@ -66,11 +66,12 @@ const configurations: { [env: string]: Configuration } = {
     networkSetupDocLink: 'https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/',
     supportedTokens: [
       'ARTH-DP',
-      'USDC'
+      'USDC',
+      'MAHA'
     ],
     decimalOverrides: {
       'ARTH-DP': 18,
-      USDC: 6
+      'USDC': 6
     },
   }
 };

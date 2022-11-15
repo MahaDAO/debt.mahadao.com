@@ -7,7 +7,7 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import useClaimReward from '../../../hooks/callbacks/useClaimReward';
 import useGetDebtPoolSupply from '../../../hooks/state/useGetDebtPoolSupply';
 import useGetBalanceOfDebtPool from '../../../hooks/state/useGetBalanceOfDebtPool';
-import ArthDebtPool from "../../../protocol/deployments/abi/ArthDebtPool.json"
+import DebtToken from "../../../protocol/deployments/abi/DebtToken.json"
 import Button from "../../../components/Button";
 import InfoTip from "../../../components/InfoTip";
 import IconLoader from "../../../components/IconLoader";
@@ -44,7 +44,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
     [arthBalanceOf, arthTotalSupply]
   );
 
-  const arthdptoken = new ethers.Contract(core.tokens['ARTH-DP'].address, ArthDebtPool, core.signer)
+  const arthdptoken = new ethers.Contract(core.tokens['ARTH-DP'].address, DebtToken, core.signer)
 
   return (
     <Wrapper style={{ marginRight: isMobile ? '' : '16px' }}>
