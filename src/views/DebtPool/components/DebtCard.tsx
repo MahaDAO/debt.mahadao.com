@@ -17,6 +17,7 @@ import { BigNumber, ethers } from 'ethers';
 import WithdrawModal from '../modal/WithdrawModal';
 import useTokenBalanceOf from '../../../hooks/useTokenBalanceOf';
 import useGetDepositBalance from '../../../hooks/useGetDepositBalance';
+import useGetStakingRewardsSupply from '../../../hooks/state/useGetStakingRewardsSupply';
 // import DataField from "../../../components/DataField";
 // import theme from "../../../theme";
 
@@ -35,14 +36,16 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
 
   const arthTotalSupply = useGetDebtPoolSupply(symbol);
   const arthBalanceOf = useTokenBalanceOf(arthdptoken, core.myAccount);
-  const totalDeposited = useGetDepositBalance(core.myAccount);
+  const totalDepositedByUser = useGetDepositBalance(core.myAccount);
+  const totalDeposited = useGetStakingRewardsSupply()
 
   const claimCallback = useClaimReward(symbol);
 
   const depositShare = useMemo(() => {
     if (arthBalanceOf.value.isZero() || arthTotalSupply.value.isZero() || arthTotalSupply.value.sub(arthBalanceOf.value).isZero()) return 0
 
-    return arthTotalSupply.value.sub(arthBalanceOf.value).mul(10000).div(arthTotalSupply.value).toNumber() / 100
+    let diff = totalDeposited.value.sub(totalDepositedByUser.value)
+    return totalDeposited.value.sub(diff).mul(10000).div(totalDeposited.value).toNumber() / 100
 
   },
     [arthBalanceOf, arthTotalSupply]
@@ -70,7 +73,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
           <CardSection>
             <TextWithIcon>Your Allocation</TextWithIcon>
             <StyledValue>
-              {Number(getDisplayBalance(arthBalanceOf.value, 18, 3)).toLocaleString() || 0} {symbol}
+            {Number(getDisplayBalance(totalDepositedByUser.value, 18, 3)).toLocaleString() || 0} {symbol}
             </StyledValue>
           </CardSection>
           <CardSection>

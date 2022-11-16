@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import ContractBalanceContainer from './components/ContractBalanceContainer';
-import DeptCard from './components/DeptCard';
+import DebtCard from './components/DebtCard';
 
 // import LockerGraph from './components/LockerGraph';
 
@@ -14,7 +14,7 @@ const LockDeposit = () => {
         <PageHeading>{'DEBT POOL'}</PageHeading>
       </div>
       <DebtContainer style={{flexDirection: isMobile ? 'column' : 'row'}}>
-        <DeptCard price={1} symbol={'ARTH-DP'} />
+        <DebtCard price={1} symbol={'ARTH-DP'} />
         <ContractBalanceContainer />
       </DebtContainer>
       {/* <LockerGraph /> */}
