@@ -19,9 +19,10 @@ function Dex() {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const baseTokenBalance = useTokenBalance(core.tokens['ARTH-DP'])
   const quoteTokenBalance = useTokenBalance(core.tokens['USDC'])
+  let arthUsdcPairStatus = JSON.parse(localStorage.getItem('ARTH-DP/USDC pair') || 'false')
 
   const [selectQuoteToken, setSelectQuoteToken] = useState<string>('USDC')
-  const [selectorQToken, setSelectorQToken] = useState<boolean>(false)
+  const [selectorQToken, setSelectorQToken] = useState<boolean>(arthUsdcPairStatus)
 
   const usdcbal = useTokenBalance(core.tokens['USDC'])
   const mahabal = useTokenBalance(core.tokens['MAHA'])
@@ -35,10 +36,11 @@ function Dex() {
   }, [selectorQToken])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    localStorage.setItem('ARTH-DP/USDC pair', `${event.target.checked}`)
     setSelectorQToken(event.target.checked);
+
   };
 
-  console.log('quoteTokenBalance', quoteTokenBalance)
 
   return (
     <div className='custom-container'>
@@ -48,7 +50,7 @@ function Dex() {
               ARTH-DP / USDC
             </Grid>
             <Grid item>
-              <AntSwitch checked={selectorQToken} onChange={handleChange} name="checkedC" />
+              <AntSwitch checked={arthUsdcPairStatus || selectorQToken} onChange={handleChange} name="checkedC" />
             </Grid>
             <Grid className={'textWhite'} item>
               ARTH-DP / MAHA

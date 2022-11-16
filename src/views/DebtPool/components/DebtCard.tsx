@@ -29,7 +29,7 @@ interface DeptCardProps {
 const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
-  const arthdptoken = new ethers.Contract(core.tokens['ARTH-DP'].address, DebtToken, core.signer)
+  const arthdptoken = core.tokens['ARTH-DP']
 
   const [openDepositModal, setOpenDepositModal] = useState<boolean>(false);
   const [openWithdrawModal, setWithdrawModal] = useState<boolean>(false);
