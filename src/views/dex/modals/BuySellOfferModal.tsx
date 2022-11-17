@@ -23,6 +23,8 @@ function BuySellOffer(props: any) {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const core = useCore()
 
+  console.log("tableData", tableData)
+
   const [quoteToken, setQuoteToken] = useState<string>('0')
   const [baseToken, setBaseToken] = useState<string>('0')
   const [totalQuoteToken, setTotalQuoteToken] = useState<string>('0')

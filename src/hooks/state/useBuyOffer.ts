@@ -26,7 +26,7 @@ const useBuyoffer = (pay_amt: BigNumber, buy_amt: BigNumber, txAction: string, q
         addTransaction(response, {
           summary: `${txAction} ${Numeral(getDisplayBalance(buy_amt, 18, 3)).format(
             '0,0.00a',
-          )}`,
+          )} ${core.tokens[quoteTokenName].symbol}`,
         });
 
         if (callback) callback();

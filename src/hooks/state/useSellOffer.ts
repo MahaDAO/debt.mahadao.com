@@ -27,7 +27,7 @@ const useSellOffer = (pay_amt: BigNumber, buy_amt: BigNumber, txAction: string, 
         addTransaction(response, {
           summary: `${txAction} ${Numeral(getDisplayBalance(buy_amt, 6, 3)).format(
             '0,0.00a',
-          )}`,
+          )} ${core.tokens['ARTH-DP'].symbol}`,
         });
 
         if (callback) callback();

@@ -104,7 +104,11 @@ function Dex() {
               baseTokenBalance={baseTokenBalance}
               // quoteTokenBalance={quoteTokenBalance}
               action={'Sell'}
-              selectQuoteToken={{name: selectQuoteToken, balance: Number(getDisplayBalance(baseTokenBalance.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })}}
+              selectQuoteToken={{name: selectQuoteToken, balance: 
+                selectQuoteToken == "USDC" ? 
+                Number(getDisplayBalance(usdcbal.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
+                Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
+              }}
             />
           </Card>
         </Wrapper>

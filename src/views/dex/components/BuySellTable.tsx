@@ -9,7 +9,7 @@ import Button from '../../../components/Button';
 import InfoTip from '../../../components/InfoTip';
 import Input from '../../../components/Input';
 import { getDisplayBalance } from '../../../utils/formatBalance';
-import BuySellOffer from '../modals/BuySellOffer';
+import BuySellOfferModal from '../modals/BuySellOfferModal';
 import Selector from '../../../components/Selector';
 import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/useTokenBalance';
@@ -117,7 +117,7 @@ function BuySellTable(props: IProps) {
           />
         </CardColumn3>
       </CardSection>
-      <BuySellOffer
+      <BuySellOfferModal
         openModal={openOfferModal}
         onModalClose={() => setOpenOfferModal(false)}
         action={action}
@@ -125,7 +125,7 @@ function BuySellTable(props: IProps) {
           quote: quoteToken,
           base: baseToken,
           total: action === 'Buy' ? buyTotal.toString() : sellTotal.toString(),
-          quoteTokenBalance: selectQuoteToken.name == "USDC" ? usdcbal : mahabal , 
+          quoteTokenBalance: selectQuoteToken.balance,
           selectQuoteToken
         }}
       />
