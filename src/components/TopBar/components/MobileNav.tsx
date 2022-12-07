@@ -81,12 +81,12 @@ const MobileNav = (props: props) => {
                 <IconLoader iconName={'Transaction'} width={24} height={24} className="m-r-8" />
               </Button>
             </div>
-            <Link to={'/form'} >
+            {/* <Link to={'/form'} >
               <Button
                 
                 onClick={() => {}}
                 variant={'transparent'}>Register User</Button>
-            </Link>
+            </Link> */}
             </div>
               )
           }

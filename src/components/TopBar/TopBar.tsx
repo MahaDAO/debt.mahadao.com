@@ -38,14 +38,11 @@ const TopBar: React.FC = () => {
   const [showProjectModal, setShowProjectModal] = useState<boolean>(false);
   const [isHomePage, setIsHomePage] = useState<boolean>(location.pathname === "/");
 
-  console.log('isHomePage', isHomePage)
   useGaTracker();
   const { account, connect } = useWallet();
   const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
 
-  console.log('Topbar account', account)
-  console.log('Topbar showWarning', showWarning)
   const processNetwork = useCallback(async () => {
     const provider: any = await detectEthereumProvider();
 
@@ -145,13 +142,13 @@ const TopBar: React.FC = () => {
               </div>} */}
               
                 <div className="single-line-center-start">
-                  <Link to={'/form'} className={'m-r-8'}>
+                  {/* <Link to={'/form'} className={'m-r-8'}>
                     <Button
                       onClick={() => {}}
                       variant={'transparent'}>Register User</Button>
-                  </Link>
+                  </Link> */}
                   
-                  <IconLoader className={"pointer m-r-24"} iconName={'BentoMenu'} iconType={'misc'} onClick={() => {setShowProjectModal(true)}}/>
+                  {/* <IconLoader className={"pointer m-r-24"} iconName={'BentoMenu'} iconType={'misc'} onClick={() => {setShowProjectModal(true)}}/> */}
                     {
                       !!account &&
                       <IconLoader
@@ -165,16 +162,17 @@ const TopBar: React.FC = () => {
             </div>
           </HideonPhone>
           <HideOnBigScreen>
-            <div className="single-line-center-between">
-              {
-                isHomePage && <IconLoader
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <div style={{flex: 1}}>
+                <IconLoader
                   iconName={!showMobileMenu ? 'Menu' : 'Cross'}
                   onClick={() => toggleMobileMenu(!showMobileMenu)}
                   className={'pointer'}
                 />
-              }
-              <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'} />
-              <IconLoader iconName={'BentoMenu'} iconType={'misc'} onClick={() => {setShowProjectModal(true)}}/>
+              </div>
+              <div style={{flex: 3}}>
+                <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'} />
+              </div>
             </div>
           </HideOnBigScreen>
           <HideOnBigScreen>

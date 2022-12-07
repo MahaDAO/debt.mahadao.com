@@ -94,7 +94,7 @@ function SellOrdersCard(props: IProps) {
                   <div className={'single-line-center-center pointer'} onClick={() => {handleCancelOrder(order.i)}} style={{padding: '9px'}}>
                     <CancelIcon />
                   </div>
-                :  <div className={'single-line-center-center pointer'}><CancelIcon style={{color: '#1A1919'}} /></div>
+                :  <div className={'single-line-center-center pointer'}><CancelIcon color={'disabled'} style={{color: '#444'}} /></div>
               }
               
             </CardSection>

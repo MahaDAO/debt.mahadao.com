@@ -19,10 +19,10 @@
   },
   "ARTH-DP": {
     "abi": "DebtToken",
-    "address": "0xC2D23a14d5F93C28Db6a9e6Afdee98279519c7f8"
+    "address": "0xEe5B950e135853a28a2b8b456735358D135661d5"
   },  
   "Staking-RewardsV2": {
     "abi": "StakingRewardsV2",
-    "address": "0x3B9cCf5f9E890fB3F78274cB6d76b12a8De94F61"
+    "address": "0x03998b014EC8B603Db40F30B89E7213d06d48eEd"
   }
 }

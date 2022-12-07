@@ -375,6 +375,19 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      }
+    ],
+    "name": "grantMintRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "bytes32",
         "name": "role",
         "type": "bytes32"
@@ -452,24 +465,6 @@
       }
     ],
     "name": "mint",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address[]",
-        "name": "to",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "amount",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "mintMultiple",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
