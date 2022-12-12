@@ -18,6 +18,7 @@ import WithdrawModal from '../modal/WithdrawModal';
 import useTokenBalanceOf from '../../../hooks/useTokenBalanceOf';
 import useGetDepositBalance from '../../../hooks/useGetDepositBalance';
 import useGetStakingRewardsSupply from '../../../hooks/state/useGetStakingRewardsSupply';
+import useGetEarnedRewards from '../../../hooks/callbacks/useGetEarnedRewards';
 // import DataField from "../../../components/DataField";
 // import theme from "../../../theme";
 
@@ -39,7 +40,8 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   const totalDepositedByUser = useGetDepositBalance(core.myAccount);
   const totalDeposited = useGetStakingRewardsSupply()
 
-  const claimCallback = useClaimReward(symbol);
+  const claimCallback = useClaimReward();
+  const earnedRewards = useGetEarnedRewards()
 
   const depositShare = useMemo(() => {
     if (arthBalanceOf.value.isZero() || arthTotalSupply.value.isZero() || arthTotalSupply.value.sub(arthBalanceOf.value).isZero()) return 0
@@ -51,6 +53,11 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
     [arthBalanceOf, arthTotalSupply]
   );
 
+  const handleGetRewards = () => {
+    claimCallback(() => {})
+  }
+
+  const disableRewardBtn = Number(getDisplayBalance(earnedRewards.value)) > 0
 
   return (
     <Wrapper style={{ marginRight: isMobile ? '' : '16px' }}>
@@ -82,39 +89,18 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
               {depositShare.toFixed(2)}%
             </StyledValue>
           </CardSection>
-          {/* <CardSection>
+
+          <CardSection>
             <TextWithIcon>Your Rewards</TextWithIcon>
             <StyledValue>
               {
-                arthEarned.isLoading
+                earnedRewards.isLoading
                   ? <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
-                  : Number(getDisplayBalance(arthEarned.value, 18, 5)).toLocaleString('en-US',
-                    { minimumFractionDigits: 5, maximumFractionDigits: 8 })
-              } ARTH
-            </StyledValue>
-          </CardSection> */}
-          {/* <CardSection className="m-t-4 m-b-4">
-            <TextWithIcon></TextWithIcon>
-            <StyledValue>
-              {
-                mahaEarned.isLoading
-                  ? <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
-                  : Number(getDisplayBalance(mahaEarned.value, 18, 5)).toLocaleString('en-US',
-                    { minimumFractionDigits: 5, maximumFractionDigits: 8 })
-              } MAHA
-            </StyledValue>
-          </CardSection> */}
-          {/* <CardSection className="m-t-4 m-b-4">
-            <TextWithIcon></TextWithIcon>
-            <StyledValue>
-              {
-                usdcEarned.isLoading
-                  ? <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
-                  : Number(getDisplayBalance(usdcEarned.value, 6, 5)).toLocaleString('en-US',
+                  : Number(getDisplayBalance(earnedRewards.value, 18, 5)).toLocaleString('en-US',
                     { minimumFractionDigits: 5, maximumFractionDigits: 8 })
               } USDC
             </StyledValue>
-          </CardSection> */}
+          </CardSection>
           <div className={"m-b-8 m-t-40"}>
             <InfoTip
               type={'Info'}
@@ -132,10 +118,9 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
               </div>}
             />
           </div>
-          <ButtonToBottom style={{ flexDirection: isMobile ? 'column' : 'row' }}>
+         
+          <ButtonToBottom style={{ flexDirection: isMobile ? 'column' : 'row', marginBottom: '16px' }}>
             <Button
-              // loading={arthEarned.isLoading || mahaEarned.isLoading || usdcEarned.isLoading}
-              // disabled={!hasClaimableAmount}
               text="Deposit"
               onClick={() => {
                 setOpenDepositModal(true)
@@ -143,14 +128,17 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
             />
             <div style={{ width: '100px', marginTop: isMobile ? '15px' : '' }}></div>
             <Button
-              // loading={arthEarned.isLoading || mahaEarned.isLoading || usdcEarned.isLoading}
-              // disabled={!hasClaimableAmount}
               text="Withdraw"
               onClick={
                 () => setWithdrawModal(true)
               }
             />
           </ButtonToBottom>
+          <Button
+              // disabled={!disableRewardBtn}
+              text="Get Rewards"
+              onClick={handleGetRewards}
+            />
         </CardContent>
       </Card>
       <DepositModal

@@ -39,9 +39,7 @@ const DepositModal = (props: any) => {
   const depositAction = useDeposit(val)
 
   function handleDeposit() {
-
     depositAction(() => {
-      // props.onCancel();
     })
   };
 

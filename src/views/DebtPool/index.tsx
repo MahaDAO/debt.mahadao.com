@@ -12,6 +12,9 @@ const LockDeposit = () => {
     <div className='custom-container' style={{marginTop: '150px', }}>
       <div className="m-b-40">
         <PageHeading>{'DEBT POOL'}</PageHeading>
+        <CardSubHeader>
+          lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+        </CardSubHeader>
       </div>
       <DebtContainer style={{flexDirection: isMobile ? 'column' : 'row'}}>
         <DebtCard price={1} symbol={'ARTH-DP'} />
@@ -39,11 +42,25 @@ const PageHeading = styled.p`
   text-transform: uppercase;
   text-align: center;
   color: #ffffff;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 `;
 
 const InfoHeader = styled.div`
   // max-width: 450px;
   margin-left: auto;
   margin-right: auto;
+`
+
+const CardSubHeader = styled.div`
+  color: #999;
+  display: flex;
+  font-size: 14px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 32px 30px 32px;
+  border-bottom: 1px solid #FFFFFF20;
+  @media (max-width: 600px) {
+    padding: 16px;
+  }
 `

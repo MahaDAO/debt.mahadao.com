@@ -5,7 +5,7 @@ import useCore from "../useCore";
 import { useAddPopup } from "../../state/application/hooks";
 import formatErrorMessage from "../../utils/formatErrorMessage";
 
-const useClaimReward = (symbol: string | null) => {
+const useClaimReward = () => {
   const core = useCore();
   const addPopup = useAddPopup();
   const addTransaction = useTransactionAdder();
@@ -13,15 +13,14 @@ const useClaimReward = (symbol: string | null) => {
   const action = useCallback(
     async (callback?: () => void): Promise<void> => {
       try {
-        const contract =
-          symbol === "ARTH"
-            ? core.contracts["ARTH-StakingMaster"]
-            : core.contracts["ARTHX-StakingMaster"];
+        const contract = core.contracts["Staking-RewardsV2"]
 
         const response = await contract.getReward();
 
+        console.log("useClaimReward response", response)
+
         addTransaction(response, {
-          summary: `Claim Reward from ${symbol?.toString()} Debt Pool`,
+          summary: `Claimed rewards successfully!`,
         });
 
         if (callback) callback();
@@ -35,7 +34,7 @@ const useClaimReward = (symbol: string | null) => {
         });
       }
     },
-    [core, addPopup, symbol, addTransaction]
+    [core, addPopup, addTransaction]
   );
 
   return action;

@@ -36,11 +36,14 @@ function BuySellTable(props: IProps) {
   const mahabal = useTokenBalance(core.tokens['MAHA'])
 
   let actionButton: boolean = false
-  actionButton =  
+  actionButton = 
+
+    action === "Buy" ?
+
     Number(selectQuoteToken.balance) < Number(quoteToken) || 
-    Number(selectQuoteToken.balance) < Number(baseToken) || 
-    Number(selectQuoteToken.balance) < Number(buyTotal) ||
-    Number(selectQuoteToken.balance) < Number(sellTotal)
+    Number(selectQuoteToken.balance) < Number(buyTotal)
+    :
+    Number(baseToken) > Number(getDisplayBalance(baseTokenBalance.value))
   
   // console.log('totalQuoteToken', totalQuoteToken, Number(getDisplayBalance(quoteTokenBalance.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }), Number(getDisplayBalance(baseTokenBalance.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }));
   console.log('first', buyTotal, sellTotal)
@@ -60,6 +63,8 @@ function BuySellTable(props: IProps) {
     }
 
   }, [quoteToken, baseToken])
+
+  console.log("test buysell", Number(baseToken), getDisplayBalance(baseTokenBalance.value))
 
   return (
     <CardContent>
@@ -103,9 +108,14 @@ function BuySellTable(props: IProps) {
       <CardSection style={{alignItems: 'center' }}>
         <CardColumn2>
           {
-            Number(selectQuoteToken.balance) < Number(quoteToken) || Number(selectQuoteToken.balance) < Number(baseToken) || Number(selectQuoteToken.balance) < Number(buyTotal)|| Number(selectQuoteToken.balance) < Number(sellTotal)
-            ? <InfoTip type={'Error'} msg={`You don't have enough ${selectQuoteToken.name} tokens`} />
-            : <InfoTip type={'Warning'} msg={'Enter a price to unlock amount'} />
+            action === "Buy" ?
+            Number(selectQuoteToken.balance) < Number(quoteToken) || Number(selectQuoteToken.balance) < Number(buyTotal)
+              ? <InfoTip type={'Error'} msg={`You don't have enough ${selectQuoteToken.name} tokens`} />
+              : <InfoTip type={'Warning'} msg={'Enter a price to unlock amount'} />
+            :
+            Number(baseToken) > Number(getDisplayBalance(baseTokenBalance.value)) 
+              ? <InfoTip type={'Error'} msg={`You don't have enough ARTH-DP tokens`} /> 
+              : <InfoTip type={'Warning'} msg={'Enter a price to unlock amount'} />
           }
           </CardColumn2>
         <CardColumn1></CardColumn1>
