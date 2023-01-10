@@ -14,7 +14,7 @@ import Selector from '../../../components/Selector';
 import useCore from '../../../hooks/useCore';
 import useTokenBalance from '../../../hooks/useTokenBalance';
 
-interface IProps{
+interface IProps {
   baseTokenBalance: any,
   action: string,
   selectQuoteToken: {
@@ -25,7 +25,7 @@ interface IProps{
 
 function BuySellTable(props: IProps) {
   const core = useCore()
-  const {action, selectQuoteToken, baseTokenBalance} = props;
+  const { action, selectQuoteToken, baseTokenBalance } = props;
   const [quoteToken, setQuoteToken] = useState<string>('')
   const [baseToken, setBaseToken] = useState<string>('')
   const [buyTotal, setBuyTotal] = useState<string>('0')
@@ -36,28 +36,26 @@ function BuySellTable(props: IProps) {
   const mahabal = useTokenBalance(core.tokens['MAHA'])
 
   let actionButton: boolean = false
-  actionButton = 
-
+  actionButton =
     action === "Buy" ?
+      Number(selectQuoteToken.balance) < Number(quoteToken) ||
+      Number(selectQuoteToken.balance) < Number(buyTotal)
+      :
+      Number(baseToken) > Number(getDisplayBalance(baseTokenBalance.value))
 
-    Number(selectQuoteToken.balance) < Number(quoteToken) || 
-    Number(selectQuoteToken.balance) < Number(buyTotal)
-    :
-    Number(baseToken) > Number(getDisplayBalance(baseTokenBalance.value))
-  
   // console.log('totalQuoteToken', totalQuoteToken, Number(getDisplayBalance(quoteTokenBalance.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }), Number(getDisplayBalance(baseTokenBalance.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }));
   console.log('first', buyTotal, sellTotal)
 
   useEffect(() => {
-    if(quoteToken.length && baseToken.length){
-      if(action === 'Buy'){
+    if (quoteToken.length && baseToken.length) {
+      if (action === 'Buy') {
         setBuyTotal((Number(quoteToken) * Number(baseToken)).toString())
       }
-      if(action === 'Sell'){
+      if (action === 'Sell') {
         setSellTotal((Number(quoteToken) * Number(baseToken)).toString())
       }
-      
-    }else{
+
+    } else {
       setBuyTotal('0')
       setSellTotal('0')
     }
@@ -69,15 +67,15 @@ function BuySellTable(props: IProps) {
   return (
     <CardContent>
       <CardSection>
-        <CardColumn1 
+        <CardColumn1
           className={'table-border single-line-center-center'}>Price</CardColumn1>
-        <CardColumn2 
+        <CardColumn2
           className={'table-border text-right'} >
-            <Input
-              value={quoteToken}
-              setValue={setQuoteToken}
-              alignInput={'right'}
-            />
+          <Input
+            value={quoteToken}
+            setValue={setQuoteToken}
+            alignInput={'right'}
+          />
         </CardColumn2>
         <CardColumn3
           className={'table-border single-line-center-center'}>{selectQuoteToken.name}</CardColumn3>
@@ -93,7 +91,7 @@ function BuySellTable(props: IProps) {
         </CardColumn2>
         <CardColumn3 className={'table-border single-line-center-center'}>ARTH-DP</CardColumn3>
       </CardSection>
-      <CardSection style={{marginBottom: '40px'}}>
+      <CardSection style={{ marginBottom: '40px' }}>
         <CardColumn1 className={'table-border single-line-center-center'}>Total</CardColumn1>
         <CardColumn2 className={'table-border text-right'}>
           <Input
@@ -105,21 +103,21 @@ function BuySellTable(props: IProps) {
         </CardColumn2>
         <CardColumn3 className={'table-border single-line-center-center'}>{selectQuoteToken.name}</CardColumn3>
       </CardSection>
-      <CardSection style={{alignItems: 'center' }}>
+      <CardSection style={{ alignItems: 'center' }}>
         <CardColumn2>
           {
             action === "Buy" ?
-            Number(selectQuoteToken.balance) < Number(quoteToken) || Number(selectQuoteToken.balance) < Number(buyTotal)
-              ? <InfoTip type={'Error'} msg={`You don't have enough ${selectQuoteToken.name} tokens`} />
-              : <InfoTip type={'Warning'} msg={'Enter a price to unlock amount'} />
-            :
-            Number(baseToken) > Number(getDisplayBalance(baseTokenBalance.value)) 
-              ? <InfoTip type={'Error'} msg={`You don't have enough ARTH-DP tokens`} /> 
-              : <InfoTip type={'Warning'} msg={'Enter a price to unlock amount'} />
+              Number(selectQuoteToken.balance) < Number(quoteToken) || Number(selectQuoteToken.balance) < Number(buyTotal)
+                ? <InfoTip type={'Error'} msg={`You don't have enough ${selectQuoteToken.name} tokens`} />
+                : <InfoTip type={'Warning'} msg={'Enter a price to unlock amount'} />
+              :
+              Number(baseToken) > Number(getDisplayBalance(baseTokenBalance.value))
+                ? <InfoTip type={'Error'} msg={`You don't have enough ARTH-DP tokens`} />
+                : <InfoTip type={'Warning'} msg={'Enter a price to unlock amount'} />
           }
-          </CardColumn2>
+        </CardColumn2>
         <CardColumn1></CardColumn1>
-        <CardColumn3 style={{textAlign: 'center'}}>
+        <CardColumn3 style={{ textAlign: 'center' }}>
           <Button
             disabled={actionButton}
             text={`${action}`}
@@ -170,10 +168,10 @@ const CardSection = styled.div`
 `;
 
 const CardColumn1 = styled.div`
-  flex-basis: 20%; 
+  flex-basis: 20%;
 `
 const CardColumn2 = styled.div`
-  flex-basis: 55%; 
+  flex-basis: 55%;
 `
 const CardColumn3 = styled.div`
   flex-basis: 25%;

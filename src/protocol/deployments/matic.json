@@ -2,7 +2,7 @@
   "MatchingMarket": {
     "abi": "MatchingMarket",
     "verified": true,
-    "address": "0xe7820CfB7EAF051b0Fe2da4606b2EbfCb5eA15E6"
+    "address": "0x45E85055C90B2a807F1e199d7F7C91ae9aCFEbe1"
   },
   "USDC": {
     "abi": "IERC20",
@@ -19,10 +19,10 @@
   },
   "ARTH-DP": {
     "abi": "DebtToken",
-    "address": "0xdF32C0137e17F7cca07984947Aa323Fc84a7Ce0E"
-  },  
+    "address": "0x71e9454df3ab9936d7aB97D24925719E0B319c59"
+  },
   "Staking-RewardsV2": {
     "abi": "StakingRewardsV2",
-    "address": "0xE016cCB6308432a6b7aCc1015C94d6B6d6485cba"
+    "address": "0x05bC6c4aB02F6523cE5268cf72212a11d4D395CB"
   }
 }
