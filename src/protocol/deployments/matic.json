@@ -2,7 +2,7 @@
   "MatchingMarket": {
     "abi": "MatchingMarket",
     "verified": true,
-    "address": "0xa07687f03AFaC082e8A42b88a5239b9a2D5FAbB6"
+    "address": "0xe7820CfB7EAF051b0Fe2da4606b2EbfCb5eA15E6"
   },
   "USDC": {
     "abi": "IERC20",
@@ -11,7 +11,7 @@
   "MAHA": {
     "abi": "IERC20",
     "verified": true,
-    "address": "0xedd6ca8a4202d4a36611e2fff109648c4863ae19"
+    "address": "0x745407c86DF8DB893011912d3aB28e68B62E49B0"
   },
   "Snapshot": {
     "abi": "Snapshot",
@@ -19,10 +19,10 @@
   },
   "ARTH-DP": {
     "abi": "DebtToken",
-    "address": "0xEe5B950e135853a28a2b8b456735358D135661d5"
+    "address": "0xdF32C0137e17F7cca07984947Aa323Fc84a7Ce0E"
   },  
   "Staking-RewardsV2": {
     "abi": "StakingRewardsV2",
-    "address": "0x03998b014EC8B603Db40F30B89E7213d06d48eEd"
+    "address": "0xE016cCB6308432a6b7aCc1015C94d6B6d6485cba"
   }
 }
