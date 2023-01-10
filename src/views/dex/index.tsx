@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {useMediaQuery} from "react-responsive";
+import { useMediaQuery } from "react-responsive";
 import _ from 'underscore'
 
 import BuySellTable from './components/BuySellTable';
@@ -28,9 +28,9 @@ function Dex() {
   const mahabal = useTokenBalance(core.tokens['MAHA'])
 
   useEffect(() => {
-    if(selectorQToken){
+    if (selectorQToken) {
       setSelectQuoteToken('MAHA')
-    }else {
+    } else {
       setSelectQuoteToken('USDC')
     }
   }, [selectorQToken])
@@ -45,33 +45,33 @@ function Dex() {
   return (
     <div className='custom-container'>
       <Typography component="div" align={'center'} className={'m-b-20'}>
-          <Grid component="label" container alignItems="center" justifyContent={'center'} spacing={1}>
-            <Grid className={'textWhite'} item>
-              ARTH-DP / USDC
-            </Grid>
-            <Grid item>
-              <AntSwitch checked={arthUsdcPairStatus || selectorQToken} onChange={handleChange} name="checkedC" />
-            </Grid>
-            <Grid className={'textWhite'} item>
-              ARTH-DP / MAHA
-            </Grid>
+        <Grid component="label" container alignItems="center" justifyContent={'center'} spacing={1}>
+          <Grid className={'textWhite'} item>
+            ARTH-DP / USDC
           </Grid>
-        </Typography>
-      <div style={{display: 'flex', flexDirection: isMobile? 'column' : 'row'}}>
+          <Grid item>
+            <AntSwitch checked={arthUsdcPairStatus || selectorQToken} onChange={handleChange} name="checkedC" />
+          </Grid>
+          <Grid className={'textWhite'} item>
+            ARTH-DP / MAHA
+          </Grid>
+        </Grid>
+      </Typography>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
         <Wrapper>
           <Card className={'material-primary'}>
-            <CardHeader>Buy Debt</CardHeader>
-            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
-            <CardSection style={{marginBottom: '20px', fontWeight: 'bold',}} className={'alignItemsCenter'}>
+            <CardHeader>BUY DEBT</CardHeader>
+            <CardSubHeader>Buy debt tokens using {selectQuoteToken}</CardSubHeader>
+            <CardSection style={{ marginBottom: '20px', fontWeight: 'bold', }} className={'alignItemsCenter'}>
               <CardColumn1 className='text-center'>AVAILABLE</CardColumn1>
               <CardColumn2 className='text-right'>
                 {
-                  selectQuoteToken == "USDC" ? 
-                  Number(getDisplayBalance(usdcbal.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
-                  Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
-                  
+                  selectQuoteToken == "USDC" ?
+                    Number(getDisplayBalance(usdcbal.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
+                    Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
+
                 }
-                
+
               </CardColumn2>
               <CardColumn3 className='text-center'>
                 {selectQuoteToken}
@@ -81,22 +81,23 @@ function Dex() {
               baseTokenBalance={baseTokenBalance}
               // quoteTokenBalance={quoteTokenBalance}
               action={'Buy'}
-              selectQuoteToken={{name: selectQuoteToken, balance: 
-                selectQuoteToken == "USDC" ? 
-                Number(getDisplayBalance(usdcbal.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
-                Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
+              selectQuoteToken={{
+                name: selectQuoteToken, balance:
+                  selectQuoteToken == "USDC" ?
+                    Number(getDisplayBalance(usdcbal.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
+                    Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
               }}
             />
           </Card>
         </Wrapper>
         <Wrapper>
           <Card className={'material-primary'}>
-            <CardHeader>Sell Debt</CardHeader>
-            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
-            <CardSection style={{marginBottom: '20px', fontWeight: 'bold',}} className={'alignItemsCenter'}>
+            <CardHeader>SELL DEBT</CardHeader>
+            <CardSubHeader>Sell your debt tokens for {selectQuoteToken}</CardSubHeader>
+            <CardSection style={{ marginBottom: '20px', fontWeight: 'bold', }} className={'alignItemsCenter'}>
               <CardColumn1 className='text-center'>AVAILABLE</CardColumn1>
               <CardColumn2 className='text-right'>
-                { Number(getDisplayBalance(baseTokenBalance.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) }
+                {Number(getDisplayBalance(baseTokenBalance.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })}
               </CardColumn2>
               <CardColumn3 className='text-center'>ARTH-DP</CardColumn3>
             </CardSection>
@@ -104,28 +105,29 @@ function Dex() {
               baseTokenBalance={baseTokenBalance}
               // quoteTokenBalance={quoteTokenBalance}
               action={'Sell'}
-              selectQuoteToken={{name: selectQuoteToken, balance: 
-                selectQuoteToken == "USDC" ? 
-                Number(getDisplayBalance(usdcbal.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
-                Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
+              selectQuoteToken={{
+                name: selectQuoteToken, balance:
+                  selectQuoteToken == "USDC" ?
+                    Number(getDisplayBalance(usdcbal.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
+                    Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
               }}
             />
           </Card>
         </Wrapper>
       </div>
 
-      <div style={{display: 'flex', flexDirection: isMobile? 'column' : 'row'}}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
         <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>Buy Orders</CardHeader>
-            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
+            <CardSubHeader>All orders buying debt tokens</CardSubHeader>
             <BuyOrdersCard selectQuoteToken={selectQuoteToken} />
           </Card>
         </Wrapper>
         <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>Sell Orders</CardHeader>
-            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
+            <CardSubHeader>All orders selling debt tokens</CardSubHeader>
             <SellOrdersCard selectQuoteToken={selectQuoteToken} />
           </Card>
         </Wrapper>
@@ -149,7 +151,7 @@ function Dex() {
       </div> */}
 
     </div>
-    
+
   )
 }
 
@@ -239,10 +241,10 @@ const CardSection = styled.div`
 `;
 
 const CardColumn1 = styled.div`
-  flex-basis: 20%; 
+  flex-basis: 20%;
 `
 const CardColumn2 = styled.div`
-  flex-basis: 55%; 
+  flex-basis: 55%;
 `
 const CardColumn3 = styled.div`
   flex-basis: 25%;

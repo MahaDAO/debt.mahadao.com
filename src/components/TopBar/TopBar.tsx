@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import {useWallet } from "use-wallet";
+import { useWallet } from "use-wallet";
 import React, { useEffect, useState, useCallback } from 'react';
 import detectEthereumProvider from '@metamask/detect-provider';
 
@@ -129,7 +129,8 @@ const TopBar: React.FC = () => {
           <HideonPhone>
             <div className="single-line-center-between">
               <div className="dialog-class">
-                <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'} />
+                {/* DEBT POOL */}
+                {/* <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'} /> */}
               </div>
               {/* {isHomePage && <div className="single-line-center-start">
                 <Button
@@ -140,37 +141,37 @@ const TopBar: React.FC = () => {
                   tracking_id="Topbar_OpenGovernance"
                 />
               </div>} */}
-              
-                <div className="single-line-center-start">
-                  {/* <Link to={'/form'} className={'m-r-8'}>
+
+              <div className="single-line-center-start">
+                {/* <Link to={'/form'} className={'m-r-8'}>
                     <Button
                       onClick={() => {}}
                       variant={'transparent'}>Register User</Button>
                   </Link> */}
-                  
-                  {/* <IconLoader className={"pointer m-r-24"} iconName={'BentoMenu'} iconType={'misc'} onClick={() => {setShowProjectModal(true)}}/> */}
-                    {
-                      !!account &&
-                      <IconLoader
-                        iconName={'Transaction'}
-                        className={'pointer m-r-12'}
-                        onClick={() => setShowTxModal(true)}
-                      />
-                    }
+
+                {/* <IconLoader className={"pointer m-r-24"} iconName={'BentoMenu'} iconType={'misc'} onClick={() => {setShowProjectModal(true)}}/> */}
+                {
+                  !!account &&
+                  <IconLoader
+                    iconName={'Transaction'}
+                    className={'pointer m-r-12'}
+                    onClick={() => setShowTxModal(true)}
+                  />
+                }
                 <AccountButton showWarning={showWarning} />
               </div>
             </div>
           </HideonPhone>
           <HideOnBigScreen>
-            <div style={{display: 'flex', alignItems: 'center'}}>
-              <div style={{flex: 1}}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ flex: 1 }}>
                 <IconLoader
                   iconName={!showMobileMenu ? 'Menu' : 'Cross'}
                   onClick={() => toggleMobileMenu(!showMobileMenu)}
                   className={'pointer'}
                 />
               </div>
-              <div style={{flex: 3}}>
+              <div style={{ flex: 3 }}>
                 <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'} />
               </div>
             </div>
