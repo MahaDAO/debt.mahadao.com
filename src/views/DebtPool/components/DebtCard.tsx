@@ -54,7 +54,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   );
 
   const handleGetRewards = () => {
-    claimCallback(() => {})
+    claimCallback(() => { })
   }
 
   const disableRewardBtn = Number(getDisplayBalance(earnedRewards.value)) > 0
@@ -71,16 +71,16 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
           </div>
         </CardHeader>
         <CardContent>
-          <CardSection>
+          {/* <CardSection>
             <TextWithIcon>Total Deposited</TextWithIcon>
             <StyledValue>
               {Number(getDisplayBalance(totalDeposited.value, 18, 3)).toLocaleString() || 0} {symbol}
             </StyledValue>
-          </CardSection>
+          </CardSection> */}
           <CardSection>
             <TextWithIcon>Your Allocation</TextWithIcon>
             <StyledValue>
-            {Number(getDisplayBalance(totalDepositedByUser.value, 18, 3)).toLocaleString() || 0} {symbol}
+              {Number(getDisplayBalance(totalDepositedByUser.value, 18, 3)).toLocaleString() || 0} {symbol}
             </StyledValue>
           </CardSection>
           <CardSection>
@@ -118,27 +118,27 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
               </div>}
             />
           </div>
-         
+
           <ButtonToBottom style={{ flexDirection: isMobile ? 'column' : 'row', marginBottom: '16px' }}>
             <Button
-              text="Deposit"
+              text="Deposit Debt Tokens"
               onClick={() => {
                 setOpenDepositModal(true)
               }}
             />
             <div style={{ width: '100px', marginTop: isMobile ? '15px' : '' }}></div>
             <Button
-              text="Withdraw"
+              text="Withdraw Debt Tokens"
               onClick={
                 () => setWithdrawModal(true)
               }
             />
           </ButtonToBottom>
           <Button
-              // disabled={!disableRewardBtn}
-              text="Get Rewards"
-              onClick={handleGetRewards}
-            />
+            disabled={earnedRewards.value.eq(0)}
+            text="Claim USDC"
+            onClick={handleGetRewards}
+          />
         </CardContent>
       </Card>
       <DepositModal
