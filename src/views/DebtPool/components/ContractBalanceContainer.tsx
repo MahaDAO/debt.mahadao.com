@@ -59,7 +59,7 @@ const ContractBalanceContainer = () => {
               : (
                 <TextWrapper
                   text={
-                    Number(getDisplayBalance(totalCirculatingSupply.value, 18, 3)).toLocaleString(navigator.language, { minimumFractionDigits: 3 }) +
+                    Number(getDisplayBalance(totalCirculatingSupply.value, 18, 3)).toLocaleString(undefined, { minimumFractionDigits: 3 }) +
                     ' ARTH-DP'
                   }
                   fontSize={24}
@@ -77,7 +77,7 @@ const ContractBalanceContainer = () => {
                 <TextWrapper
                   text={
                     '(' +
-                    Number(getDisplayBalance(percentOfMAHACirculatingSupplyLocked.value.mul(100), 18, 3)).toLocaleString(navigator.language, { minimumFractionDigits: 3 }) +
+                    Number(getDisplayBalance(percentOfMAHACirculatingSupplyLocked.value.mul(100), 18, 3)).toLocaleString(undefined, { minimumFractionDigits: 3 }) +
                     ' % debt burned)'
                   }
                   fontSize={24}
@@ -103,7 +103,7 @@ const ContractBalanceContainer = () => {
               : (
                 <TextWrapper
                   text={`$ ${
-                    Number(getDisplayBalance(totalSupply.value, 18, 3)).toLocaleString(navigator.language, { minimumFractionDigits: 3 })
+                    Number(getDisplayBalance(totalSupply.value, 18, 3)).toLocaleString(undefined, { minimumFractionDigits: 3 })
                   }`}
                   fontSize={24}
                   fontWeight={'bold'}

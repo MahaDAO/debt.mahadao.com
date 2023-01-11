@@ -98,7 +98,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
               {
                 earnedRewards.isLoading
                   ? <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
-                  : Number(getDisplayBalance(earnedRewards.value, 18, 5)).toLocaleString('en-US',
+                  : Number(getDisplayBalance(earnedRewards.value, 18, 5)).toLocaleString(undefined,
                     { minimumFractionDigits: 5, maximumFractionDigits: 8 })
               } USDC
             </StyledValue>
