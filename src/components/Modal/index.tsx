@@ -36,26 +36,57 @@ export interface DialogTitleProps extends WithStyles<typeof styles> {
   modalTitleStyle?: any;
   closeButton?: boolean;
   title: string;
+  subTitle?: string;
+}
+
+export interface DialogSubTitleProps extends WithStyles<typeof styles> {
+  modalTitleStyle?: any;
+  children: string;
 }
 
 const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
-  const { children, classes, onClose, titleLogo, modalTitleStyle, closeButton, title, ...other } = props;
+  const { children, classes, onClose, titleLogo, modalTitleStyle, closeButton, title, subTitle, ...other } = props;
   return (
-    <MuiDialogTitle style={modalTitleStyle} disableTypography className={classes.root} {...other}>
-      <div className="dialog-class width-100">
-        {titleLogo && titleLogo}
-        <TextWrapper
-          text={title}
-          fontSize={18}
-          fontWeight={600}
-        />
+    <div>
+      <MuiDialogTitle style={modalTitleStyle} disableTypography className={classes.root} {...other}>
+      
+      <div style={{display: 'flex'}}>
+        <div className="dialog-class width-100">
+          {titleLogo && titleLogo}
+          <TextWrapper
+            text={title}
+            fontSize={18}
+            fontWeight={600}
+          />
+        </div>
+        {closeButton ? (
+          <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+            <IconLoader iconName={'Cross'} iconType="misc" />
+          </IconButton>
+        ) : null}
       </div>
-      {closeButton ? (
-        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-          <IconLoader iconName={'Cross'} iconType="misc" />
-        </IconButton>
-      ) : null}
+      {
+        subTitle && 
+        <DialogSubTitle>{subTitle}</DialogSubTitle>
+      }
+
     </MuiDialogTitle>
+   
+    </div>
+  );
+});
+
+const DialogSubTitle = withStyles(styles)((props: DialogSubTitleProps) => {
+  const { modalTitleStyle, children } = props;
+  return (
+    <div className="p-t-16 width-100">
+      <TextWrapper
+        text={children}
+        fontSize={14}
+        // fontWeight={600}
+        align={'center'}
+      />
+    </div>
   );
 });
 
@@ -90,6 +121,7 @@ interface props {
   modalBodyStyle?: any;
   closeButton?: boolean;
   mobile?: boolean;
+  subTitle?: string;
 }
 
 const useStyles = makeStyles({
@@ -134,6 +166,7 @@ const Modal: React.FC<props> = ({
   modalBodyStyle,
   closeButton,
   mobile = false,
+  subTitle
 }) => {
   const [openModal, setOpen] = React.useState(open);
 
@@ -172,6 +205,7 @@ const Modal: React.FC<props> = ({
           closeButton={closeButton}
           modalTitleStyle={{
             display: 'flex',
+            flexDirection: 'column',
             color: 'rgba(255, 255, 255, 0.88)',
             alignItems: 'center',
             justifyContent: 'center',
@@ -183,9 +217,13 @@ const Modal: React.FC<props> = ({
           onClose={handleCloseModal}
           titleLogo={titleLogo}
           title={title}
+          subTitle={subTitle}
         >
           {title}
         </DialogTitle>}
+
+       
+       
         <DialogContent style={{
           ...modalBodyStyle
         }} dividers>

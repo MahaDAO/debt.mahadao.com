@@ -129,27 +129,9 @@ const TopBar: React.FC = () => {
           <HideonPhone>
             <div className="single-line-center-between">
               <div className="dialog-class">
-                {/* DEBT POOL */}
-                {/* <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'} /> */}
+                <PageHeading style={{fontSize: '24px'}}>DEBT POOL</PageHeading>
               </div>
-              {/* {isHomePage && <div className="single-line-center-start">
-                <Button
-                  onClick={() => {
-                    window.location.href = '/#/locker'
-                  }}
-                  text="Open Governance"
-                  tracking_id="Topbar_OpenGovernance"
-                />
-              </div>} */}
-
               <div className="single-line-center-start">
-                {/* <Link to={'/form'} className={'m-r-8'}>
-                    <Button
-                      onClick={() => {}}
-                      variant={'transparent'}>Register User</Button>
-                  </Link> */}
-
-                {/* <IconLoader className={"pointer m-r-24"} iconName={'BentoMenu'} iconType={'misc'} onClick={() => {setShowProjectModal(true)}}/> */}
                 {
                   !!account &&
                   <IconLoader
@@ -171,9 +153,7 @@ const TopBar: React.FC = () => {
                   className={'pointer'}
                 />
               </div>
-              <div style={{ flex: 3 }}>
-                <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'} />
-              </div>
+              <PageHeading>DEBT POOL</PageHeading>
             </div>
           </HideOnBigScreen>
           <HideOnBigScreen>
@@ -242,6 +222,19 @@ const WarningMsg = styled.div`
   display: block;
   background-color: #2A2827;
   padding: 12px 16px;
+`;
+
+const PageHeading = styled.p`
+  font-family: Syne;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 29px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 8px;
 `;
 
 export default TopBar;

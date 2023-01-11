@@ -50,6 +50,7 @@ const WithdrawModal = (props: any) => {
       handleClose={onModalClose}
       open={openModal}
       title={`Withdraw your staked token`}
+      subTitle={'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum'}
     >
       <div>
         <div>

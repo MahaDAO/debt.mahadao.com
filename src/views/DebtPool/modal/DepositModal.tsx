@@ -57,6 +57,7 @@ const DepositModal = (props: any) => {
       handleClose={onModalClose}
       open={openModal}
       title={`Stake your token`}
+      subTitle={'lorem ispum lorem ipsum lorem ipsum'}
     >
       <div>
         <div>

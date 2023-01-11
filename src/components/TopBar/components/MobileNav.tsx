@@ -91,31 +91,8 @@ const MobileNav = (props: props) => {
               )
           }
         </WalletButton>
-        {/* <TopMenu className="bottom-divider">
-          <StyledLinkHref href="https://discuss.mahadao.com" target={"_blank"}>
-            <div className={"single-line-center-start"}>
-              <p>Forum</p>
-              <IconLoader iconName={"ArrowLinkColored"} iconType={"arrow"} />
-            </div>
-          </StyledLinkHref>
 
-          {config.networkName === "Matic Mumbai Testnet" &&
-            <StyledLink exact activeClassName="activeSidebar" onClick={props.onClick} to="/faucet">
-              Faucet
-            </StyledLink>
-          }
-        </TopMenu> */}
-        <BottomMenu className="bottom-divider">
-          <StyledLinkHref href="https://docs.mahadao.com/governance/governance-portal" target={'_blank'}>
-            Documentation
-          </StyledLinkHref>
-          <StyledLinkHref href="https://www.youtube.com/watch?v=qxtyvcckgGg&list=PL2bcCoQ5RXeGh-Gkh1QZE_SjevMIDdtgN&index=8" target={'_blank'}>
-            Video Tutorials
-          </StyledLinkHref>
-          <StyledLinkHref href="https://docs.google.com/forms/d/e/1FAIpQLSdeFG524PT4jrLYzbZZPUuuCY7Ty220Y3iSi1StvLbsk8JSXA/viewform" target={'_blank'}>
-            Report a Bug
-          </StyledLinkHref>
-        </BottomMenu>
+
       </StyledNav>
     </div>
   );

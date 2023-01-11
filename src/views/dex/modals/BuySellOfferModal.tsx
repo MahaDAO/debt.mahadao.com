@@ -19,11 +19,9 @@ import styled from 'styled-components';
 
 function BuySellOffer(props: any) {
 
-  const {openModal, onModalClose, action, tableData} = props;
+  const {openModal, onModalClose, action, tableData, subTitle} = props;
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const core = useCore()
-
-  console.log("tableData", tableData)
 
   const [quoteToken, setQuoteToken] = useState<string>('0')
   const [baseToken, setBaseToken] = useState<string>('0')
@@ -84,8 +82,9 @@ function BuySellOffer(props: any) {
       handleClose={onModalClose}
       open={openModal}
       title={`${action} Order`}
+      subTitle={subTitle}
     >
-      {/* <Card > */}
+      <div>
         <CardContent>
           <CardSection>
             <TextWithIcon>Price</TextWithIcon>
@@ -144,7 +143,7 @@ function BuySellOffer(props: any) {
             </Grid>
           </Grid>
         </CardContent>
-      {/* </Card> */}
+      </div>
     </Modal>
   );
 }
@@ -203,6 +202,7 @@ const CardSection = styled.div`
     text-align: right;
   }
 `;
+
 
 // const Card = styled.div`
 //   padding: 5px 0;

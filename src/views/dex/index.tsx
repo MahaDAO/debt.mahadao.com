@@ -44,6 +44,8 @@ function Dex() {
 
   return (
     <div className='custom-container'>
+       <CardHeader style={{fontSize: '24px', justifyContent: 'center'}}>Buy and Sell Debt</CardHeader>
+      <CardSubHeader style={{justifyContent: 'center', marginBottom: '24px'}}>lorem ipsum lorem ipsum lorem ipsum lore ipsum lorem ipsum lorem ipsum lorem ipsum lore ipsum</CardSubHeader>
       <Typography component="div" align={'center'} className={'m-b-20'}>
         <Grid component="label" container alignItems="center" justifyContent={'center'} spacing={1}>
           <Grid className={'textWhite'} item>
@@ -71,7 +73,6 @@ function Dex() {
                     Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
 
                 }
-
               </CardColumn2>
               <CardColumn3 className='text-center'>
                 {selectQuoteToken}

@@ -59,11 +59,13 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
 
   const disableRewardBtn = Number(getDisplayBalance(earnedRewards.value)) > 0
 
+  const depositDisable = !arthBalanceOf.value.isZero()
+  const withdrawDisable = !totalDepositedByUser.value.isZero()
+
   return (
     <Wrapper style={{ marginRight: isMobile ? '' : '16px' }}>
       <Card className={'material-primary'}>
         <CardHeader>
-          <IconLoader iconName={symbol} iconType="brandLogo" width={44} className="m-r-4" />
           <div
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline', textAlign: 'left' }}
           >
@@ -125,6 +127,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
               onClick={() => {
                 setOpenDepositModal(true)
               }}
+              disabled={!depositDisable}
             />
             <div style={{ width: '100px', marginTop: isMobile ? '15px' : '' }}></div>
             <Button
@@ -132,6 +135,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
               onClick={
                 () => setWithdrawModal(true)
               }
+              disabled={!withdrawDisable}
             />
           </ButtonToBottom>
           <Button
@@ -260,5 +264,6 @@ const ButtonToBottom = styled.div`
   margin-top: 12px;
   width: 100%
 `;
+
 
 export default HomeCard;

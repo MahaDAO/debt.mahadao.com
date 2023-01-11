@@ -9,9 +9,9 @@ const LockDeposit = () => {
   const isMobile = useMediaQuery({ maxWidth: '680px' })
 
   return (
-    <div className='custom-container' style={{ marginTop: '150px', }}>
+    <div className='custom-container' style={{ marginTop: '110px', }}>
       <div className="m-b-40">
-        <PageHeading>{'DEBT POOL'}</PageHeading>
+        {/* <PageHeading>{'DEBT POOL'}</PageHeading> */}
         <CardSubHeader>
           The debt pool is a way for holders to get reimbursed from protocol revenue. You can burn your
           debt tokens for USDC that gets collected from the protocol's revenue at a 1:1 ratio. Or you can choose to
@@ -56,11 +56,11 @@ const InfoHeader = styled.div`
 const CardSubHeader = styled.div`
   color: #999;
   display: flex;
-  font-size: 14px;
-  justify-content: center;
+  font-size: 16px;
+  justify-content: start;
   align-items: center;
-  text-align: center;
-  padding: 0 32px 30px 32px;
+  // text-align: center;
+  padding: 0 0px 30px 0px;
   border-bottom: 1px solid #FFFFFF20;
   @media (max-width: 600px) {
     padding: 16px;
