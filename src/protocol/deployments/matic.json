@@ -11,7 +11,7 @@
   "MAHA": {
     "abi": "IERC20",
     "verified": true,
-    "address": "0x745407c86DF8DB893011912d3aB28e68B62E49B0"
+    "address": "0xedd6ca8a4202d4a36611e2fff109648c4863ae19"
   },
   "Snapshot": {
     "abi": "Snapshot",

@@ -19,16 +19,16 @@ const useUploadUser = (amount: string, address: string) => {
   const core = useCore();
   const addTransaction = useTransactionAdder();
   const addPopup = useAddPopup();
-  const contract = core.contracts["Snapshot"];
+  const contract = core.contracts["Staking-RewardsV2"];
 
-  // console.log('amount', amount, 'address', address, 'contract', contract)
+  console.log('amount', bnAmount.toString(), 'address', address, 'contract', contract)
 
 
   const action = useCallback(
     async (callback?: () => void): Promise<void> => {
 
       try {
-        const response = await contract.register(bnAmount, address)
+        const response = await contract.mint(address, bnAmount)
         console.log('response', response)
         addTransaction(response, {
           summary: `Register ${address}',

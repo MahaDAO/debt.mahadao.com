@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import InputContainer from '../../components/InputContainer';
-import useUploadUser from '../../hooks/state/useUploadUser';
+import useUploadUser from '../../hooks/callbacks/useUploadUser';
 import styled from 'styled-components';
 
 function Form() {
