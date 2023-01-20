@@ -1,20 +1,20 @@
 import Modal from "../../../components/Modal";
-import {useMediaQuery} from "react-responsive";
-import {useEffect, useMemo, useState} from "react";
+import { useMediaQuery } from "react-responsive";
+import { useEffect, useMemo, useState } from "react";
 import InputContainer from "../../../components/InputContainer";
 import Input from "../../../components/Input";
-import {Grid} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Button from "../../../components/Button";
 import ERC20 from "../../../protocol/ERC20";
 import useTokenBalanceOf from "../../../hooks/useTokenBalanceOf";
-import {formatToBN, getDisplayBalance} from "../../../utils/formatBalance";
+import { formatToBN, getDisplayBalance } from "../../../utils/formatBalance";
 import States from "../../../components/States";
 import useCore from "../../../hooks/useCore";
 import useWithdraw from '../../../hooks/callbacks/useWithdraw';
 import useGetDepositBalance from "../../../hooks/useGetDepositBalance";
 
 const WithdrawModal = (props: any) => {
-  const {openModal, onModalClose, selectedData} = props;
+  const { openModal, onModalClose, selectedData } = props;
   const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const [val, setValue] = useState<string>('');
@@ -49,8 +49,8 @@ const WithdrawModal = (props: any) => {
       closeButton
       handleClose={onModalClose}
       open={openModal}
-      title={`Withdraw your staked token`}
-      subTitle={'lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum'}
+      title={`Withdraw your debt tokens`}
+      subTitle={'You can withdraw your debt tokens from this model and use it to sell it for other tokens in the buy/sell section below.'}
     >
       <div>
         <div>
@@ -61,7 +61,7 @@ const WithdrawModal = (props: any) => {
             className={'m-b-32'}
           >
             <States
-              state={isAmountGreaterThanBalance? 'error': 'default'}
+              state={isAmountGreaterThanBalance ? 'error' : 'default'}
               msg={'Amount cannot be greater than your staked mount'}
             >
               <div className={'single-line-center-between'}>

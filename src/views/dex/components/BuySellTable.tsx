@@ -126,7 +126,7 @@ function BuySellTable(props: IProps) {
         </CardColumn3>
       </CardSection>
       <BuySellOfferModal
-        subTitle={'lorem ipsum lorem ipsum lorem ipsum'}
+        subTitle={`Here you can place an order to ${action.toLowerCase()} debt tokens.`}
         openModal={openOfferModal}
         onModalClose={() => setOpenOfferModal(false)}
         action={action}

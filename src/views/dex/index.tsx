@@ -44,8 +44,12 @@ function Dex() {
 
   return (
     <div className='custom-container'>
-       <CardHeader style={{fontSize: '24px', justifyContent: 'center'}}>Buy and Sell Debt</CardHeader>
-      <CardSubHeader style={{justifyContent: 'center', marginBottom: '24px'}}>lorem ipsum lorem ipsum lorem ipsum lore ipsum lorem ipsum lorem ipsum lorem ipsum lore ipsum</CardSubHeader>
+      <CardHeader style={{ fontSize: '24px', justifyContent: 'center' }}>Buy and Sell Debt</CardHeader>
+      <CardSubHeader style={{ justifyContent: 'center', marginBottom: '24px' }}>
+        In this section, you can place orders to buy or sell your debt tokens (ARTH-DP) for other
+        tokens at a price that you choose. On a monthly basis the team will attempt to regularly
+        fullfil the orders with whatever inventory was available at that time.
+      </CardSubHeader>
       <Typography component="div" align={'center'} className={'m-b-20'}>
         <Grid component="label" container alignItems="center" justifyContent={'center'} spacing={1}>
           <Grid className={'textWhite'} item>
@@ -133,24 +137,6 @@ function Dex() {
           </Card>
         </Wrapper>
       </div>
-
-      {/* <div style={{display: 'flex'}}>
-        <Wrapper>
-          <Card className={'material-primary'}>
-            <CardHeader>My Orders</CardHeader>
-            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
-            <MyOrders />
-          </Card>
-        </Wrapper>
-        <Wrapper>
-          <Card className={'material-primary'}>
-            <CardHeader>Market History</CardHeader>
-            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
-            <MyOrders />
-          </Card>
-        </Wrapper>
-      </div> */}
-
     </div>
 
   )
