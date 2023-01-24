@@ -4,6 +4,10 @@ import ERC20 from './ERC20';
 import ABIS from './deployments/abi';
 import { Configuration } from '../utils/interface';
 import { getDefaultProvider } from '../utils/provider';
+import Multicall from './Multicall';
+import * as tokenState from '../state/token/controller';
+
+
 
 /**
  * An API module of ARTH contracts.
@@ -26,9 +30,17 @@ export class Protocol {
     [name: string]: ERC20;
   };
 
+  multicall!: { [chainId: number]: Multicall };
+
   constructor(cfg: Configuration) {
+
     const { deployments, supportedTokens } = cfg;
+    console.log("deployments", deployments)
+
     const provider = getDefaultProvider(cfg);
+
+    // @ts-ignore
+    this.multicall = { 137: {} };
 
     this.contracts = {};
     this.tokens = {};
@@ -43,6 +55,11 @@ export class Protocol {
           cfg.decimalOverrides[name] || 18,
         );
       }
+
+      this.multicall[137] = new Multicall(
+        cfg.defaultProvider,
+        deployments[name].address,
+      );
     }
 
     this.config = cfg;
@@ -53,7 +70,7 @@ export class Protocol {
    * @param provider From an unlocked wallet. (e.g. Metamask)
    * @param account An address of unlocked wallet account.
    */
-  async unlockWallet(provider: any, account: string) {
+  async unlockWallet(provider: any, account: string, dispatch: any) {
     const newProvider = new ethers.providers.Web3Provider(provider, this.config.chainId);
     await newProvider.send("eth_requestAccounts", []);
     this.signer = newProvider.getSigner()
@@ -71,6 +88,9 @@ export class Protocol {
     for (const token of Object.values(this.tokens)) {
       if (token && token.address) token.connect(this.signer);
     }
+
+    tokenState.initUser(this, dispatch, 137);
+
   };
 
   get isUnlocked(): boolean {

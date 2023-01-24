@@ -30,6 +30,7 @@ function BuyOrdersCard(props: IProps) {
 
   useEffect(() => {
     getBuyOrderData()
+    console.log("inside useeffect")
   
   }, [selectQuoteToken])
   
@@ -46,11 +47,12 @@ function BuyOrdersCard(props: IProps) {
 
       if(offer[5]._hex !== "0x00"){
         if(offer.buy_gem.toLowerCase() === core.tokens['ARTH-DP'].address.toLowerCase()){
-          console.log("offer", offer, i)
           if(offer.pay_gem.toLowerCase() === core.tokens['USDC'].address.toLowerCase())
             buyOrderArr.push({offer, i, exchangeToken: 'USDC'})
           if(offer.pay_gem.toLowerCase() === core.tokens['MAHA'].address.toLowerCase())
             buyOrderArr.push({offer, i, exchangeToken: 'MAHA'})
+          if(offer.pay_gem.toLowerCase() === core.tokens['SCLP'].address.toLowerCase())
+            buyOrderArr.push({offer, i, exchangeToken: 'SCLP'})
 
           setBuyOrderData(buyOrderArr)
         }
@@ -58,12 +60,9 @@ function BuyOrdersCard(props: IProps) {
     }
   }
 
-  console.log('buyOrderData', buyOrderData)
-
   const cancelOrderAction = useCancelOffer(cancelId)
 
   const handleCancelOrder = (id: number) => {
-    // console.log('handleCancelOrder', id)
     setCancelId(id)
     cancelOrderAction(id)
   }

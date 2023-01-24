@@ -8,6 +8,10 @@
     "abi": "IERC20",
     "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
   },
+  "SCLP": {
+    "abi": "IERC20",
+    "address": "0x2fc711518aae7c87d7002566c5d43b0e5d2b1932"
+  },
   "MAHA": {
     "abi": "IERC20",
     "verified": true,
@@ -24,5 +28,11 @@
   "Staking-RewardsV2": {
     "abi": "StakingRewardsV2",
     "address": "0x05bC6c4aB02F6523cE5268cf72212a11d4D395CB"
+  },
+  "Multicall": {
+    "abi": "Multicall",
+    "address": "0x1261365EFbff94446731d7943354e580Ee890e74",
+    "txHash": "0x050740c881e9fdab4d86e29d62c6b2e3437707ed84501cdc32501201c73bb563",
+    "verification": "https://polygonscan.com/address/0x1261365EFbff94446731d7943354e580Ee890e74#code"
   }
 }

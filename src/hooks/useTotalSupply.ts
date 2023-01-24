@@ -9,6 +9,8 @@ import {
   LOADING_DEFAULT_BASIC_STATE,
   NON_LOADING_DEFAULT_BASIC_STATE,
 } from "../utils/constants";
+import { useSelector } from "react-redux";
+import { AppState } from "../state";
 
 const useTotalSupply = (token: ERC20 | Contract) => {
   const [balance, setBalance] = useState<BasicState>(
@@ -18,7 +20,15 @@ const useTotalSupply = (token: ERC20 | Contract) => {
   const core = useCore();
   const blockNumber = useBlockNumber();
 
+
+
   const fetchBalance = useCallback(async () => {
+
+    if (!core.myAccount) {
+      setBalance({ isLoading: false, value: BigNumber.from(0) });
+      return;
+    }
+
     const bal: BigNumber = await token.totalSupply();
     setBalance({ isLoading: false, value: bal });
   }, [token]);

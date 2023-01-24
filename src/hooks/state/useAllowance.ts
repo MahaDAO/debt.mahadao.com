@@ -5,9 +5,15 @@ import { useCallback, useEffect, useState } from 'react';
 import useCore from '../useCore';
 import ERC20 from '../../protocol/ERC20';
 import { useBlockNumber } from '../../state/application/hooks';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../state';
 
 const useAllowance = (token: ERC20, spender: string, pendingApproval?: boolean) => {
   const [allowance, setAllowance] = useState<BigNumber>(BigNumber.from(0));
+
+  const stateAllowance = useSelector(
+    (state: AppState) => state.token.allowance[token.address]
+  )
 
   const core = useCore();
   const { account } = useWallet();
@@ -15,6 +21,11 @@ const useAllowance = (token: ERC20, spender: string, pendingApproval?: boolean) 
 
   const fetchAllowance = useCallback(async () => {
     if (!account) return;
+
+    if(stateAllowance && stateAllowance[spender]){
+      setAllowance(stateAllowance[spender])
+      return
+    }
     const allowance = await token.allowance(account, spender);
     setAllowance(allowance);
   }, [account, spender, token]);

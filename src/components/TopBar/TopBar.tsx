@@ -42,20 +42,21 @@ const TopBar: React.FC = () => {
   const { account, connect } = useWallet();
   const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
+  
 
   const processNetwork = useCallback(async () => {
     const provider: any = await detectEthereumProvider();
 
     if (provider) {
       const chainId = Number(await provider.request({ method: 'eth_chainId' }));
-      setShowWarning(chainId !== core.config.chainId);
+      setShowWarning(chainId !== core.config.chainId );
     }
   }, [core]);
 
   useEffect(() => {
     if (location.pathname === "/") setIsHomePage(true)
     else setIsHomePage(false)
-    Mixpanel.track(`ScreenView:${location.pathname}`);
+    // Mixpanel.track(`ScreenView:${location.pathname}`);
   }, [location]);
 
   useEffect(() => {

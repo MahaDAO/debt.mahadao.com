@@ -26,10 +26,7 @@ function SellOrdersCard(props: IProps) {
   let allOfers: any = []
 
   useEffect(() => {
-    getSellOrderData()
-
-    console.log("getSellOrderData", selectQuoteToken)
-  
+    getSellOrderData()  
   }, [selectQuoteToken])
   
 
@@ -46,14 +43,13 @@ function SellOrdersCard(props: IProps) {
             sellOrderArr.push({offer, i, exchangeToken: 'USDC'})
           if(offer.buy_gem.toLowerCase() == core.tokens['MAHA'].address.toLowerCase())
             sellOrderArr.push({offer, i, exchangeToken: 'MAHA'})
-          
+          if(offer.buy_gem.toLowerCase() == core.tokens['SCLP'].address.toLowerCase())
+            sellOrderArr.push({offer, i, exchangeToken: 'SCLP'})
           setSellOrderData(sellOrderArr)
         }
       }
     }
   }
-
-  console.log('sellOrderData', sellOrderData)
 
   const sellOrderAction = useCancelOffer(cancelId)
 

@@ -8,19 +8,30 @@ import {
   LOADING_DEFAULT_BASIC_STATE,
   NON_LOADING_DEFAULT_BASIC_STATE,
 } from "../../utils/constants";
+import { useSelector } from "react-redux";
+import { AppState } from "../../state";
 
 const useGetEarnedRewards = () => {
   const [state, setState] = useState<BasicState>(LOADING_DEFAULT_BASIC_STATE);
   const core = useCore();
   const { account } = useWallet();
 
+  const rewardsOf = useSelector(
+    (state: AppState) => state.token.yourRewards
+  )
+ 
   const action = useCallback(async () => {
+    if(!account) {
+      setState({isLoading: false, value: BigNumber.from(0)})
+      return
+    }
+    if(rewardsOf && account && rewardsOf[account]){
+      setState({isLoading: false, value: rewardsOf[account]})
+      return
+    }
+
     const contract = core.contracts["Staking-RewardsV2"]
-
     const response: BigNumber = await contract.earned(account);
-
-    console.log("useGetEarnedRewards", account, response)
-
     const newState: BasicState = {
       isLoading: false,
       value: response,

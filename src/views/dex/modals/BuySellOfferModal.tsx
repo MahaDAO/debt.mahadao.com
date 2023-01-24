@@ -51,12 +51,9 @@ function BuySellOffer(props: any) {
     core.contracts['MatchingMarket'].address
   );
 
-  console.log('tableData.total', tableData.total)
-
   const buyOfferAction = useBuyOffer(formatToBN(tableData.total, 6), formatToBN(baseToken), action, tableData.selectQuoteToken.name) 
 
   function handleBuyOffer() {
-    console.log('buyoffer')
     buyOfferAction(() => {
       // props.onCancel();
     })
@@ -65,7 +62,6 @@ function BuySellOffer(props: any) {
   const sellOfferAction = useSellOffer(formatToBN(baseToken), formatToBN(tableData.total, 6), action, tableData.selectQuoteToken.name) 
 
   function handleSellOffer() {
-    console.log('selloffer')
     sellOfferAction(() => {
       // props.onCancel();
     })

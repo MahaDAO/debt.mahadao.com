@@ -43,9 +43,6 @@ function BuySellTable(props: IProps) {
       :
       Number(baseToken) > Number(getDisplayBalance(baseTokenBalance.value))
 
-  // console.log('totalQuoteToken', totalQuoteToken, Number(getDisplayBalance(quoteTokenBalance.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }), Number(getDisplayBalance(baseTokenBalance.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }));
-  console.log('first', buyTotal, sellTotal)
-
   useEffect(() => {
     if (quoteToken.length && baseToken.length) {
       if (action === 'Buy') {
@@ -61,8 +58,6 @@ function BuySellTable(props: IProps) {
     }
 
   }, [quoteToken, baseToken])
-
-  console.log("test buysell", Number(baseToken), getDisplayBalance(baseTokenBalance.value))
 
   return (
     <CardContent>
