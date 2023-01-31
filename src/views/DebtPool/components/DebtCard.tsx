@@ -44,10 +44,14 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   const earnedRewards = useGetEarnedRewards()
 
   const depositShare = useMemo(() => {
-    if (arthBalanceOf.value.isZero() || arthTotalSupply.value.isZero() || arthTotalSupply.value.sub(arthBalanceOf.value).isZero()) return 0
+    if (arthBalanceOf.value.isZero() || 
+        arthTotalSupply.value.isZero() || 
+        arthTotalSupply.value.sub(arthBalanceOf.value).isZero() ||
+        totalDeposited.value.isZero() ) return 0
 
     let diff = totalDeposited.value.sub(totalDepositedByUser.value)
-    return totalDeposited.value.sub(diff).mul(10000).div(totalDeposited.value).toNumber() / 100
+
+    return totalDeposited.value.sub(diff).mul(10000000).div(totalDeposited.value).toNumber() / 100000
 
   },
     [arthBalanceOf, arthTotalSupply]
@@ -88,7 +92,10 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
           <CardSection>
             <TextWithIcon>Your Deposit Share</TextWithIcon>
             <StyledValue>
-              {depositShare.toFixed(2)}%
+              { depositShare.toFixed(2) != '0.00' ?
+                  depositShare.toFixed(2) :
+                   depositShare.toFixed(5)
+              }% 
             </StyledValue>
           </CardSection>
 

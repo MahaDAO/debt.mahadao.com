@@ -10,8 +10,9 @@ import BuyOrdersCard from './components/BuyOrdersCard';
 import SellOrdersCard from './components/SellOrdersCard';
 import { useEffect, useState } from 'react';
 import Selector from '../../components/Selector';
-import { FormControlLabel, Grid, Switch, Typography } from '@material-ui/core';
+import { FormControl, FormControlLabel, FormLabel, Grid, RadioGroup, Switch, Typography } from '@material-ui/core';
 import { AntSwitch } from '../../components/AntSwitch';
+import Button from '../../components/Button';
 
 function Dex() {
 
@@ -19,28 +20,32 @@ function Dex() {
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   const baseTokenBalance = useTokenBalance(core.tokens['ARTH-DP'])
   const quoteTokenBalance = useTokenBalance(core.tokens['USDC'])
-  let arthUsdcPairStatus = JSON.parse(localStorage.getItem('ARTH-DP/USDC pair') || 'false')
+  let arthUsdcPairStatus = localStorage.getItem('selectorQToken') || 'usdc'
 
   const [selectQuoteToken, setSelectQuoteToken] = useState<string>('USDC')
-  const [selectorQToken, setSelectorQToken] = useState<boolean>(arthUsdcPairStatus)
+  const [selectorQToken, setSelectorQToken] = useState<string>(arthUsdcPairStatus)
 
   const usdcbal = useTokenBalance(core.tokens['USDC'])
   const mahabal = useTokenBalance(core.tokens['MAHA'])
+  const sclpbal = useTokenBalance(core.tokens['SCLP'])
 
   useEffect(() => {
-    if (selectorQToken) {
+    if (selectorQToken === 'maha') {
       setSelectQuoteToken('MAHA')
-    } else {
+    } else if (selectorQToken === 'usdc') {
       setSelectQuoteToken('USDC')
+    }
+    else {
+      setSelectQuoteToken('SCLP')
     }
   }, [selectorQToken])
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    localStorage.setItem('ARTH-DP/USDC pair', `${event.target.checked}`)
-    setSelectorQToken(event.target.checked);
+  const handleChange = (val: string) => {
+    localStorage.setItem('selectorQToken', val)
+    console.log('handleChange', val)
+    setSelectorQToken(val);
 
   };
-
 
   return (
     <div className='custom-container'>
@@ -50,19 +55,35 @@ function Dex() {
         tokens at a price that you choose. On a monthly basis the team will attempt to regularly
         fullfil the orders with whatever inventory was available at that time.
       </CardSubHeader>
-      <Typography component="div" align={'center'} className={'m-b-20'}>
-        <Grid component="label" container alignItems="center" justifyContent={'center'} spacing={1}>
-          <Grid className={'textWhite'} item>
-            ARTH-DP / USDC
-          </Grid>
-          <Grid item>
-            <AntSwitch checked={arthUsdcPairStatus || selectorQToken} onChange={handleChange} name="checkedC" />
-          </Grid>
-          <Grid className={'textWhite'} item>
-            ARTH-DP / MAHA
-          </Grid>
-        </Grid>
-      </Typography>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+        <div style={{ marginRight: '10px' }}>
+          <Button
+            text="ARTH-DP / USDC"
+            onClick={
+              () => { handleChange('usdc') }
+            }
+            variant={selectorQToken === 'usdc' ? 'default' : 'transparent'}
+          />
+        </div>
+        <div style={{ marginRight: '10px' }}>
+          <Button
+            text="ARTH-DP / MAHA"
+            onClick={
+              () => { handleChange('maha') }
+            }
+            variant={selectorQToken === 'maha' ? 'default' : 'transparent'}
+          />
+        </div>
+        <div style={{ marginRight: '10px' }}>
+          <Button
+            text="ARTH-DP / SCLP"
+            onClick={
+              () => { handleChange('sclp') }
+            }
+            variant={selectorQToken === 'sclp' ? 'default' : 'transparent'}
+          />
+        </div>
+      </div>
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
         <Wrapper>
           <Card className={'material-primary'}>
@@ -74,8 +95,9 @@ function Dex() {
                 {
                   selectQuoteToken == "USDC" ?
                     Number(getDisplayBalance(usdcbal.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
-                    Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
-
+                    selectQuoteToken == "MAHA" ?
+                      Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
+                      Number(getDisplayBalance(sclpbal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
                 }
               </CardColumn2>
               <CardColumn3 className='text-center'>
@@ -90,7 +112,9 @@ function Dex() {
                 name: selectQuoteToken, balance:
                   selectQuoteToken == "USDC" ?
                     Number(getDisplayBalance(usdcbal.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
-                    Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
+                    selectQuoteToken == "MAHA" ?
+                      Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
+                      Number(getDisplayBalance(sclpbal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
               }}
             />
           </Card>
@@ -114,7 +138,9 @@ function Dex() {
                 name: selectQuoteToken, balance:
                   selectQuoteToken == "USDC" ?
                     Number(getDisplayBalance(usdcbal.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
-                    Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
+                    selectQuoteToken == "MAHA" ?
+                      Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
+                      Number(getDisplayBalance(sclpbal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
               }}
             />
           </Card>

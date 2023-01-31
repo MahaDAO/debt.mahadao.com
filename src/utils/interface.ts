@@ -72,7 +72,7 @@ export type Configuration = {
   defaultProvider: string;
   deployments: Deployments;
   config?: EthereumConfig;
-  blockchainToken: 'MATIC' | 'ETH' | 'BNB';
+  blockchainToken: 'MATIC'
   refreshInterval: number;
   gasLimitMultiplier: number;
   blockchainTokenName: string;

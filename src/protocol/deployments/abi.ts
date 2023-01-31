@@ -6,6 +6,7 @@ import DebtToken from "./abi/DebtToken.json";
 import StakingRewardsV2 from "./abi/StakingRewardsV2.json"
 import MatchingMarket from "./abi/MatchingMarket.json"
 import Snapshot from "./abi/Snapshot.json"
+import Multicall from "./abi/Multicall.json"
 
 const abis: IABIS = {
   IERC20,
@@ -14,7 +15,8 @@ const abis: IABIS = {
   DebtToken,
   StakingRewardsV2,
   MatchingMarket,
-  Snapshot
+  Snapshot,
+  Multicall
 };
 
 export default abis;

@@ -10,14 +10,17 @@ import { formatToBN, getDisplayBalance } from '../../utils/formatBalance';
 
 const useBuyoffer = (pay_amt: BigNumber, buy_amt: BigNumber, txAction: string, quoteTokenName: string) => {
   const core = useCore();
-
-  const pay_gem = txAction === "Buy" ? core.tokens[quoteTokenName].address : core.tokens['ARTH-DP'].address
-  const buy_gem = txAction === "Buy" ? core.tokens['ARTH-DP'].address : core.tokens[quoteTokenName].address 
+  
+  const pay_gem = txAction === "Buy" ? 
+    core.tokens[quoteTokenName].address : 
+    core.tokens['ARTH-DP'].address
+  const buy_gem = txAction === "Buy" ? 
+    core.tokens['ARTH-DP'].address : 
+    core.tokens[quoteTokenName].address 
 
   const addTransaction = useTransactionAdder();
   const addPopup = useAddPopup();
   const contract = core.contracts["MatchingMarket"];
-  console.log('pay_amt', pay_amt)
   const action = useCallback(
     async (callback?: () => void): Promise<void> => {
 

@@ -29,7 +29,7 @@ const MaterialToolTip = (props: Iprops) => {
     children,
   } = props;
 
-  console.log("tooltip", typeof (toolTipContent))
+  // console.log("tooltip", typeof (toolTipContent))
 
   const [open, setOpen] = React.useState<boolean>(false);
 

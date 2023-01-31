@@ -18,17 +18,10 @@ import useGetCirculatingSupply from '../../../hooks/state/useGetCirculatingSuppl
 
 const ContractBalanceContainer = () => {
   
-  const totalCirculatingSupply = useGetDebtPoolSupply('ARTH-DP')
-  const totalSupply = useGetCirculatingSupply();
+  const totalCirculatingSupply = useGetCirculatingSupply(); 
+  const totalSupply = useGetDebtPoolSupply('ARTH-DP')
 
-  // useEffect(() => {
-  //   fetch('https://api.coingecko.com/api/v3/coins/mahadao?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false')
-  //     .then(res => res.json())
-  //     .then(res => setMAHACirculatingSupply(Math.round(res.market_data.circulating_supply)))
-  //     .catch(err => { })
-  // }, [totalMAHALocked]);
-
-  const percentOfMAHACirculatingSupplyLocked = useMemo(() => {
+  const percentOfDebtBurned = useMemo(() => {
     if (totalCirculatingSupply.isLoading) return {
       isLoading: true,
       value: BigNumber.from(0)
@@ -39,13 +32,25 @@ const ContractBalanceContainer = () => {
       value: BigNumber.from(0)
     }
 
-    let val = ((Number(ethers.utils.formatEther(totalSupply.value)) - Number(ethers.utils.formatEther(totalCirculatingSupply.value))) / Number(ethers.utils.formatEther(totalSupply.value)))
-    let bigval = ethers.utils.parseEther(`0`)
+    if(totalSupply.value !== totalCirculatingSupply.value && !totalSupply.value.isZero()){
+      // let val = ((Number(ethers.utils.formatEther(totalSupply.value)) - Number(ethers.utils.formatEther(totalCirculatingSupply.value))) / Number(ethers.utils.formatEther(totalSupply.value)))
 
-    return {
-      isLoading: false,
-      value: bigval
-    }
+      let diff = totalSupply.value.sub(totalCirculatingSupply.value)
+      let val = totalSupply.value.sub(diff).mul(100).div(totalSupply.value).toNumber()
+
+      let bigval = ethers.utils.parseEther(`${val}`)
+
+        return {
+          isLoading: false,
+          value: bigval
+        }
+      }
+    
+      return {
+        isLoading: false,
+        value: ethers.utils.parseEther(`0`)
+      }
+   
   }, [totalSupply, totalCirculatingSupply]);
 
 
@@ -71,13 +76,13 @@ const ContractBalanceContainer = () => {
               )
           }
           {
-            percentOfMAHACirculatingSupplyLocked.isLoading
+            percentOfDebtBurned.isLoading
               ? <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
               : (
                 <TextWrapper
                   text={
                     '(' +
-                    Number(getDisplayBalance(percentOfMAHACirculatingSupplyLocked.value.mul(100), 18, 3)).toLocaleString(undefined, { minimumFractionDigits: 3 }) +
+                    Number(getDisplayBalance(percentOfDebtBurned.value, 18, 3)).toLocaleString(undefined, { minimumFractionDigits: 3 }) +
                     ' % debt burned)'
                   }
                   fontSize={24}

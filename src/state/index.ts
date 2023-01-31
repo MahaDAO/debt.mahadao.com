@@ -5,13 +5,15 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import {isProduction} from "../analytics/Mixpanel";
 import application from './application/reducer';
 import transactions from './transactions/reducer';
+import token from './token/reducer';
 
-const PERSISTED_KEYS: string[] = ['transactions', 'slippage'];
+const PERSISTED_KEYS: string[] = ['transactions', 'slippage',];
 
 const store = configureStore({
   reducer: {
     application,
     transactions,
+    token
   },
   middleware: isProduction
     ? [

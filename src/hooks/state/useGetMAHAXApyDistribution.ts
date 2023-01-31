@@ -42,7 +42,6 @@ const useGetMAHAXApyDistribution = () => {
   const fetchValue = useCallback(async () => {
     callApi("apy/governance")
       .then((rewardApy) => {
-        // console.log('Result', res)
         try {
           console.log("Result", rewardApy);
           setData({

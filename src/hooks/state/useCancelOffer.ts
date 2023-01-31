@@ -7,7 +7,6 @@ import formatErrorMessage from '../../utils/formatErrorMessage';
 import { BigNumber } from "ethers";
 
 const useCancelOffer = (id: number) => {
-  console.log('useCancelOffer id', id)
   const core = useCore();
   const addTransaction = useTransactionAdder();
   const addPopup = useAddPopup();
@@ -16,9 +15,7 @@ const useCancelOffer = (id: number) => {
   const action =  async (id: number) => {
 
     try {
-      console.log("useCancelOffer id", id)
       const response = await contract["cancel(uint256)"](BigNumber.from(`${id}`))
-      console.log('response', response)
       addTransaction(response, {
         summary: `Cancel Offer ${id}`,
       });

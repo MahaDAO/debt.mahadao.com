@@ -36,7 +36,6 @@ const useDeposit = (amount: string) => {
       try {
         const response = await contract.stake(bnAmount)
 
-        console.log("useDeposit response", response)
         addTransaction(response, {
           summary: `Stake ${Numeral(getDisplayBalance(bnAmount, 18, 3)).format(
             '0,0.00a',

@@ -17,8 +17,6 @@ const useClaimReward = () => {
 
         const response = await contract.getReward();
 
-        console.log("useClaimReward response", response)
-
         addTransaction(response, {
           summary: `Claimed rewards successfully!`,
         });

@@ -28,7 +28,6 @@ const WalletInfo = () => {
   const core = useCore();
   const { account } = useWallet();
 
-  console.log('account', account)
   // const votingPower = useGetVotingPower(account);
   // const mahaErc20 = core.tokens['MAHA'];
   // const { isLoading: isMAHABalanceLoading, value: mahaBalance } = useTokenBalanceOf(mahaErc20, account || "");
