@@ -11,9 +11,8 @@ const LockDeposit = () => {
   return (
     <div className='custom-container' style={{ marginTop: '110px', }}>
       <div className="m-b-40">
-        {/* <PageHeading>{'DEBT POOL'}</PageHeading> */}
         <CardSubHeader>
-          The debt pool is a platform for holders to get reimbursed from protocol revenue. You can burn your debt tokens for USDC that gets collected from the protocol's revenue at a 1:1 ratio. Or you can choose
+          The payback pool is a platform for holders to get reimbursed from protocol revenue. You can burn your debt tokens for USDC that gets collected from the protocol's revenue at a 1:1 ratio. Or you can choose
           to sell your debt tokens for either USDC or MAHA at a price you choose.
         </CardSubHeader>
       </div>

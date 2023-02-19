@@ -49,9 +49,9 @@ function Dex() {
 
   return (
     <div className='custom-container'>
-      <CardHeader style={{ fontSize: '24px', justifyContent: 'center' }}>Buy and Sell Debt</CardHeader>
+      <CardHeader style={{ fontSize: '24px', justifyContent: 'center' }}>Sell Your Debt Early</CardHeader>
       <CardSubHeader style={{ justifyContent: 'center', marginBottom: '24px' }}>
-        In this section, you can place orders to buy or sell your debt tokens (ARTH-DP) for other
+        In this section, you can place orders to sell your debt tokens (ARTH-DP) for other
         tokens at a price that you choose. On a monthly basis the team will attempt to regularly
         fullfil the orders with whatever inventory was available at that time.
       </CardSubHeader>

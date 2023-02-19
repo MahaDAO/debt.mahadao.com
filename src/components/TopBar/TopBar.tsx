@@ -42,14 +42,14 @@ const TopBar: React.FC = () => {
   const { account, connect } = useWallet();
   const core = useCore();
   const isMobile = useMediaQuery({ maxWidth: '600px' });
-  
+
 
   const processNetwork = useCallback(async () => {
     const provider: any = await detectEthereumProvider();
 
     if (provider) {
       const chainId = Number(await provider.request({ method: 'eth_chainId' }));
-      setShowWarning(chainId !== core.config.chainId );
+      setShowWarning(chainId !== core.config.chainId);
     }
   }, [core]);
 
@@ -130,7 +130,7 @@ const TopBar: React.FC = () => {
           <HideonPhone>
             <div className="single-line-center-between">
               <div className="dialog-class">
-                <PageHeading style={{fontSize: '24px'}}>DEBT POOL</PageHeading>
+                <PageHeading style={{ fontSize: '24px' }}>PAYBACK POOL</PageHeading>
               </div>
               <div className="single-line-center-start">
                 {
@@ -154,7 +154,7 @@ const TopBar: React.FC = () => {
                   className={'pointer'}
                 />
               </div>
-              <PageHeading>DEBT POOL</PageHeading>
+              <PageHeading>PAYBACK POOL</PageHeading>
             </div>
           </HideOnBigScreen>
           <HideOnBigScreen>
