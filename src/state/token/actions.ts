@@ -17,5 +17,7 @@ export const updateAllocation = createAction<AllocationType>('token/updateAlloca
 export type RewardsType = {rewards: BigNumber, account: string}
 export const updateRewards = createAction<RewardsType>('token/updateRewards')
 
-export type GetOrderType = {offers: any, lastId: BigNumber}
+export type GetLastIdType = {lastId: BigNumber, token: string}
+
+export type GetOrderType = {offer: any, lastId: number}
 export const updateOrdersList = createAction<GetOrderType>('token/updateOrdersList')

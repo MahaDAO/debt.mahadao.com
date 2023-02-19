@@ -45,7 +45,10 @@ function SellOrdersCard(props: IProps) {
             sellOrderArr.push({offer, i, exchangeToken: 'MAHA'})
           if(offer.buy_gem.toLowerCase() == core.tokens['SCLP'].address.toLowerCase())
             sellOrderArr.push({offer, i, exchangeToken: 'SCLP'})
-          setSellOrderData(sellOrderArr)
+
+          const finalArr = sellOrderArr.sort((a: any, b: any) => Number(getDisplayBalance(a.offer.pay_amt)) - Number(getDisplayBalance(b.offer.pay_amt)))
+
+          setSellOrderData(finalArr)
         }
       }
     }
@@ -57,6 +60,8 @@ function SellOrdersCard(props: IProps) {
     setCancelId(id)
     sellOrderAction(id)
   }
+
+  console.log('sellOrderData', sellOrderData)
 
   return (
     <CardContent>

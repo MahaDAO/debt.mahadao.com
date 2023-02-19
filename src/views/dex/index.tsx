@@ -61,7 +61,7 @@ function Dex() {
               variant={selectorQToken === 'usdc' ? 'default' : 'transparent'}
             />
           </div>
-          <div style={{marginRight: '10px'}}>
+          {/* <div style={{marginRight: '10px'}}>
             <Button
               text="ARTH-DP / MAHA"
               onClick={
@@ -78,7 +78,7 @@ function Dex() {
               }
               variant={selectorQToken === 'sclp' ? 'default' : 'transparent'}
             />
-          </div>
+          </div> */}
         </div>
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
         <Wrapper>

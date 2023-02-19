@@ -23,6 +23,9 @@ export interface TokenState {
   },
   yourRewards: {
     [account: string]: BigNumber
+  },
+  orderList: {
+    [token: string]: any[]
   }
 }
 
@@ -31,19 +34,20 @@ export const initialState: TokenState = {
   allowance: {},
   totalSupply: {},
   yourAllocation: {},
-  yourRewards: {}
+  yourRewards: {},
+  orderList: {}
 };
 
 export default createReducer(initialState, (builder) => {
     builder
       .addCase(
-      Actions.updateBalanceOf,
-      (t, { payload }: { payload: Actions.BalanceOfType }) => {
-        console.log("updateBalanceOf reducer", t, payload)
-        t.balanceOf = t.balanceOf || {};
-        t.balanceOf[payload.token] = t.balanceOf[payload.token] || {};
-        t.balanceOf[payload.token][payload.who] = payload.bal;
-      })
+        Actions.updateBalanceOf,
+        (t, { payload }: { payload: Actions.BalanceOfType }) => {
+          console.log("updateBalanceOf reducer", t.balanceOf, payload)
+          t.balanceOf = t.balanceOf || {};
+          t.balanceOf[payload.token] = t.balanceOf[payload.token] || {};
+          t.balanceOf[payload.token][payload.who] = payload.bal;
+        })
       .addCase(
         Actions.updateAllowance,
         (t, { payload }: { payload: Actions.AllowanceType }) => {
@@ -75,12 +79,16 @@ export default createReducer(initialState, (builder) => {
           t.yourRewards[payload.account] = payload.rewards
         }
       )
-      // .addCase(
-      //   Actions.updateOrdersList,
-      //   (t, {payload}: {payload: Actions.GetOrderType}) => {
-
-      //   }
-      // )
+      .addCase(
+        Actions.updateOrdersList,
+        (t, {payload}: {payload: Actions.GetOrderType}) => {
+          console.log("updateOrdersList", t.orderList, payload)
+          t.orderList = t.orderList || {}
+          // filter according to quote token
+          // t.orderList[payload.token] = t.orderList[payload.token] || []
+          // t.orderList[payload.token].push(payload.offer) 
+        }
+      )
 
   }
 );

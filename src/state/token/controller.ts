@@ -5,6 +5,7 @@ import {IMulticallInput} from '../../utils/interface';
 import { Protocol } from '../../protocol/Protocol';
 
 import * as Actions from './actions';
+import { BigNumber } from 'ethers';
 
 export const initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {
   setTimeout(() => _initUser(core, dispatch, chainId), 100);
@@ -48,15 +49,13 @@ const _initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {
         }),
       )
     });
-    // core.multicall[chainId].on(`GET_OFFER_${token}`, (offers, lastId) =>{
-    //   for(let i = 1; i <= lastId; i++){
-    //     dispatch(
-    //       Actions.updateOrdersList({
-    //         offers,
-    //         lastId // pass last order id here coming from state
-    //       }),
-    //     )
-    //   }
+    // core.multicall[chainId].on(`GET_OFFER_${token}`, (offer) =>{
+    //   dispatch(
+    //     Actions.updateOrdersList({
+    //       offer,
+    //       lastId: 3, 
+    //     }),
+    //   )
       
     // });
   }
@@ -92,7 +91,8 @@ const _initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {
       // {
       //   key: `GET_OFFER_${token}`,
       //   target: core.contracts['MatchingMarket'].address,
-      //   call: ['offers(uint256)(uint256, address, uint256, address, address, uint64)', ],
+      //   // call: ['getBetterOffer(uint256)(uint256)', 6],
+      //   call: ['offers(uint256)(uint256,address,uint256,address,address,uint64)', 3],
       //   convertResult: (val: any) => val
       // }
     );

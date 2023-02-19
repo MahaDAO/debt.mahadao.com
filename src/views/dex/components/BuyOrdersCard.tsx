@@ -54,7 +54,8 @@ function BuyOrdersCard(props: IProps) {
           if(offer.pay_gem.toLowerCase() === core.tokens['SCLP'].address.toLowerCase())
             buyOrderArr.push({offer, i, exchangeToken: 'SCLP'})
 
-          setBuyOrderData(buyOrderArr)
+          const finalArr = buyOrderArr.sort((a: any, b: any) => Number(getDisplayBalance(a.offer.buy_amt)) - Number(getDisplayBalance(b.offer.buy_amt)))
+          setBuyOrderData(finalArr)
         }
       }
     }
@@ -66,6 +67,10 @@ function BuyOrdersCard(props: IProps) {
     setCancelId(id)
     cancelOrderAction(id)
   }
+
+  console.log("buyOrderData",buyOrderData)
+
+
 
   return (
     <CardContent>
