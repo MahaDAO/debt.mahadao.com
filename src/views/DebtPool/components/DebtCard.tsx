@@ -73,7 +73,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
           <div
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline', textAlign: 'left' }}
           >
-            <span>{`${symbol} into USDC Payback Pool`}</span>
+            <span>{`${symbol} into Payback Pool`}</span>
           </div>
         </CardHeader>
         <CardContent>
