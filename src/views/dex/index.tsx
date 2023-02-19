@@ -32,7 +32,7 @@ function Dex() {
   useEffect(() => {
     if (selectorQToken === 'maha') {
       setSelectQuoteToken('MAHA')
-    } else if(selectorQToken === 'usdc'){
+    } else if (selectorQToken === 'usdc') {
       setSelectQuoteToken('USDC')
     }
     else {
@@ -49,37 +49,41 @@ function Dex() {
 
   return (
     <div className='custom-container'>
-       <CardHeader style={{fontSize: '24px', justifyContent: 'center'}}>Buy and Sell Debt</CardHeader>
-        <CardSubHeader style={{justifyContent: 'center', marginBottom: '24px'}}>lorem ipsum lorem ipsum lorem ipsum lore ipsum lorem ipsum lorem ipsum lorem ipsum lore ipsum</CardSubHeader>
-        <div style={{display: 'flex', justifyContent: 'center', marginBottom: '24px'}}>
-          <div style={{marginRight: '10px'}}>
-            <Button
-              text="ARTH-DP / USDC"
-              onClick={
-                () => {handleChange('usdc')}
-              }
-              variant={selectorQToken === 'usdc' ? 'default' : 'transparent'}
-            />
-          </div>
-          {/* <div style={{marginRight: '10px'}}>
-            <Button
-              text="ARTH-DP / MAHA"
-              onClick={
-                () => {handleChange('maha')}
-              }
-              variant={selectorQToken === 'maha' ? 'default' : 'transparent'}
-            />
-          </div>
-          <div style={{marginRight: '10px'}}>
-            <Button
-              text="ARTH-DP / SCLP"
-              onClick={
-                () => {handleChange('sclp')}
-              }
-              variant={selectorQToken === 'sclp' ? 'default' : 'transparent'}
-            />
-          </div> */}
+      <CardHeader style={{ fontSize: '24px', justifyContent: 'center' }}>Buy and Sell Debt</CardHeader>
+      <CardSubHeader style={{ justifyContent: 'center', marginBottom: '24px' }}>
+        In this section, you can place orders to buy or sell your debt tokens (ARTH-DP) for other
+        tokens at a price that you choose. On a monthly basis the team will attempt to regularly
+        fullfil the orders with whatever inventory was available at that time.
+      </CardSubHeader>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+        <div style={{ marginRight: '10px' }}>
+          <Button
+            text="ARTH-DP / USDC"
+            onClick={
+              () => { handleChange('usdc') }
+            }
+            variant={selectorQToken === 'usdc' ? 'default' : 'transparent'}
+          />
         </div>
+        <div style={{ marginRight: '10px' }}>
+          <Button
+            text="ARTH-DP / MAHA"
+            onClick={
+              () => { handleChange('maha') }
+            }
+            variant={selectorQToken === 'maha' ? 'default' : 'transparent'}
+          />
+        </div>
+        {/* <div style={{ marginRight: '10px' }}>
+          <Button
+            text="ARTH-DP / SCLP"
+            onClick={
+              () => { handleChange('sclp') }
+            }
+            variant={selectorQToken === 'sclp' ? 'default' : 'transparent'}
+          />
+        </div> */}
+      </div>
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
         <Wrapper>
           <Card className={'material-primary'}>
@@ -92,8 +96,8 @@ function Dex() {
                   selectQuoteToken == "USDC" ?
                     Number(getDisplayBalance(usdcbal.value, 6, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
                     selectQuoteToken == "MAHA" ?
-                    Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
-                    Number(getDisplayBalance(sclpbal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
+                      Number(getDisplayBalance(mahabal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 }) :
+                      Number(getDisplayBalance(sclpbal.value, 18, 3)).toLocaleString('en-US', { minimumFractionDigits: 3 })
                 }
               </CardColumn2>
               <CardColumn3 className='text-center'>
@@ -159,24 +163,6 @@ function Dex() {
           </Card>
         </Wrapper>
       </div>
-
-      {/* <div style={{display: 'flex'}}>
-        <Wrapper>
-          <Card className={'material-primary'}>
-            <CardHeader>My Orders</CardHeader>
-            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
-            <MyOrders />
-          </Card>
-        </Wrapper>
-        <Wrapper>
-          <Card className={'material-primary'}>
-            <CardHeader>Market History</CardHeader>
-            <CardSubHeader>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</CardSubHeader>
-            <MyOrders />
-          </Card>
-        </Wrapper>
-      </div> */}
-
     </div>
 
   )
