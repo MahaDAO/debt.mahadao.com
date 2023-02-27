@@ -34,5 +34,12 @@
     "address": "0x1261365EFbff94446731d7943354e580Ee890e74",
     "txHash": "0x050740c881e9fdab4d86e29d62c6b2e3437707ed84501cdc32501201c73bb563",
     "verification": "https://polygonscan.com/address/0x1261365EFbff94446731d7943354e580Ee890e74#code"
+  },
+  "UIHelper": {
+    "abi": "UIHelper",
+    "address": "0x94311A0a21751fa1bCBA19B1FEFBD791e3A610B3",
+    "txHash": "0x9eef4d1801e49722ce91a268b11fb519e2f7387965a12fb2a74669440c2656c4",
+    "verification": "https://polygonscan.com/address/0x94311A0a21751fa1bCBA19B1FEFBD791e3A610B3#code"
   }
+  
 }

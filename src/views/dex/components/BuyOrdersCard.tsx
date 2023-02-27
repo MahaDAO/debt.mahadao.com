@@ -68,7 +68,7 @@ function BuyOrdersCard(props: IProps) {
     cancelOrderAction(id)
   }
 
-  console.log("buyOrderData",buyOrderData)
+  // console.log("buyOrderData",buyOrderData)
 
 
 

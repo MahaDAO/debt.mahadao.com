@@ -7,6 +7,7 @@ import StakingRewardsV2 from "./abi/StakingRewardsV2.json"
 import MatchingMarket from "./abi/MatchingMarket.json"
 import Snapshot from "./abi/Snapshot.json"
 import Multicall from "./abi/Multicall.json"
+import UIHelper from "./abi/UIHelper.json"
 
 const abis: IABIS = {
   IERC20,
@@ -16,7 +17,8 @@ const abis: IABIS = {
   StakingRewardsV2,
   MatchingMarket,
   Snapshot,
-  Multicall
+  Multicall,
+  UIHelper
 };
 
 export default abis;

@@ -8,7 +8,8 @@ import * as Actions from './actions';
 import { BigNumber } from 'ethers';
 
 export const initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {
-  setTimeout(() => _initUser(core, dispatch, chainId), 100);
+  // setTimeout(() => _initUser(core, dispatch, chainId), 3000);
+  // _initUser(core, dispatch, chainId)
 };
  
 const _initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {
@@ -49,15 +50,6 @@ const _initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {
         }),
       )
     });
-    // core.multicall[chainId].on(`GET_OFFER_${token}`, (offer) =>{
-    //   dispatch(
-    //     Actions.updateOrdersList({
-    //       offer,
-    //       lastId: 3, 
-    //     }),
-    //   )
-      
-    // });
   }
 
   const addCallsArray: Array<IMulticallInput> = [];
@@ -88,13 +80,6 @@ const _initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {
         call: ['earned(address)(uint256)', core.myAccount],
         convertResult: (val: any) => val,
       },
-      // {
-      //   key: `GET_OFFER_${token}`,
-      //   target: core.contracts['MatchingMarket'].address,
-      //   // call: ['getBetterOffer(uint256)(uint256)', 6],
-      //   call: ['offers(uint256)(uint256,address,uint256,address,address,uint64)', 3],
-      //   convertResult: (val: any) => val
-      // }
     );
   }
 

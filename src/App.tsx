@@ -25,54 +25,45 @@ import { useMediaQuery } from "react-responsive";
 
 const Providers = ({ children }: any) => {
   return (
-    <UseWalletProvider
-      // chainId={config.chainId}
-      connectors={{
-        injected: {
-          chainId: [config.chainId],
-        },
-        walletconnect: {
-          chainId: config.chainId,
-          rpcUrl: config.defaultProvider
-        }
-      }}
-    >
-      <Provider store={store}>
+    <Provider store={store}>
+      <UseWalletProvider
+        connectors={{
+          injected: {
+            chainId: [config.chainId],
+          },
+          walletconnect: {
+            chainId: config.chainId,
+            bridge: 'https://bridge.walletconnect.org',
+            pollingInterval: 12000,
+            rpc: config.defaultProvider,
+          }
+        }}>
         <Updaters />
-        <ProtocolProvider>
-          <ModalsProvider>
-            <SnackbarProvider
-              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-              maxSnack={2}
-            >
-              <>
-                <Popups />
-                {children}
-              </>
-            </SnackbarProvider>
-          </ModalsProvider>
-        </ProtocolProvider>
-      </Provider>
-    </UseWalletProvider>
+          <ProtocolProvider>
+            <AppContent>{children}</AppContent>
+          </ProtocolProvider>
+      </UseWalletProvider>
+    </Provider>
   );
 };
 
 export let isMobileGlobal = false;
 
-const App: React.FC = () => {
+// @ts-ignore
+const AppContent: any = ({ children }) => {
   const core = useCore()
   const isMobile = useMediaQuery({ maxWidth: '600px' });
   isMobileGlobal = isMobile;
 
   console.log('App core', core)
-  // useEffect(() => {
-  //   // @ts-ignore
-  //   if (window.ethereum)
-  //     // @ts-ignore
-  //     window.ethereum.on('chainChanged', (chainId) => {
-  //       window.location.reload();
-  //     });
-  // }, []);
+  useEffect(() => {
+    // @ts-ignore
+    if (window.ethereum)
+      // @ts-ignore
+      window.ethereum.on('chainChanged', (chainId) => {
+        window.location.reload();
+      });
+  }, []);
 
   if (!window.ethereum) {
     console.log('no window ethereum')
@@ -84,10 +75,31 @@ const App: React.FC = () => {
   };
 
   return (
+    <ModalsProvider>
+      <SnackbarProvider
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        maxSnack={2}
+        autoHideDuration={2500}
+      >
+        <>
+          <Popups />
+          {children}
+        </>
+      </SnackbarProvider>
+    </ModalsProvider>
+  );
+};
+
+const App: React.FC = () => {
+
+  return (
     <Providers>
       <Router>
         <TopBar />
-        <Navigation />
+        <Navigation />cl
       </Router>
     </Providers>
   );

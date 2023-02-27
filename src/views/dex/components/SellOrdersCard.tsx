@@ -61,7 +61,7 @@ function SellOrdersCard(props: IProps) {
     sellOrderAction(id)
   }
 
-  console.log('sellOrderData', sellOrderData)
+  // console.log('sellOrderData', sellOrderData)
 
   return (
     <CardContent>
@@ -92,10 +92,10 @@ function SellOrdersCard(props: IProps) {
               </CardColumn3>
               {
                 owner === order.offer.owner ?
-                  <div className={'single-line-center-center pointer'} onClick={() => {handleCancelOrder(order.i)}} style={{padding: '9px'}}>
+                  <div className={'single-line-center-center pointer p9'} onClick={() => {handleCancelOrder(order.i)}}>
                     <CancelIcon />
                   </div>
-                :  <div className={'single-line-center-center pointer'}><CancelIcon color={'disabled'} style={{color: '#444'}} /></div>
+                :  <div className={'single-line-center-center pointer p9'}><div className='p5'></div></div>
               }
               
             </CardSection>

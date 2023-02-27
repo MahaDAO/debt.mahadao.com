@@ -13,6 +13,7 @@ import Selector from '../../components/Selector';
 import { FormControl, FormControlLabel, FormLabel, Grid, RadioGroup, Switch, Typography } from '@material-ui/core';
 import { AntSwitch } from '../../components/AntSwitch';
 import Button from '../../components/Button';
+import useGetBestBuyOrders from '../../hooks/state/useGetBestBuyOrders';
 
 function Dex() {
 
@@ -28,6 +29,10 @@ function Dex() {
   const usdcbal = useTokenBalance(core.tokens['USDC'])
   const mahabal = useTokenBalance(core.tokens['MAHA'])
   const sclpbal = useTokenBalance(core.tokens['SCLP'])
+
+  const buyList = useGetBestBuyOrders(selectQuoteToken)
+
+  // console.log("buyList", buyList)
 
   useEffect(() => {
     if (selectorQToken === 'maha') {
@@ -85,7 +90,7 @@ function Dex() {
         </div> */}
       </div>
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
-        <Wrapper>
+        {/* <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>BUY DEBT</CardHeader>
             <CardSubHeader>Buy debt tokens using {selectQuoteToken}</CardSubHeader>
@@ -118,7 +123,7 @@ function Dex() {
               }}
             />
           </Card>
-        </Wrapper>
+        </Wrapper> */}
         <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>SELL DEBT</CardHeader>

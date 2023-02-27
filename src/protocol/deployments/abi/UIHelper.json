@@ -1,0 +1,124 @@
+[
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "market",
+          "type": "address"
+        },
+        {
+          "name": "baseAsset",
+          "type": "address"
+        },
+        {
+          "name": "quoteAsset",
+          "type": "address"
+        },
+        {
+          "name": "limit",
+          "type": "uint256"
+        }
+      ],
+      "name": "getBestSellOrders",
+      "outputs": [
+        {
+          "components": [
+            {
+              "name": "pay_amt",
+              "type": "uint256"
+            },
+            {
+              "name": "pay_gem",
+              "type": "address"
+            },
+            {
+              "name": "buy_amt",
+              "type": "uint256"
+            },
+            {
+              "name": "buy_gem",
+              "type": "address"
+            },
+            {
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "name": "timestamp",
+              "type": "uint64"
+            },
+            {
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "ret",
+          "type": "tuple[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "market",
+          "type": "address"
+        },
+        {
+          "name": "baseAsset",
+          "type": "address"
+        },
+        {
+          "name": "quoteAsset",
+          "type": "address"
+        },
+        {
+          "name": "limit",
+          "type": "uint256"
+        }
+      ],
+      "name": "getBestBuyOrders",
+      "outputs": [
+        {
+          "components": [
+            {
+              "name": "pay_amt",
+              "type": "uint256"
+            },
+            {
+              "name": "pay_gem",
+              "type": "address"
+            },
+            {
+              "name": "buy_amt",
+              "type": "uint256"
+            },
+            {
+              "name": "buy_gem",
+              "type": "address"
+            },
+            {
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "name": "timestamp",
+              "type": "uint64"
+            },
+            {
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "ret",
+          "type": "tuple[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]

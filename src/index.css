@@ -314,6 +314,10 @@ body {
   padding: 8px;
 }
 
+.p5 {
+  padding: 5px;
+}
+
 /* *** MATERIALS *** */
 .material-primary {
   position: relative;
