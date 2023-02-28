@@ -1,6 +1,7 @@
 import { Redirect, Route, Switch } from "react-router-dom";
 import DebtPool from './views/DebtPool';
 import Dex from './views/dex';
+import BuyDebt from "./views/dex/components/BuyDebt";
 import Form from './views/form';
 
 const Navigation = () => {
@@ -12,6 +13,9 @@ const Navigation = () => {
       </Route>
       <Route exact path={"/form"}>
         <Form />
+      </Route>
+      <Route exact path={'/buydebt'}>
+        <BuyDebt />
       </Route>
       <Redirect to="/" />
     </Switch>

@@ -136,6 +136,7 @@ export const INITIAL_APP_STATE: ApplicationState = {
 export const INITIAL_TRANSACTION_STATE: TransactionState = {};
 
 export const BNZERO = BigNumber.from(0);
+export const BNHUNDRED = BigNumber.from(100);
 
 export const noOp = () => { };
 

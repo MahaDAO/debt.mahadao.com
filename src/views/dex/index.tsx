@@ -153,13 +153,13 @@ function Dex() {
       </div>
 
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
-        <Wrapper>
+        {/* <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>Buy Orders</CardHeader>
             <CardSubHeader>All orders buying debt tokens</CardSubHeader>
             <BuyOrdersCard buyList={buyList} selectQuoteToken={selectQuoteToken} />
           </Card>
-        </Wrapper>
+        </Wrapper> */}
         <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>Sell Orders</CardHeader>
@@ -176,7 +176,7 @@ function Dex() {
 export default Dex
 
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   min-width: 200px;
   width: 100%;
   border-radius: 6px;
@@ -193,7 +193,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const CardHeader = styled.h2`
+export const CardHeader = styled.h2`
   color: #fff;
   display: flex;
   font-weight: 600;
@@ -209,7 +209,7 @@ const CardHeader = styled.h2`
   }
 `;
 
-const CardSubHeader = styled.div`
+export const CardSubHeader = styled.div`
   color: #999;
   display: flex;
   font-size: 14px;
@@ -223,7 +223,7 @@ const CardSubHeader = styled.div`
   }
 `
 
-const Card = styled.div`
+export const Card = styled.div`
   padding: 5px 0;
   color: #eee;
   position: relative;
@@ -243,7 +243,7 @@ const Card = styled.div`
   min-height: 400px;
 `;
 
-const CardSection = styled.div`
+export const CardSection = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -258,12 +258,12 @@ const CardSection = styled.div`
   }
 `;
 
-const CardColumn1 = styled.div`
+export const CardColumn1 = styled.div`
   flex-basis: 20%;
 `
-const CardColumn2 = styled.div`
+export const CardColumn2 = styled.div`
   flex-basis: 55%;
 `
-const CardColumn3 = styled.div`
+export const CardColumn3 = styled.div`
   flex-basis: 25%;
 `

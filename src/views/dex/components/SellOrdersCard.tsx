@@ -62,7 +62,7 @@ function SellOrdersCard(props: IProps) {
     sellOrderAction(id)
   }
 
-  // console.log('sellOrderData', sellOrderData)
+  console.log('sellList', sellList)
 
   return (
     <CardContent>
@@ -74,7 +74,11 @@ function SellOrdersCard(props: IProps) {
         <div style={{padding: '13px'}}></div>
       </CardSection>
       {
-        sellList.filter((item) => item[5]._hex !== "0x00").map((order: any, i: number) => {
+        sellList
+          .filter((item) => item[5]._hex !== "0x00")
+          .sort((a: any, b: any) => 
+            Number(getDisplayBalance(a.pay_amt)) - Number(getDisplayBalance(b.pay_amt)))
+              .map((order: any, i: number) => {
 
           const payAmt = getDisplayBalance(order.pay_amt, 18, 3)
           const buyAmt = getDisplayBalance(order.buy_amt, selectQuoteToken === 'USDC' ? 6 : 18, 3)
@@ -96,7 +100,7 @@ function SellOrdersCard(props: IProps) {
                   <div className={'single-line-center-center pointer p9'} onClick={() => {handleCancelOrder(i)}}>
                     <CancelIcon />
                   </div>
-                :  <div className={'single-line-center-center pointer p9'}><div className='p5'></div></div>
+                :  <div className={'single-line-center-center pointer p9'}><div style={{marginRight: '14px'}} className='p5'></div></div>
               }
               
             </CardSection>
