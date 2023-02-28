@@ -25,7 +25,7 @@ const useGetBestSellOrders = (selectQuoteToken: string) => {
     useEffect(() => {
         fetchValue()
             .catch((err) => console.log("err", err))
-    }, [])
+    }, [selectQuoteToken])
 
     return data
 

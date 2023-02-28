@@ -10,11 +10,12 @@ import { formatToBN, getDisplayBalance } from '../../../utils/formatBalance';
 import useCancelOffer from '../../../hooks/state/useCancelOffer';
 
 interface IProps {
-  selectQuoteToken: string
+  selectQuoteToken: string,
+  sellList: any[]
 }
 
 function SellOrdersCard(props: IProps) {
-  const {selectQuoteToken} = props
+  const {selectQuoteToken, sellList} = props
 
   const core = useCore()
 
@@ -25,34 +26,34 @@ function SellOrdersCard(props: IProps) {
 
   let allOfers: any = []
 
-  useEffect(() => {
-    getSellOrderData()  
-  }, [selectQuoteToken])
+  // useEffect(() => {
+  //   getSellOrderData()  
+  // }, [selectQuoteToken])
   
 
-  const getSellOrderData = async() => {
-        let sellOrderArr: any = []
+  // const getSellOrderData = async() => {
+  //       let sellOrderArr: any = []
 
-    const testLastOfferId = await core.contracts['MatchingMarket'].last_offer_id()
+  //   const testLastOfferId = await core.contracts['MatchingMarket'].last_offer_id()
     
-    for(let i = 1; i <= testLastOfferId.toString(); i++){
-      const offer = await core.contracts['MatchingMarket'].offers(i)
-      if(offer[5]._hex !== "0x00"){
-        if(offer.pay_gem.toLowerCase() === core.tokens['ARTH-DP'].address.toLowerCase()) {
-          if(offer.buy_gem.toLowerCase() === core.tokens['USDC'].address.toLowerCase())
-            sellOrderArr.push({offer, i, exchangeToken: 'USDC'})
-          if(offer.buy_gem.toLowerCase() == core.tokens['MAHA'].address.toLowerCase())
-            sellOrderArr.push({offer, i, exchangeToken: 'MAHA'})
-          if(offer.buy_gem.toLowerCase() == core.tokens['SCLP'].address.toLowerCase())
-            sellOrderArr.push({offer, i, exchangeToken: 'SCLP'})
+  //   for(let i = 1; i <= testLastOfferId.toString(); i++){
+  //     const offer = await core.contracts['MatchingMarket'].offers(i)
+  //     if(offer[5]._hex !== "0x00"){
+  //       if(offer.pay_gem.toLowerCase() === core.tokens['ARTH-DP'].address.toLowerCase()) {
+  //         if(offer.buy_gem.toLowerCase() === core.tokens['USDC'].address.toLowerCase())
+  //           sellOrderArr.push({offer, i, exchangeToken: 'USDC'})
+  //         if(offer.buy_gem.toLowerCase() == core.tokens['MAHA'].address.toLowerCase())
+  //           sellOrderArr.push({offer, i, exchangeToken: 'MAHA'})
+  //         if(offer.buy_gem.toLowerCase() == core.tokens['SCLP'].address.toLowerCase())
+  //           sellOrderArr.push({offer, i, exchangeToken: 'SCLP'})
 
-          const finalArr = sellOrderArr.sort((a: any, b: any) => Number(getDisplayBalance(a.offer.pay_amt)) - Number(getDisplayBalance(b.offer.pay_amt)))
+  //         const finalArr = sellOrderArr.sort((a: any, b: any) => Number(getDisplayBalance(a.offer.pay_amt)) - Number(getDisplayBalance(b.offer.pay_amt)))
 
-          setSellOrderData(finalArr)
-        }
-      }
-    }
-  }
+  //         setSellOrderData(finalArr)
+  //       }
+  //     }
+  //   }
+  // }
 
   const sellOrderAction = useCancelOffer(cancelId)
 
@@ -73,14 +74,14 @@ function SellOrdersCard(props: IProps) {
         <div style={{padding: '13px'}}></div>
       </CardSection>
       {
-        sellOrderData?.filter((a) => a.exchangeToken == selectQuoteToken).map((order: any) => {
+        sellList.filter((item) => item[5]._hex !== "0x00").map((order: any, i: number) => {
 
-          const payAmt = getDisplayBalance(order.offer.pay_amt, 18, 3)
-          const buyAmt = getDisplayBalance(order.offer.buy_amt, 6, 3)
+          const payAmt = getDisplayBalance(order.pay_amt, 18, 3)
+          const buyAmt = getDisplayBalance(order.buy_amt, selectQuoteToken === 'USDC' ? 6 : 18, 3)
           const price = Number(buyAmt) / Number(payAmt)
   
           return(
-            <CardSection key={order.i}>
+            <CardSection key={i}>
               <CardColumn1 className={'table-border single-line-center-center'}>
                 { Numeral(price).format('0.000') }
               </CardColumn1>
@@ -91,8 +92,8 @@ function SellOrdersCard(props: IProps) {
                 { Numeral(payAmt).format('0.000')}
               </CardColumn3>
               {
-                owner === order.offer.owner ?
-                  <div className={'single-line-center-center pointer p9'} onClick={() => {handleCancelOrder(order.i)}}>
+                owner === order.owner ?
+                  <div className={'single-line-center-center pointer p9'} onClick={() => {handleCancelOrder(i)}}>
                     <CancelIcon />
                   </div>
                 :  <div className={'single-line-center-center pointer p9'}><div className='p5'></div></div>

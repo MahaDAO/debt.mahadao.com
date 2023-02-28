@@ -10,16 +10,16 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import useCancelOffer from '../../../hooks/state/useCancelOffer';
 
 interface IProps {
-  selectQuoteToken: string
+  selectQuoteToken: string,
+  buyList: any[]
 }
 
 
 function BuyOrdersCard(props: IProps) {
 
-  const {selectQuoteToken} = props
+  const {selectQuoteToken, buyList} = props
 
   const core = useCore()
-
 
   const [buyOrderData, setBuyOrderData] = useState<any[]>([])
   const [sellOrderData, setSellOrderData] = useState<any[]>([])
@@ -28,38 +28,39 @@ function BuyOrdersCard(props: IProps) {
 
   let allOfers: any = []
 
-  useEffect(() => {
-    getBuyOrderData()
-    console.log("inside useeffect")
+  // useEffect(() => {
+  //   getBuyOrderData()
+  //   console.log("inside useeffect")
   
-  }, [selectQuoteToken])
+  // }, [selectQuoteToken])
   
+  // console.log("buyList", buyList)
 
-  const getBuyOrderData = async() => {
+  // const getBuyOrderData = async() => {
     
-    let buyOrderArr: any = []
-    let sellOrderArr: any = []
+  //   let buyOrderArr: any = []
+  //   let sellOrderArr: any = []
 
-    const testLastOfferId = await core.contracts['MatchingMarket'].last_offer_id()
+  //   const testLastOfferId = await core.contracts['MatchingMarket'].last_offer_id()
     
-    for(let i = 1; i <= testLastOfferId.toString(); i++){
-      const offer = await core.contracts['MatchingMarket'].offers(i)
+  //   for(let i = 1; i <= testLastOfferId.toString(); i++){
+  //     const offer = await core.contracts['MatchingMarket'].offers(i)
 
-      if(offer[5]._hex !== "0x00"){
-        if(offer.buy_gem.toLowerCase() === core.tokens['ARTH-DP'].address.toLowerCase()){
-          if(offer.pay_gem.toLowerCase() === core.tokens['USDC'].address.toLowerCase())
-            buyOrderArr.push({offer, i, exchangeToken: 'USDC'})
-          if(offer.pay_gem.toLowerCase() === core.tokens['MAHA'].address.toLowerCase())
-            buyOrderArr.push({offer, i, exchangeToken: 'MAHA'})
-          if(offer.pay_gem.toLowerCase() === core.tokens['SCLP'].address.toLowerCase())
-            buyOrderArr.push({offer, i, exchangeToken: 'SCLP'})
+  //     if(offer[5]._hex !== "0x00"){
+  //       if(offer.buy_gem.toLowerCase() === core.tokens['ARTH-DP'].address.toLowerCase()){
+  //         if(offer.pay_gem.toLowerCase() === core.tokens['USDC'].address.toLowerCase())
+  //           buyOrderArr.push({offer, i, exchangeToken: 'USDC'})
+  //         if(offer.pay_gem.toLowerCase() === core.tokens['MAHA'].address.toLowerCase())
+  //           buyOrderArr.push({offer, i, exchangeToken: 'MAHA'})
+  //         if(offer.pay_gem.toLowerCase() === core.tokens['SCLP'].address.toLowerCase())
+  //           buyOrderArr.push({offer, i, exchangeToken: 'SCLP'})
 
-          const finalArr = buyOrderArr.sort((a: any, b: any) => Number(getDisplayBalance(a.offer.buy_amt)) - Number(getDisplayBalance(b.offer.buy_amt)))
-          setBuyOrderData(finalArr)
-        }
-      }
-    }
-  }
+  //         const finalArr = buyOrderArr.sort((a: any, b: any) => Number(getDisplayBalance(a.offer.buy_amt)) - Number(getDisplayBalance(b.offer.buy_amt)))
+  //         setBuyOrderData(finalArr)
+  //       }
+  //     }
+  //   }
+  // }
 
   const cancelOrderAction = useCancelOffer(cancelId)
 
@@ -82,14 +83,14 @@ function BuyOrdersCard(props: IProps) {
         <div style={{padding: '13px'}}></div>
       </CardSection>
       {
-        buyOrderData?.filter((a) => a.exchangeToken == selectQuoteToken).map((order: any) => {
+        buyList?.filter((item) => item[5]._hex !== "0x00").map((order: any, i: any) => {
 
-          const payAmt = getDisplayBalance(order.offer.pay_amt, 6, 3)
-          const buyAmt = getDisplayBalance(order.offer.buy_amt)
+          const payAmt = getDisplayBalance(order.pay_amt, selectQuoteToken === 'USDC' ? 6 : 18, 3)
+          const buyAmt = getDisplayBalance(order.buy_amt)
           const price = Number(payAmt) / Number(buyAmt)
   
           return(
-            <CardSection key={order.i} >
+            <CardSection key={i} >
               <CardColumn1 className={'table-border single-line-center-center'}>
                 { Numeral(price).format('0.000') }
               </CardColumn1>
@@ -100,11 +101,11 @@ function BuyOrdersCard(props: IProps) {
                 { Numeral(buyAmt).format('0.000') }
               </CardColumn3>
               {
-                owner === order.offer.owner ? 
-                <div className={'single-line-center-center pointer p9'} onClick={() => {handleCancelOrder(order.i)}} >
+                owner === order.owner ? 
+                <div className={'single-line-center-center pointer p9'} onClick={() => {handleCancelOrder(i)}} >
                   <CancelIcon />
                 </div>
-                : <div className={'single-line-center-center pointer p9'}><CancelIcon color={'disabled'} style={{color: '#444'}} /></div>
+                : <div className={'single-line-center-center pointer p9'}><div className='p5'></div></div>
               }
               
             </CardSection>

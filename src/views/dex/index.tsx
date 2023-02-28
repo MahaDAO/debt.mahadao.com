@@ -14,6 +14,7 @@ import { FormControl, FormControlLabel, FormLabel, Grid, RadioGroup, Switch, Typ
 import { AntSwitch } from '../../components/AntSwitch';
 import Button from '../../components/Button';
 import useGetBestBuyOrders from '../../hooks/state/useGetBestBuyOrders';
+import useGetBestSellOrders from '../../hooks/state/useGetBestSellOrders copy';
 
 function Dex() {
 
@@ -31,8 +32,7 @@ function Dex() {
   const sclpbal = useTokenBalance(core.tokens['SCLP'])
 
   const buyList = useGetBestBuyOrders(selectQuoteToken)
-
-  // console.log("buyList", buyList)
+  const sellList = useGetBestSellOrders(selectQuoteToken)
 
   useEffect(() => {
     if (selectorQToken === 'maha') {
@@ -124,7 +124,7 @@ function Dex() {
             />
           </Card>
         </Wrapper> */}
-        <Wrapper>
+        <Wrapper> 
           <Card className={'material-primary'}>
             <CardHeader>SELL DEBT</CardHeader>
             <CardSubHeader>Sell your debt tokens for {selectQuoteToken}</CardSubHeader>
@@ -157,14 +157,14 @@ function Dex() {
           <Card className={'material-primary'}>
             <CardHeader>Buy Orders</CardHeader>
             <CardSubHeader>All orders buying debt tokens</CardSubHeader>
-            <BuyOrdersCard selectQuoteToken={selectQuoteToken} />
+            <BuyOrdersCard buyList={buyList} selectQuoteToken={selectQuoteToken} />
           </Card>
         </Wrapper>
         <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>Sell Orders</CardHeader>
             <CardSubHeader>All orders selling debt tokens</CardSubHeader>
-            <SellOrdersCard selectQuoteToken={selectQuoteToken} />
+            <SellOrdersCard sellList={sellList} selectQuoteToken={selectQuoteToken} />
           </Card>
         </Wrapper>
       </div>
