@@ -44,10 +44,10 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   const earnedRewards = useGetEarnedRewards()
 
   const depositShare = useMemo(() => {
-    if (arthBalanceOf.value.isZero() || 
-        arthTotalSupply.value.isZero() || 
-        arthTotalSupply.value.sub(arthBalanceOf.value).isZero() ||
-        totalDeposited.value.isZero() ) return 0
+    if (arthBalanceOf.value.isZero() ||
+      arthTotalSupply.value.isZero() ||
+      arthTotalSupply.value.sub(arthBalanceOf.value).isZero() ||
+      totalDeposited.value.isZero()) return 0
 
     let diff = totalDeposited.value.sub(totalDepositedByUser.value)
 
@@ -73,7 +73,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
           <div
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline', textAlign: 'left' }}
           >
-            <span>{`${symbol} into USDC Payback Pool`}</span>
+            <span>{`${symbol} into Payback Pool`}</span>
           </div>
         </CardHeader>
         <CardContent>
@@ -92,10 +92,10 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
           <CardSection>
             <TextWithIcon>Your Deposit Share</TextWithIcon>
             <StyledValue>
-              { depositShare.toFixed(2) != '0.00' ?
-                  depositShare.toFixed(2) :
-                   depositShare.toFixed(5)
-              }% 
+              {depositShare.toFixed(2) != '0.00' ?
+                depositShare.toFixed(2) :
+                depositShare.toFixed(5)
+              }%
             </StyledValue>
           </CardSection>
 
@@ -113,7 +113,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
           <div className={"m-b-8 m-t-40"}>
             <InfoTip
               type={'Info'}
-              msg={`This debt pool allows users to convert their ${symbol} token into debt to the protocol.
+              msg={`This pool allows users to convert their ${symbol} token into debt to the protocol.
               The protocol promises to pay all holders of this pool their ${symbol} (polygon)
               tokens at a price of ${price}$.`}
             />
@@ -122,7 +122,7 @@ const HomeCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
             <InfoTip
               type={'Warning'}
               msg={<div>
-                If you can't find your allocation in this debt pool, you can raise a ticket
+                If you can't find your allocation in this pool, you can raise a ticket
                 to <LinkA target="_blank" href="https://support.mahadao.com/support/tickets/new">support.mahadao.com</LinkA>
               </div>}
             />

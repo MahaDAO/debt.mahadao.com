@@ -12,7 +12,7 @@ const Sidebar = () => {
           <StyledLink exact activeClassName="activeSidebar" to="/locker">
             Lock MAHA
           </StyledLink>
-           {/*<StyledLink
+          {/*<StyledLink
             exact
             activeClassName="activeSidebar"
             to="/vote"
@@ -33,7 +33,7 @@ const Sidebar = () => {
           <StyledLink exact activeClassName="activeSidebar" to="/minter">
             Minter
           </StyledLink>*/}
-           <StyledLink exact activeClassName="activeSidebar" to="/rewards">
+          <StyledLink exact activeClassName="activeSidebar" to="/rewards">
             Rewards
           </StyledLink>
           <StyledLinkHref href="https://vote.mahadao.com" target={"_blank"}>
@@ -42,11 +42,11 @@ const Sidebar = () => {
               <IconLoader iconName={"ArrowLinkColored"} iconType={"arrow"} />
             </div>
           </StyledLinkHref>
-         {/* <StyledLink exact activeClassName="activeSidebar" to="/reward-vesting">
+          {/* <StyledLink exact activeClassName="activeSidebar" to="/reward-vesting">
             Reward Vesting
           </StyledLink> */}
           <StyledLink exact activeClassName="activeSidebar" to="/debt-pool">
-            Debt Pool
+            Payback Pool
           </StyledLink>
           <StyledLinkHref href="https://discuss.mahadao.com" target={"_blank"}>
             <div className={"single-line-center-start"}>
