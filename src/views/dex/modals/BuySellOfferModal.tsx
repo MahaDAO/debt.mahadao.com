@@ -50,8 +50,8 @@ function BuySellOffer(props: any) {
     tokenToApprove,
     core.contracts['MatchingMarket'].address
   );
-
-  const buyOfferAction = useBuyOffer(formatToBN(tableData.total, 6), formatToBN(baseToken), action, tableData.selectQuoteToken.name) 
+  
+  const buyOfferAction = useBuyOffer(formatToBN(tableData.total, tableData.selectQuoteToken.name == 'USDC' ? 6 : 18), formatToBN(baseToken), action, tableData.selectQuoteToken.name) 
 
   function handleBuyOffer() {
     buyOfferAction(() => {
@@ -59,7 +59,7 @@ function BuySellOffer(props: any) {
     })
   };
  
-  const sellOfferAction = useSellOffer(formatToBN(baseToken), formatToBN(tableData.total, 6), action, tableData.selectQuoteToken.name) 
+  const sellOfferAction = useSellOffer(formatToBN(baseToken), formatToBN(tableData.total, tableData.selectQuoteToken.name == 'USDC' ? 6 : 18), action, tableData.selectQuoteToken.name) 
 
   function handleSellOffer() {
     sellOfferAction(() => {

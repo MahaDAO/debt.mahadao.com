@@ -6,12 +6,8 @@ const useGetBestBuyOrders = (selectQuoteToken: string) => {
     const core = useCore();
     const blockNumber = useBlockNumber();
     const [data, setData] = useState<any[]>([])
-
-    console.log("inside useGetBestBuyOrders hook")
-
+    
     const fetchValue = useCallback(async() => {
-        console.log("inside useGetBestBuyOrders fetch")
-
         const marketAddress = core.contracts["MatchingMarket"].address
         const baseTokenAddress = core.contracts["ARTH-DP"].address
         const quoteTokenAddress = core.contracts[selectQuoteToken].address
@@ -27,7 +23,6 @@ const useGetBestBuyOrders = (selectQuoteToken: string) => {
     }, [])
 
     useEffect(() => {
-        console.log("inside useGetBestBuyOrders useeffect")
 
         fetchValue()
             .catch((err) => console.log("err", err))

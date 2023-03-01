@@ -62,8 +62,6 @@ function SellOrdersCard(props: IProps) {
     sellOrderAction(id)
   }
 
-  console.log('sellList', sellList)
-
   return (
     <CardContent>
       

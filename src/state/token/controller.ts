@@ -8,8 +8,8 @@ import * as Actions from './actions';
 import { BigNumber } from 'ethers';
 
 export const initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {
-  // setTimeout(() => _initUser(core, dispatch, chainId), 3000);
-  // _initUser(core, dispatch, chainId)
+  setTimeout(() => _initUser(core, dispatch, chainId), 3000);
+  _initUser(core, dispatch, chainId)
 };
  
 const _initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {

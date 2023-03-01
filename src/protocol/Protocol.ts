@@ -35,8 +35,6 @@ export class Protocol {
   constructor(cfg: Configuration) {
 
     const { deployments, supportedTokens } = cfg;
-    
-
     const provider = getDefaultProvider(cfg);
 
     // @ts-ignore
@@ -56,10 +54,10 @@ export class Protocol {
         );
       }
 
-      // this.multicall[137] = new Multicall(
-      //   cfg.defaultProvider,
-      //   deployments[name].address,
-      // );
+      this.multicall[137] = new Multicall(
+        cfg.defaultProvider,
+        deployments[name].address,
+      );
     }
 
     this.config = cfg;

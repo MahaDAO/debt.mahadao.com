@@ -37,6 +37,7 @@ export default function Updater(): null {
 
   // The attach/detach listeners.
   useEffect(() => {
+
     if (!ethereum || !chainId || !windowVisible) return undefined;
     setState({ chainId, blockNumber: null });
 
@@ -54,7 +55,7 @@ export default function Updater(): null {
     };
   }, [dispatch, chainId, ethereum, blockNumberCallback, windowVisible]);
 
-  const debouncedState = useDebounce(state, 100);
+  const debouncedState = useDebounce(state, 3000);
 
   useEffect(() => {
     if (!debouncedState.chainId || !debouncedState.blockNumber || !windowVisible) return;
