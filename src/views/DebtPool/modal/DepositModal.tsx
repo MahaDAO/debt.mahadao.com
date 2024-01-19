@@ -33,7 +33,8 @@ const DepositModal = (props: any) => {
 
   const [approveStatus, approve] = useApprove(
     token,
-    core.contracts['Staking-RewardsV2'].address
+    core.contracts['Staking-RewardsV2'].address,
+    formatToBN(val, token.decimal).toString()
   );
 
   const depositAction = useDeposit(val)

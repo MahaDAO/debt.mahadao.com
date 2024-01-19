@@ -70,6 +70,7 @@ export type Configuration = {
   networkDisplayName: string;
   etherscanUrl: string;
   defaultProvider: string;
+  logHistoryProvider: string;
   deployments: Deployments;
   config?: EthereumConfig;
   blockchainToken: 'MATIC'

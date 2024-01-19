@@ -21,7 +21,7 @@ const _initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {
         Actions.updateBalanceOf({
           bal,
           who: core.myAccount,
-          token: core.tokens['ARTH-DP'].address,
+          token: core.tokensLog['ARTH-DP'].address,
         }),
       )
     });
@@ -29,7 +29,7 @@ const _initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {
       dispatch(
         Actions.updateTotalSupply({
           supply,
-          token: core.tokens['ARTH-DP'].address,
+          token: core.tokensLog['ARTH-DP'].address,
         }),
       )
     });
@@ -66,13 +66,13 @@ const _initUser = (core: Protocol, dispatch: Dispatch, chainId: number) => {
     addCallsArray.push(
       {
       key: `BALANCE_OF_${token}`,
-      target: core.tokens['ARTH-DP'].address,
+      target: core.tokensLog['ARTH-DP'].address,
       call: ['balanceOf(address)(uint256)', core.myAccount],
       convertResult: (val: any) => val,
       },
       {
         key: `TOTAL_SUPPLY_OF_${token}`,
-        target: core.tokens['ARTH-DP'].address,
+        target: core.tokensLog['ARTH-DP'].address,
         call: ['totalSupply()(uint256)'],
         convertResult: (val: any) => val,
       },

@@ -5,9 +5,7 @@ import ERC20 from '../../protocol/ERC20';
 import useAllowance from '../state/useAllowance';
 import { useHasPendingApproval, useTransactionAdder } from '../../state/transactions/hooks';
 import useCore from '../useCore';
-
-const APPROVE_AMOUNT = ethers.constants.MaxUint256;
-const APPROVE_BASE_AMOUNT = BigNumber.from('1000000000000000000000000');
+import { current } from '@reduxjs/toolkit';
 
 export enum ApprovalState {
   UNKNOWN,
@@ -20,18 +18,21 @@ export enum ApprovalState {
  * Returns a variable indicating the state of the approval and a function which 
  * approves if necessary or early returns.
  */
-function useApprove(token: ERC20, spender: string): [ApprovalState, () => Promise<void>] {
+function useApprove(token: ERC20, spender: string, approveAmount: string): [ApprovalState, () => Promise<void>] {
   const core = useCore()
   const pendingApproval = useHasPendingApproval(token?.address, spender);
   const currentAllowance = useAllowance(token, spender, pendingApproval);
-
   // Check the current approval status.
   const approvalState: ApprovalState = useMemo(() => {
     // We might not have enough data to know whether or not we need to approve.
-    if (!currentAllowance) return ApprovalState.UNKNOWN;
+    if (approveAmount == "")
+      return ApprovalState.UNKNOWN;
+    console.log(currentAllowance, BigNumber.from(String(Number(approveAmount) * 1000000)))
+    if (!currentAllowance || currentAllowance < BigNumber.from(String(Number(approveAmount) * 1000000))) {
+      return ApprovalState.NOT_APPROVED;
+    }
 
-    // The amountToApprove will be defined if currentAllowance is.
-    return currentAllowance.lt(APPROVE_BASE_AMOUNT)
+    return currentAllowance.lt(BigNumber.from(approveAmount))
       ? pendingApproval
         ? ApprovalState.PENDING
         : ApprovalState.NOT_APPROVED
@@ -39,9 +40,9 @@ function useApprove(token: ERC20, spender: string): [ApprovalState, () => Promis
   }, [currentAllowance, pendingApproval]);
 
   const addTransaction = useTransactionAdder();
-
   const approve = useCallback(async (): Promise<void> => {
-    if (approvalState !== ApprovalState.NOT_APPROVED && approvalState !== ApprovalState.UNKNOWN) {
+    console.log('approval-state', approvalState);
+    if (approvalState !== ApprovalState.NOT_APPROVED) {
       console.error('Approve was called unnecessarily');
       return;
     }
@@ -50,7 +51,8 @@ function useApprove(token: ERC20, spender: string): [ApprovalState, () => Promis
     // @ts-ignore
     let symbol =  token.symbol
     try {
-      const response = await token.approve(spender, APPROVE_AMOUNT);
+      console.log('-----', approveAmount, '-----');
+      const response = await token.approve(spender, BigNumber.from(String(Number(approveAmount) * 1000000)));
       addTransaction(response, {
         summary: `Approve ${symbol}`,
         approval: {
