@@ -32,8 +32,8 @@ function BuySellTable(props: IProps) {
   const [sellTotal, setSellTotal] = useState<string>('0')
   const [openOfferModal, setOpenOfferModal] = useState<boolean>(false)
 
-  const usdcbal = useTokenBalance(core.tokens['USDC'])
-  const mahabal = useTokenBalance(core.tokens['MAHA'])
+  const usdcbal = useTokenBalance(core.tokensLog['USDC'])
+  const mahabal = useTokenBalance(core.tokensLog['MAHA'])
 
   let actionButton: boolean = false
   actionButton =

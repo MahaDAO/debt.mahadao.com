@@ -18,16 +18,16 @@ function Dex() {
 
   const core = useCore()
   const isMobile = useMediaQuery({ maxWidth: '600px' });
-  const baseTokenBalance = useTokenBalance(core.tokens['ARTH-DP'])
-  const quoteTokenBalance = useTokenBalance(core.tokens['USDC'])
+  const baseTokenBalance = useTokenBalance(core.tokensLog['ARTH-DP'])
+  const quoteTokenBalance = useTokenBalance(core.tokensLog['USDC'])
   let arthUsdcPairStatus = localStorage.getItem('selectorQToken') || 'usdc'
 
   const [selectQuoteToken, setSelectQuoteToken] = useState<string>('USDC')
   const [selectorQToken, setSelectorQToken] = useState<string>(arthUsdcPairStatus)
 
-  const usdcbal = useTokenBalance(core.tokens['USDC'])
-  const mahabal = useTokenBalance(core.tokens['MAHA'])
-  const sclpbal = useTokenBalance(core.tokens['SCLP'])
+  const usdcbal = useTokenBalance(core.tokensLog['USDC'])
+  const mahabal = useTokenBalance(core.tokensLog['MAHA'])
+  const sclpbal = useTokenBalance(core.tokensLog['SCLP'])
 
   useEffect(() => {
     if (selectorQToken === 'maha') {

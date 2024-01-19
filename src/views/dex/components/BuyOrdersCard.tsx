@@ -40,18 +40,18 @@ function BuyOrdersCard(props: IProps) {
     let buyOrderArr: any = []
     let sellOrderArr: any = []
 
-    const testLastOfferId = await core.contracts['MatchingMarket'].last_offer_id()
+    const testLastOfferId = await core.contractsLog['MatchingMarket'].last_offer_id()
     
     for(let i = 1; i <= testLastOfferId.toString(); i++){
-      const offer = await core.contracts['MatchingMarket'].offers(i)
+      const offer = await core.contractsLog['MatchingMarket'].offers(i)
 
       if(offer[5]._hex !== "0x00"){
-        if(offer.buy_gem.toLowerCase() === core.tokens['ARTH-DP'].address.toLowerCase()){
-          if(offer.pay_gem.toLowerCase() === core.tokens['USDC'].address.toLowerCase())
+        if(offer.buy_gem.toLowerCase() === core.tokensLog['ARTH-DP'].address.toLowerCase()){
+          if(offer.pay_gem.toLowerCase() === core.tokensLog['USDC'].address.toLowerCase())
             buyOrderArr.push({offer, i, exchangeToken: 'USDC'})
-          if(offer.pay_gem.toLowerCase() === core.tokens['MAHA'].address.toLowerCase())
+          if(offer.pay_gem.toLowerCase() === core.tokensLog['MAHA'].address.toLowerCase())
             buyOrderArr.push({offer, i, exchangeToken: 'MAHA'})
-          if(offer.pay_gem.toLowerCase() === core.tokens['SCLP'].address.toLowerCase())
+          if(offer.pay_gem.toLowerCase() === core.tokensLog['SCLP'].address.toLowerCase())
             buyOrderArr.push({offer, i, exchangeToken: 'SCLP'})
 
           const finalArr = buyOrderArr.sort((a: any, b: any) => Number(getDisplayBalance(a.offer.buy_amt)) - Number(getDisplayBalance(b.offer.buy_amt)))
@@ -68,7 +68,7 @@ function BuyOrdersCard(props: IProps) {
     cancelOrderAction(id)
   }
 
-  console.log("buyOrderData",buyOrderData)
+  // console.log("buyOrderData",buyOrderData)
 
 
 

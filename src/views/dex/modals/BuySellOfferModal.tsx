@@ -48,7 +48,8 @@ function BuySellOffer(props: any) {
 
   const [approveStatus, approve] = useApprove(
     tokenToApprove,
-    core.contracts['MatchingMarket'].address
+    core.contracts['MatchingMarket'].address,
+    String(tableData.quote * tableData.base)
   );
 
   const buyOfferAction = useBuyOffer(formatToBN(tableData.total, 6), formatToBN(baseToken), action, tableData.selectQuoteToken.name) 

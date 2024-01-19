@@ -7,7 +7,10 @@ const configurations: { [env: string]: Configuration } = {
     chainId: 137,
     etherscanUrl: 'https://polygonscan.com',
     defaultProvider:
-      'https://polygon-rpc.com/',
+      // 'https://polygon-rpc.com/',
+      'https://rpc.ankr.com/polygon',
+    logHistoryProvider: 
+      'https://polygon.llamarpc.com',
     deployments: require('./protocol/deployments/matic.json'),
     refreshInterval: 10000,
     gasLimitMultiplier: 1.1,

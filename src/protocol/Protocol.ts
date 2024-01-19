@@ -3,7 +3,7 @@ import { BigNumber, Contract, ethers, Overrides } from 'ethers';
 import ERC20 from './ERC20';
 import ABIS from './deployments/abi';
 import { Configuration } from '../utils/interface';
-import { getDefaultProvider } from '../utils/provider';
+import { getDefaultProvider, getLogProvider } from '../utils/provider';
 import Multicall from './Multicall';
 import * as tokenState from '../state/token/controller';
 
@@ -19,7 +19,9 @@ export class Protocol {
 
   config: Configuration;
   contracts: { [name: string]: Contract };
+  contractsLog: { [name: string]: Contract };
   provider: ethers.providers.BaseProvider;
+  providerLog: ethers.providers.BaseProvider;
 
   // 'ARTH-DP': ERC20;
   // ARTH: ERC20;
@@ -29,28 +31,41 @@ export class Protocol {
   tokens: {
     [name: string]: ERC20;
   };
+  tokensLog: {
+    [name: string]: ERC20;
+  };
 
   multicall!: { [chainId: number]: Multicall };
 
   constructor(cfg: Configuration) {
 
     const { deployments, supportedTokens } = cfg;
-    console.log("deployments", deployments)
+    // console.log("deployments", deployments)
 
     const provider = getDefaultProvider(cfg);
+    const provider2 = getLogProvider(cfg);
 
     // @ts-ignore
     this.multicall = { 137: {} };
 
     this.contracts = {};
+    this.contractsLog = {};
     this.tokens = {};
+    this.tokensLog = {};
     for (const [name, deployment] of Object.entries(deployments)) {
       if (!deployment.abi) continue;
       this.contracts[name] = new Contract(deployment.address, ABIS[deployment.abi], provider);
+      this.contractsLog[name] = new Contract(deployment.address, ABIS[deployment.abi], provider2);
       if (supportedTokens.includes(name)) {
         this.tokens[name] = new ERC20(
           deployments[name].address,
           provider,
+          name,
+          cfg.decimalOverrides[name] || 18,
+        );
+        this.tokensLog[name] = new ERC20(
+          deployments[name].address,
+          provider2,
           name,
           cfg.decimalOverrides[name] || 18,
         );
@@ -64,6 +79,7 @@ export class Protocol {
 
     this.config = cfg;
     this.provider = provider;
+    this.providerLog = provider2;
   };
 
   /**
@@ -76,10 +92,10 @@ export class Protocol {
     this.signer = newProvider.getSigner()
     this.myAccount = account;
 
-    console.log('window.ethereum', window.ethereum)
-    console.log('newProvider', newProvider)
-    console.log('this.signer', this.signer)
-    console.log("Account:", await this.signer.getAddress());
+    // console.log('window.ethereum', window.ethereum)
+    // console.log('newProvider', newProvider)
+    // console.log('this.signer', this.signer)
+    // console.log("Account:", await this.signer.getAddress());
 
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
