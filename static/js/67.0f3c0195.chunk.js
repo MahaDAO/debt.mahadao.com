@@ -1,0 +1,2 @@
+(this["webpackJsonpdebt.mahadao.com"]=this["webpackJsonpdebt.mahadao.com"]||[]).push([[67],{1018:function(a,t,e){"use strict";e.r(t),t.default=e.p+"static/media/Menu.fdc05e67.svg"}}]);
+//# sourceMappingURL=67.0f3c0195.chunk.js.map
