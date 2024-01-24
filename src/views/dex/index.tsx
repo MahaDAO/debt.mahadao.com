@@ -44,7 +44,6 @@ function Dex() {
     localStorage.setItem('selectorQToken', val)
     console.log('handleChange', val)
     setSelectorQToken(val);
-
   };
 
   return (
