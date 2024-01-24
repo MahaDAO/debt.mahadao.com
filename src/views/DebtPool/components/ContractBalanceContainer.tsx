@@ -1,4 +1,4 @@
-import {ethers} from 'ethers';
+import { ethers } from 'ethers';
 import { Grid } from "@material-ui/core";
 import Loader from 'react-spinners/BeatLoader';
 import { BigNumber } from "@ethersproject/bignumber";
@@ -17,8 +17,8 @@ import useCore from '../../../hooks/useCore';
 import useGetCirculatingSupply from '../../../hooks/state/useGetCirculatingSupply';
 
 const ContractBalanceContainer = () => {
-  
-  const totalCirculatingSupply = useGetCirculatingSupply(); 
+
+  const totalCirculatingSupply = useGetCirculatingSupply();
   const totalSupply = useGetDebtPoolSupply('ARTH-DP')
 
   const percentOfDebtBurned = useMemo(() => {
@@ -32,31 +32,32 @@ const ContractBalanceContainer = () => {
       value: BigNumber.from(0)
     }
 
-    if(totalSupply.value !== totalCirculatingSupply.value && !totalSupply.value.isZero()){
+    if (totalSupply.value !== totalCirculatingSupply.value && !totalSupply.value.isZero()) {
       // let val = ((Number(ethers.utils.formatEther(totalSupply.value)) - Number(ethers.utils.formatEther(totalCirculatingSupply.value))) / Number(ethers.utils.formatEther(totalSupply.value)))
 
       let diff = totalSupply.value.sub(totalCirculatingSupply.value)
-      let val = totalSupply.value.sub(diff).mul(100).div(totalSupply.value).toNumber()
+      let val = (totalCirculatingSupply.value.sub(totalSupply.value)).mul(100).div(totalCirculatingSupply.value).toNumber()
 
+      console.log('sdf', val)
       let bigval = ethers.utils.parseEther(`${val}`)
 
-        return {
-          isLoading: false,
-          value: bigval
-        }
-      }
-    
       return {
         isLoading: false,
-        value: ethers.utils.parseEther(`0`)
+        value: bigval
       }
-   
+    }
+
+    return {
+      isLoading: false,
+      value: ethers.utils.parseEther(`0`)
+    }
+
   }, [totalSupply, totalCirculatingSupply]);
 
 
   return (
-   <div style={{flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-     <div className="material-primary m-b-16 single-line-center-center" style={{flex: 1}}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <div className="material-primary m-b-16 single-line-center-center" style={{ flex: 1 }}>
         <div className="m-b-8">
           {
             totalCirculatingSupply.isLoading
@@ -98,7 +99,7 @@ const ContractBalanceContainer = () => {
           <ToolTip toolTipText={'The total MAHA locked by all users.'} className='m-l-4' />
         </div> */}
       </div>
-      <div className="material-primary single-line-center-center" style={{flex: 1}}>
+      <div className="material-primary single-line-center-center" style={{ flex: 1 }}>
         <div>
           {
             totalSupply.isLoading
@@ -107,9 +108,8 @@ const ContractBalanceContainer = () => {
               </div>
               : (
                 <TextWrapper
-                  text={`$ ${
-                    Number(getDisplayBalance(totalSupply.value, 18, 3)).toLocaleString(undefined, { minimumFractionDigits: 3 })
-                  }`}
+                  text={`$ ${Number(getDisplayBalance(totalSupply.value, 18, 3)).toLocaleString(undefined, { minimumFractionDigits: 3 })
+                    }`}
                   fontSize={24}
                   fontWeight={'bold'}
                   Fcolor={'#FFFFFF'}
@@ -121,10 +121,10 @@ const ContractBalanceContainer = () => {
           <div className="single-line-center-center m-b-16">
             <TextWrapper fontSize={24} text={'Total debt issued'} Fcolor={theme.color.transparent[100]} />
           </div>
-          
+
         </div>
       </div>
-   </div>
+    </div>
   )
 }
 
