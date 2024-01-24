@@ -84,7 +84,7 @@ function Dex() {
         </div> */}
       </div>
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
-        <Wrapper>
+        {/* <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>BUY DEBT</CardHeader>
             <CardSubHeader>Buy debt tokens using {selectQuoteToken}</CardSubHeader>
@@ -117,7 +117,7 @@ function Dex() {
               }}
             />
           </Card>
-        </Wrapper>
+        </Wrapper> */}
         <Wrapper>
           <Card className={'material-primary'}>
             <CardHeader>SELL DEBT</CardHeader>
