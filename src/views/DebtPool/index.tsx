@@ -3,6 +3,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
 import DebtCard from "./components/DebtCard";
+import ContractBalanceContainer from "./components/ContractBalanceContainer";
 
 const LockDeposit = () => {
   const isMobile = useMediaQuery("(max-width: 680px)");
@@ -20,6 +21,7 @@ const LockDeposit = () => {
       </div>
       <DebtContainer style={{ flexDirection: isMobile ? "column" : "row" }}>
         <DebtCard price={1} symbol={"ARTH-DP"} />
+        <ContractBalanceContainer />
       </DebtContainer>
     </div>
   );

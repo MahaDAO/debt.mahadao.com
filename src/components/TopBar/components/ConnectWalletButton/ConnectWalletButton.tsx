@@ -1,7 +1,7 @@
 import Button from "@/components/Button";
 import IconLoader from "@/components/IconLoader/IconLoader";
 import { truncateAddress } from "@/utils";
-import { Menu } from "@mui/material";
+import { Menu, useMediaQuery } from "@mui/material";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React, { useState } from "react";
 import { Address } from "viem";
@@ -10,11 +10,17 @@ import DesktopWalletInfo from "../modal/WalletInfo/DesktopWalletInfo";
 
 const ConnectWalletButton = () => {
   const { disconnect } = useDisconnect();
+  const isMobile = useMediaQuery("(max-width: 600px)");
   const account = useAccount();
   const [showWalletInfo, setShowWalletInfo] = useState(false);
 
   return (
-    <div>
+    <div
+      style={{
+        marginTop: isMobile ? "20px" : "0px",
+        width: isMobile ? "90%" : "auto",
+      }}
+    >
       <ConnectButton.Custom>
         {({ chain, openChainModal, openConnectModal }) => {
           if (!account?.isConnected)

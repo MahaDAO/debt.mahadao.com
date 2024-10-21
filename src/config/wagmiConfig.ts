@@ -77,3 +77,7 @@ export const config = createConfig({
     });
   },
 });
+
+export const getChainConfig = (chainId: number) => {
+  return config.chains.find((chain) => chain.id === chainId);
+};

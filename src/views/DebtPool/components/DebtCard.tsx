@@ -5,6 +5,8 @@ import { styled } from "@mui/material/styles";
 // import styled from 'styled-components';
 import Loader from "react-spinners/PulseLoader";
 import InfoTip from "@/components/InfoTip";
+import DepositModal from "../modal/DepositModal";
+import WithdrawModal from "../modal/WithdrawModal";
 // import { useMediaQuery } from "react-responsive";
 
 // import { getDisplayBalance } from '../../../utils/formatBalance';
@@ -35,8 +37,8 @@ const DebtCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   //   const isMobile = useMediaQuery({ maxWidth: '600px' });
   //   const arthdptoken = core.tokens['ARTH-DP']
 
-  //   const [openDepositModal, setOpenDepositModal] = useState<boolean>(false);
-  //   const [openWithdrawModal, setWithdrawModal] = useState<boolean>(false);
+  const [openDepositModal, setOpenDepositModal] = useState<boolean>(false);
+  const [openWithdrawModal, setWithdrawModal] = useState<boolean>(false);
 
   //   const arthTotalSupply = useGetDebtPoolSupply(symbol);
   //   const arthBalanceOf = useTokenBalanceOf(arthdptoken, core.myAccount);
@@ -158,7 +160,7 @@ const DebtCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
             <Button
               text="Deposit Debt Tokens"
               onClick={() => {
-                // setOpenDepositModal(true)
+                setOpenDepositModal(true);
               }}
               //   disabled={!depositDisable}
             />
@@ -167,10 +169,7 @@ const DebtCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
             ></div>
             <Button
               text="Withdraw Debt Tokens"
-              onClick={
-                () => {}
-                // () => setWithdrawModal(true)
-              }
+              onClick={() => setWithdrawModal(true)}
               //   disabled={!withdrawDisable}
             />
           </ButtonToBottom>
@@ -181,16 +180,22 @@ const DebtCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
           />
         </CardContent>
       </Card>
-      {/* <DepositModal
-        // openModal={openDepositModal}
-        // onModalClose={() => setOpenDepositModal(false)}
-        selectedData={arthdptoken}
+      <DepositModal
+        openModal={openDepositModal}
+        onModalClose={() => setOpenDepositModal(false)}
+        selectedData={{
+          token: "0xsadashdj",
+          displayName: "ARTH-DP",
+        }}
       />
       <WithdrawModal
         openModal={openWithdrawModal}
         onModalClose={() => setWithdrawModal(false)}
-        selectedData={arthdptoken}
-      /> */}
+        selectedData={{
+          token: "0xsadashdj",
+          displayName: "ARTH-DP",
+        }}
+      />
     </Wrapper>
   );
 };
