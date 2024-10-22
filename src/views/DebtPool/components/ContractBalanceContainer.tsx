@@ -1,9 +1,61 @@
 import TextWrapper from "@/components/TextWrapper.tsx/TextWrapper";
-import React from "react";
+import React, { useMemo } from "react";
 import Loader from "react-spinners/BeatLoader";
 import customTheme from "@/customTheme";
+import useGetCirculatingSupply from "@/hooks/state/useGetCirculatingSupply";
+import useGetDebtPoolSupply from "@/hooks/state/useGetDebtPoolSupply";
+import { BigNumber, ethers } from "ethers";
+import { getDisplayBalance } from "@/utils/formatBalance";
 
 const ContractBalanceContainer = () => {
+  const totalCirculatingSupply = useGetCirculatingSupply();
+  const totalSupply = useGetDebtPoolSupply("ARTH-DP");
+
+  const percentOfDebtBurned = useMemo(() => {
+    if (totalCirculatingSupply.isLoading)
+      return {
+        isLoading: true,
+        value: BigNumber.from(0),
+      };
+
+    if (
+      Number(getDisplayBalance(totalCirculatingSupply.value, 18, 3)) < 0 ||
+      !totalCirculatingSupply
+    )
+      return {
+        isLoading: false,
+        value: BigNumber.from(0),
+      };
+
+    if (
+      totalSupply.value !== totalCirculatingSupply.value &&
+      !totalSupply.value.isZero() &&
+      !totalCirculatingSupply.value.isZero()
+    ) {
+      // let val = ((Number(ethers.utils.formatEther(totalSupply.value)) - Number(ethers.utils.formatEther(totalCirculatingSupply.value))) / Number(ethers.utils.formatEther(totalSupply.value)))
+
+      let diff = totalSupply.value.sub(totalCirculatingSupply.value);
+      let val = totalCirculatingSupply.value
+        .sub(totalSupply.value)
+        .mul(100)
+        .div(totalCirculatingSupply.value)
+        .toNumber();
+
+      console.log("sdf", val);
+      let bigval = ethers.utils.parseEther(`${val}`);
+
+      return {
+        isLoading: false,
+        value: bigval,
+      };
+    }
+
+    return {
+      isLoading: false,
+      value: ethers.utils.parseEther(`0`),
+    };
+  }, [totalSupply, totalCirculatingSupply]);
+
   return (
     <div
       style={{
@@ -18,33 +70,36 @@ const ContractBalanceContainer = () => {
         style={{ flex: 1 }}
       >
         <div className="m-b-8">
-          {
-            // loading
-            false ? (
-              <Loader color="#fff" loading={true} size={4} margin={2} />
-            ) : (
-              <TextWrapper
-                text={
-                  Number("22452432").toLocaleString(undefined, {
-                    minimumFractionDigits: 3,
-                  }) + " ARTH-DP"
-                }
-                fontSize={24}
-                fontWeight={"bold"}
-                Fcolor={"#FFFFFF"}
-                className="m-b-16"
-                align={"center"}
-              />
-            )
-          }
-          {false ? (
-            <Loader color="#ffffff" loading={true} size={4} margin={2} />
+          {totalCirculatingSupply.isLoading ? (
+            <Loader color={"#ffffff"} loading={true} size={4} margin={2} />
           ) : (
             <TextWrapper
-              text={`(${Number("20").toLocaleString(undefined, {
-                minimumFractionDigits: 3,
-              })} % debt burned)`}
+              text={
+                Number(
+                  getDisplayBalance(totalCirculatingSupply.value, 18, 3)
+                ).toLocaleString(undefined, { minimumFractionDigits: 3 }) +
+                " ARTH-DP"
+              }
               fontSize={24}
+              fontWeight={"bold"}
+              Fcolor={"#FFFFFF"}
+              align="center"
+              className="m-b-16"
+            />
+          )}
+          {percentOfDebtBurned.isLoading ? (
+            <Loader color={"#ffffff"} loading={true} size={4} margin={2} />
+          ) : (
+            <TextWrapper
+              text={
+                "(" +
+                Number(
+                  getDisplayBalance(percentOfDebtBurned.value, 18, 3)
+                ).toLocaleString(undefined, { minimumFractionDigits: 3 }) +
+                " % debt burned)"
+              }
+              fontSize={24}
+              // fontWeight={'bold'}
               Fcolor={customTheme.color.transparent[100]}
               align="center"
             />
@@ -56,18 +111,19 @@ const ContractBalanceContainer = () => {
         style={{ flex: 1 }}
       >
         <div>
-          {false ? (
+          {totalSupply.isLoading ? (
             <div className="single-line-center-center">
-              <Loader color="#ffffff" loading={true} size={4} margin={2} />
+              <Loader color={"#ffffff"} loading={true} size={4} margin={2} />
             </div>
           ) : (
             <TextWrapper
-              text={`$ ${Number("1234").toLocaleString(undefined, {
-                minimumFractionDigits: 3,
-              })}`}
+              text={`$ ${Number(
+                getDisplayBalance(totalSupply.value, 18, 3)
+              ).toLocaleString(undefined, { minimumFractionDigits: 3 })}`}
               fontSize={24}
               fontWeight={"bold"}
-              align={"center"}
+              Fcolor={"#FFFFFF"}
+              align="center"
               className="m-b-16"
             />
           )}

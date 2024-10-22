@@ -1,20 +1,77 @@
 import Button from "@/components/Button";
 import Modal from "@/components/Modal/Modal";
+import useApprove, { ApprovalState } from "@/hooks/callbacks/useApprove";
+import useBuyoffer from "@/hooks/state/useBuyOffer";
+import useSellOffer from "@/hooks/state/useSellOffer";
+import useCore from "@/hooks/useCore";
+import ERC20 from "@/protocol/ERC20";
+import { formatToBN } from "@/utils/formatBalance";
 import { useMediaQuery } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { styled } from "@mui/material/styles";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const BuySellOfferModal = (props: any) => {
   const { openModal, onModalClose, action, tableData, subTitle } = props;
+
+  const core = useCore();
   const isMobile = useMediaQuery("(max-width: 600px)");
   const [quoteToken, setQuoteToken] = useState<string>("0");
   const [baseToken, setBaseToken] = useState<string>("0");
   const [totalQuoteToken, setTotalQuoteToken] = useState<string>("0");
+  const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
+  const [depositing, setDepositing] = useState<boolean>(false);
+  const [tokenToApprove, setTokenToApprove] = useState<ERC20>(core.tokens.USDC);
 
-  const handleBuyOffer = () => {};
+  useEffect(() => {
+    setQuoteToken(tableData.quote);
+    setBaseToken(tableData.base);
+    setTotalQuoteToken(tableData.total);
+    if (action === "Buy") {
+      if (tableData.selectQuoteToken.name == "USDC") {
+        setTokenToApprove(core.tokens.USDC);
+      } else {
+        setTokenToApprove(core.tokens.MAHA);
+      }
+    }
+    if (action === "Sell") setTokenToApprove(core.tokens["ARTH-DP"]);
+  }, [tableData]);
 
-  const handleSellOffer = () => {};
+  const [approveStatus, approve] = useApprove(
+    tokenToApprove,
+    core.contracts["MatchingMarket"].address
+  );
+
+  const buyOfferAction = useBuyoffer(
+    formatToBN(tableData.total, 6),
+    formatToBN(baseToken),
+    action,
+    tableData.selectQuoteToken.name
+  );
+
+  function handleBuyOffer() {
+    buyOfferAction(() => {
+      // props.onCancel();
+    });
+  }
+
+  const sellOfferAction = useSellOffer(
+    formatToBN(baseToken),
+    formatToBN(tableData.total, 6),
+    action,
+    tableData.selectQuoteToken.name
+  );
+
+  function handleSellOffer() {
+    sellOfferAction(() => {
+      // props.onCancel();
+    });
+  }
+
+  const isApproved = approveStatus === ApprovalState.APPROVED;
+  const isApproving = approveStatus === ApprovalState.PENDING;
+
+  const isAmountGreaterThanBalance = false;
 
   return (
     <Modal
@@ -56,21 +113,26 @@ const BuySellOfferModal = (props: any) => {
               />
             </Grid>
             <Grid size={{ lg: 6, md: 6, sm: 12, xs: 12 }}>
-              {false ? (
+              {!isApproved ? (
                 <Button
-                  loading={false}
-                  text={false ? "Approving" : "Approve"}
+                  loading={isApproving}
+                  text={isApproving ? "Approving" : "Approve"}
                   size={"lg"}
-                  onClick={() => {}}
-                  disabled={false || !Number(quoteToken)}
+                  onClick={approve}
+                  disabled={
+                    isInputFieldError || isApproved || !Number(quoteToken)
+                  }
                 />
               ) : (
                 <Button
                   disabled={
-                    false || !Number(quoteToken) || !Number(baseToken) || false
+                    isInputFieldError ||
+                    !Number(quoteToken) ||
+                    !Number(baseToken) ||
+                    depositing
                   }
                   text={`${action}`}
-                  loading={false}
+                  loading={depositing}
                   size={"lg"}
                   onClick={action === "Buy" ? handleBuyOffer : handleSellOffer}
                   // tracking_id={'stake_deposit'}

@@ -73,7 +73,9 @@ export const config = createConfig({
   client({ chain }) {
     return createClient({
       chain,
-      transport: http(),
+      transport: http(
+        "https://polygon-mainnet.g.alchemy.com/v2/tHGWQIfQJXs1x3MLBehKqWiCe51nVHmO"
+      ),
     });
   },
 });

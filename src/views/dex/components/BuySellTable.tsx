@@ -4,6 +4,7 @@ import Input from "@/components/Input";
 import { styled } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import BuySellOfferModal from "../modal/BuySellOfferModal";
+import { getDisplayBalance } from "@/utils/formatBalance";
 
 interface IProps {
   baseTokenBalance: any;
@@ -21,6 +22,13 @@ const BuySellTable = (props: IProps) => {
   const [buyTotal, setBuyTotal] = useState<string>("0");
   const [sellTotal, setSellTotal] = useState<string>("0");
   const [openOfferModal, setOpenOfferModal] = useState<boolean>(false);
+
+  let actionButton: boolean = false;
+  actionButton =
+    action === "Buy"
+      ? Number(selectQuoteToken.balance) < Number(quoteToken) ||
+        Number(selectQuoteToken.balance) < Number(buyTotal)
+      : Number(baseToken) > Number(getDisplayBalance(baseTokenBalance.value));
 
   useEffect(() => {
     if (quoteToken.length && baseToken.length) {

@@ -1,5 +1,12 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { styled } from "@mui/material/styles";
+import useCore from "@/hooks/useCore";
+import useDebtOrders from "@/hooks/callbacks/useDebtOrders";
+import useCancelOffer from "@/hooks/state/useCancelOffer";
+import { getDisplayBalance } from "@/utils/formatBalance";
+import { BigNumber } from "ethers";
+import Numeral from "numeral";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 interface IProps {
   selectQuoteToken: string;
@@ -8,12 +15,37 @@ interface IProps {
 const SellOrdersCard = (props: IProps) => {
   const { selectQuoteToken } = props;
 
+  const core = useCore();
+
+  const sellOrderData = useDebtOrders(selectQuoteToken);
   const [cancelId, setCancelId] = useState<number>(0);
+  const owner = core.myAccount;
+
+  const sellOrderAction = useCancelOffer(cancelId);
 
   const handleCancelOrder = (id: number) => {
     setCancelId(id);
-    // sellOrderAction(id)
+    sellOrderAction(id);
   };
+
+  const tokenAddr = core.tokens[selectQuoteToken].address;
+  const sortedorders = useMemo(
+    () =>
+      sellOrderData
+        .filter((a) => a.buy_gem.toLowerCase() === tokenAddr.toLowerCase())
+        .sort((a, b) => {
+          const apayAmt = getDisplayBalance(a.pay_amt, 18, 3);
+          const abuyAmt = getDisplayBalance(a.buy_amt, 6, 3);
+          const aprice = Number(abuyAmt) / Number(apayAmt);
+
+          const bpayAmt = getDisplayBalance(b.pay_amt, 18, 3);
+          const bbuyAmt = getDisplayBalance(b.buy_amt, 6, 3);
+          const bprice = Number(bbuyAmt) / Number(bpayAmt);
+
+          return Number(aprice) - Number(bprice);
+        }),
+    [sellOrderData, tokenAddr]
+  );
 
   return (
     <CardContent>
@@ -23,26 +55,35 @@ const SellOrdersCard = (props: IProps) => {
         <CardColumn3 className="text-center">ARTH-DP</CardColumn3>
         <div style={{ padding: "13px" }}></div>
       </CardSection>
-      {[1, 2, 3, 4].map((order, index) => {
+      {sortedorders?.map((order, index) => {
+        const payAmt = getDisplayBalance(BigNumber.from(order.pay_amt), 18, 3);
+        const buyAmt = getDisplayBalance(BigNumber.from(order.buy_amt), 6, 3);
+        const price = Number(buyAmt) / Number(payAmt);
+
         return (
-          <CardSection>
+          <CardSection key={index}>
             <CardColumn1 className={"table-border single-line-center-center"}>
-              {2312321}
+              {Numeral(price).format("0.000")}
             </CardColumn1>
             <CardColumn2 className={"table-border single-line-center-center"}>
-              {2131234}
+              {Numeral(buyAmt).format("0.000")}
             </CardColumn2>
             <CardColumn3 className={"table-border single-line-center-center"}>
-              {675546}
+              {Numeral(payAmt).format("0.000")}
             </CardColumn3>
-            {/* 
-            {
-                owner.toLowerCase() === order.owner.toLowerCase() ?
-                  <div className={'single-line-center-center pointer'} onClick={() => { handleCancelOrder(order.id) }} style={{ padding: '9px' }}>
-                    <CancelIcon />
-                  </div>
-                  : <div />
-              } */}
+            {owner.toLowerCase() === order.owner.toLowerCase() ? (
+              <div
+                className={"single-line-center-center pointer"}
+                onClick={() => {
+                  handleCancelOrder(order.id);
+                }}
+                style={{ padding: "9px" }}
+              >
+                <CancelIcon />
+              </div>
+            ) : (
+              <div />
+            )}
           </CardSection>
         );
       })}

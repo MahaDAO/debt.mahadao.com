@@ -7,6 +7,14 @@ import Loader from "react-spinners/PulseLoader";
 import InfoTip from "@/components/InfoTip";
 import DepositModal from "../modal/DepositModal";
 import WithdrawModal from "../modal/WithdrawModal";
+import useCore from "@/hooks/useCore";
+import useGetDebtPoolSupply from "@/hooks/state/useGetDebtPoolSupply";
+import useTokenBalanceOf from "@/hooks/useTokenBalanceOf";
+import useGetDepositBalance from "@/hooks/useGetDepositBalance";
+import useGetStakingRewardsSupply from "@/hooks/state/useGetStakingRewardsSupply";
+import useClaimReward from "@/hooks/callbacks/useClaimReward";
+import useGetEarnedRewards from "@/hooks/callbacks/useGetEarnedRewards";
+import { getDisplayBalance } from "@/utils/formatBalance";
 // import { useMediaQuery } from "react-responsive";
 
 // import { getDisplayBalance } from '../../../utils/formatBalance';
@@ -33,43 +41,50 @@ interface DeptCardProps {
 }
 
 const DebtCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
-  //   const core = useCore();
+  const core = useCore();
   //   const isMobile = useMediaQuery({ maxWidth: '600px' });
-  //   const arthdptoken = core.tokens['ARTH-DP']
+  const arthdptoken = core.tokens["ARTH-DP"];
 
   const [openDepositModal, setOpenDepositModal] = useState<boolean>(false);
   const [openWithdrawModal, setWithdrawModal] = useState<boolean>(false);
 
-  //   const arthTotalSupply = useGetDebtPoolSupply(symbol);
-  //   const arthBalanceOf = useTokenBalanceOf(arthdptoken, core.myAccount);
-  //   const totalDepositedByUser = useGetDepositBalance(core.myAccount);
-  //   const totalDeposited = useGetStakingRewardsSupply()
+  const arthTotalSupply = useGetDebtPoolSupply(symbol);
+  const arthBalanceOf = useTokenBalanceOf(arthdptoken, core.myAccount);
 
-  //   const claimCallback = useClaimReward();
-  //   const earnedRewards = useGetEarnedRewards()
+  const totalDepositedByUser = useGetDepositBalance(core.myAccount);
+  const totalDeposited = useGetStakingRewardsSupply();
 
-  //   const depositShare = useMemo(() => {
-  //     if (arthBalanceOf.value.isZero() ||
-  //       arthTotalSupply.value.isZero() ||
-  //       arthTotalSupply.value.sub(arthBalanceOf.value).isZero() ||
-  //       totalDeposited.value.isZero()) return 0
+  const claimCallback = useClaimReward();
+  const earnedRewards = useGetEarnedRewards();
 
-  //     let diff = totalDeposited.value.sub(totalDepositedByUser.value)
+  const depositShare = useMemo(() => {
+    if (
+      arthBalanceOf.value.isZero() ||
+      arthTotalSupply.value.isZero() ||
+      arthTotalSupply.value.sub(arthBalanceOf.value).isZero() ||
+      totalDeposited.value.isZero()
+    )
+      return 0;
 
-  //     return totalDeposited.value.sub(diff).mul(10000000).div(totalDeposited.value).toNumber() / 100000
+    let diff = totalDeposited.value.sub(totalDepositedByUser.value);
 
-  //   },
-  //     [arthBalanceOf, arthTotalSupply]
-  //   );
+    return (
+      totalDeposited.value
+        .sub(diff)
+        .mul(10000000)
+        .div(totalDeposited.value)
+        .toNumber() / 100000
+    );
+  }, [arthBalanceOf, arthTotalSupply]);
 
-  //   const handleGetRewards = () => {
-  //     claimCallback(() => { })
-  //   }
+  const handleGetRewards = () => {
+    claimCallback(() => {});
+  };
 
-  //   const disableRewardBtn = Number(getDisplayBalance(earnedRewards.value)) > 0
+  const disableRewardBtn = Number(getDisplayBalance(earnedRewards.value)) > 0;
 
-  //   const depositDisable = !arthBalanceOf.value.isZero()
-  //   const withdrawDisable = !totalDepositedByUser.value.isZero()
+  const depositDisable = !arthBalanceOf.value.isZero();
+  const withdrawDisable = !totalDepositedByUser.value.isZero();
 
   const isMobile = useMediaQuery("(max-width: 600px)");
 
@@ -99,30 +114,36 @@ const DebtCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
             <TextWithIcon>Your Allocation</TextWithIcon>
             <StyledValue>
               {/* {Number(getDisplayBalance(totalDepositedByUser.value, 18, 3)).toLocaleString() || 0} {symbol} */}
-              0 {symbol}
+              {Number(
+                getDisplayBalance(totalDepositedByUser.value, 18, 3)
+              ).toLocaleString() || 0}{" "}
+              {symbol}
             </StyledValue>
           </CardSection>
           <CardSection>
             <TextWithIcon>Your Deposit Share</TextWithIcon>
             <StyledValue>
-              {/* {depositShare.toFixed(2) != '0.00' ?
-                depositShare.toFixed(2) :
-                depositShare.toFixed(5)
-              }% */}
-              0.005%
+              {depositShare.toFixed(2) != "0.00"
+                ? depositShare.toFixed(2)
+                : depositShare.toFixed(5)}
+              %
             </StyledValue>
           </CardSection>
 
           <CardSection>
             <TextWithIcon>Your Rewards</TextWithIcon>
             <StyledValue>
-              {/* {
-                earnedRewards.isLoading
-                  ? <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
-                  : Number(getDisplayBalance(earnedRewards.value, 18, 5)).toLocaleString(undefined,
-                    { minimumFractionDigits: 5, maximumFractionDigits: 8 })
-              } USDC */}
-              2.4USDC
+              {earnedRewards.isLoading ? (
+                <Loader color={"#ffffff"} loading={true} size={4} margin={2} />
+              ) : (
+                Number(
+                  getDisplayBalance(earnedRewards.value, 18, 5)
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 5,
+                  maximumFractionDigits: 8,
+                })
+              )}{" "}
+              USDC
             </StyledValue>
           </CardSection>
           <div className={"m-b-8 m-t-40"}>
@@ -162,7 +183,7 @@ const DebtCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
               onClick={() => {
                 setOpenDepositModal(true);
               }}
-              //   disabled={!depositDisable}
+              disabled={!depositDisable}
             />
             <div
               style={{ width: "100px", marginTop: isMobile ? "15px" : "" }}
@@ -170,31 +191,25 @@ const DebtCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
             <Button
               text="Withdraw Debt Tokens"
               onClick={() => setWithdrawModal(true)}
-              //   disabled={!withdrawDisable}
+              disabled={!withdrawDisable}
             />
           </ButtonToBottom>
           <Button
-            // disabled={earnedRewards.value.eq(0)}
+            disabled={earnedRewards.value.eq(0)}
             text="Claim USDC"
-            // onClick={handleGetRewards}
+            onClick={handleGetRewards}
           />
         </CardContent>
       </Card>
       <DepositModal
         openModal={openDepositModal}
         onModalClose={() => setOpenDepositModal(false)}
-        selectedData={{
-          token: "0xsadashdj",
-          displayName: "ARTH-DP",
-        }}
+        selectedData={arthdptoken}
       />
       <WithdrawModal
         openModal={openWithdrawModal}
         onModalClose={() => setWithdrawModal(false)}
-        selectedData={{
-          token: "0xsadashdj",
-          displayName: "ARTH-DP",
-        }}
+        selectedData={arthdptoken}
       />
     </Wrapper>
   );

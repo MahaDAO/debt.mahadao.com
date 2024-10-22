@@ -7,14 +7,24 @@ import { useEffect, useState } from "react";
 import BuySellTable from "./components/BuySellTable";
 import BuyOrdersCard from "./components/BuyOrdersCard";
 import SellOrdersCard from "./components/SellOrdersCard";
+import useTokenBalance from "@/hooks/useTokenBalance";
+import useCore from "@/hooks/useCore";
+import { getDisplayBalance } from "@/utils/formatBalance";
 
 const Dex = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
+  const core = useCore();
+  const baseTokenBalance = useTokenBalance(core.tokens["ARTH-DP"]);
+  const quoteTokenBalance = useTokenBalance(core.tokens["USDC"]);
   let arthUsdcPairStatus = localStorage.getItem("selectorQToken") || "usdc";
 
   const [selectQuoteToken, setSelectQuoteToken] = useState<string>("USDC");
   const [selectorQToken, setSelectorQToken] =
     useState<string>(arthUsdcPairStatus);
+
+  const usdcbal = useTokenBalance(core.tokens["USDC"]);
+  const mahabal = useTokenBalance(core.tokens["MAHA"]);
+  const sclpbal = useTokenBalance(core.tokens["SCLP"]);
 
   useEffect(() => {
     if (selectorQToken === "maha") {
@@ -80,19 +90,30 @@ const Dex = () => {
             >
               <CardColumn1 className="text-center">AVAILABLE</CardColumn1>
               <CardColumn2 className="text-right">
-                {Number("2131278").toLocaleString("en-US", {
-                  minimumFractionDigits: 3,
-                })}
+                {Number(
+                  getDisplayBalance(baseTokenBalance.value, 18, 3)
+                ).toLocaleString("en-US", { minimumFractionDigits: 3 })}
               </CardColumn2>
               <CardColumn3 className="text-center">ARTH-DP</CardColumn3>
             </CardSection>
             <BuySellTable
-              baseTokenBalance={"123123"}
+              baseTokenBalance={baseTokenBalance}
               // quoteTokenBalance={quoteTokenBalance}
               action={"Sell"}
               selectQuoteToken={{
                 name: selectQuoteToken,
-                balance: 2232,
+                balance:
+                  selectQuoteToken == "USDC"
+                    ? Number(
+                        getDisplayBalance(usdcbal.value, 6, 3)
+                      ).toLocaleString("en-US", { minimumFractionDigits: 3 })
+                    : selectQuoteToken == "MAHA"
+                    ? Number(
+                        getDisplayBalance(mahabal.value, 18, 3)
+                      ).toLocaleString("en-US", { minimumFractionDigits: 3 })
+                    : Number(
+                        getDisplayBalance(sclpbal.value, 18, 3)
+                      ).toLocaleString("en-US", { minimumFractionDigits: 3 }),
               }}
             />
           </Card>
