@@ -5,7 +5,8 @@ import Loader from "react-spinners/PulseLoader";
 
 import { styled } from "@mui/material/styles";
 import fileTheme from "@/customTheme";
-// import { Mixpanel } from "../../analytics/Mixpanel";
+import config from "@/config";
+import { Mixpanel } from "../../analytics/Mixpanel";
 // import config from "../../config";
 
 export interface tracking_params {
@@ -292,13 +293,13 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled || loading}
       fontSize={fontSize}
       onClick={() => {
-        //   const params = {
-        //     networkName: config.networkDisplayName || "",
-        //     ...tracking_params,
-        //   };
-        //   if (tracking_id) {
-        //     Mixpanel.track(`buttonClick:${tracking_id.toLowerCase()}`, params)
-        //   }
+        const params = {
+          networkName: config.networkDisplayName || "",
+          ...tracking_params,
+        };
+        if (tracking_id) {
+          Mixpanel.track(`buttonClick:${tracking_id.toLowerCase()}`, params);
+        }
         if (onClick) onClick();
       }}
       padding={buttonPadding}

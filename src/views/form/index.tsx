@@ -1,6 +1,9 @@
+"use client";
+
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import InputContainer from "@/components/InputContainer";
+import useUploadUser from "@/hooks/callbacks/useUploadUser";
 import { useMediaQuery } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React, { useState } from "react";
@@ -10,7 +13,11 @@ const Form = () => {
   const [amount, setAmount] = useState<string>("");
   const [address, setAddress] = useState<string>("");
 
-  const handleUpload = () => {};
+  const uploadAction = useUploadUser(amount, address);
+
+  const handleUpload = () => {
+    uploadAction(() => {});
+  };
 
   return (
     <div

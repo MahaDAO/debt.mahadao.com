@@ -1,31 +1,46 @@
 "use client";
 
 import React, { useState } from "react";
-import { Typography, useMediaQuery } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import IconLoader from "../IconLoader/IconLoader";
-import { syne } from "@/app/fonts";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import ConnectWalletButton from "./components/ConnectWalletButton/ConnectWalletButton";
 import MobileNav from "./components/MobileNav";
+import useGaTracker from "@/analytics/useGATracker.js";
 
 const Topbar = () => {
   const isMobile = useMediaQuery("(max-width: 600px)");
+  const [showTxModal, setShowTxModal] = useState<boolean>(false);
   const [showMobileMenu, toggleMobileMenu] = useState(false);
   const [showWarning, setShowWarning] = React.useState<boolean>(false);
+
+  useGaTracker();
 
   return (
     <TopBarContainer>
       <div id="showWarning" style={{ display: "none" }}></div>
-      {/* {
-        isMobile
-          ? <MobileTransactionInfo openModal={showTxModal} onDismiss={() => setShowTxModal(false)} />
-          : <DesktopTransactionInfo openModal={showTxModal} onDismiss={() => setShowTxModal(false)} />
-      } */}
-      {/* {isMobile
-        ? <MobileProjectRoutes openModal={showProjectModal} onDismiss={() => setShowProjectModal(false)} />
-        : <DesktopProjectRoutes openModal={showProjectModal} onDismiss={() => setShowProjectModal(false)} />
-      } */}
+      {/* {isMobile ? (
+        <MobileTransactionInfo
+          openModal={showTxModal}
+          onDismiss={() => setShowTxModal(false)}
+        />
+      ) : (
+        <DesktopTransactionInfo
+          openModal={showTxModal}
+          onDismiss={() => setShowTxModal(false)}
+        />
+      )}
+      {isMobile ? (
+        <MobileProjectRoutes
+          openModal={showProjectModal}
+          onDismiss={() => setShowProjectModal(false)}
+        />
+      ) : (
+        <DesktopProjectRoutes
+          openModal={showProjectModal}
+          onDismiss={() => setShowProjectModal(false)}
+        />
+      )} */}
 
       {/* <AlertSnackbar
         open={showWarning}

@@ -2,12 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { load, save } from "redux-localstorage-simple";
 import { createLogger } from "redux-logger";
 
-// import { isProduction } from "../analytics/Mixpanel";
+import { isProduction } from "../analytics/Mixpanel";
 import application from "./application/reducer";
 import transactions from "./transactions/reducer";
 import token from "./token/reducer";
-
-const isProduction = false;
 
 const PERSISTED_KEYS: string[] = ["transactions", "slippage"];
 
@@ -22,10 +20,9 @@ const store = configureStore({
       ? getDefaultMiddleware({ serializableCheck: false, thunk: false }).concat(
           save({ states: PERSISTED_KEYS })
         )
-      : getDefaultMiddleware({ serializableCheck: false, thunk: false }).concat(
-          save({ states: PERSISTED_KEYS })
-        );
-    // .concat(createLogger());
+      : getDefaultMiddleware({ serializableCheck: false, thunk: false })
+          .concat(save({ states: PERSISTED_KEYS }))
+          .concat(createLogger());
   },
   preloadedState: load({ states: PERSISTED_KEYS }),
 });
