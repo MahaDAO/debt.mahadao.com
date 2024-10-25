@@ -9,6 +9,7 @@ import {
 
 import useCore from "../useCore";
 import abi from "../../protocol/deployments/abi/MatchingMarket.json";
+import { useActivePopups } from "@/state/application/hooks";
 
 interface IOrders {
   id: number;
@@ -20,9 +21,16 @@ interface IOrders {
   timestamp: string;
 }
 
-const useDebtOrders = (selectQuoteToken: string) => {
+const useDebtOrders = (selectQuoteToken: string, responseHash?: string) => {
   const [orders, setSellOrderData] = useState<IOrders[]>([]);
+  const activePopups = useActivePopups();
   const core = useCore();
+
+  const currentPopups = activePopups.find(
+    (popup) => popup.content.txn?.hash === responseHash
+  );
+
+  const transactionSuccess = !!currentPopups?.content.txn?.success;
 
   const getSellOrderData = useCallback(async () => {
     const contract = await core.contracts["MatchingMarket"];
@@ -38,6 +46,8 @@ const useDebtOrders = (selectQuoteToken: string) => {
     });
 
     const calls = [];
+
+    console.log("lastOfferId", testLastOfferId.toString());
 
     for (let i = 1; i <= testLastOfferId.toString(); i++) {
       calls.push({
@@ -78,6 +88,12 @@ const useDebtOrders = (selectQuoteToken: string) => {
   useEffect(() => {
     getSellOrderData();
   }, [getSellOrderData, selectQuoteToken]);
+
+  useEffect(() => {
+    if (transactionSuccess) {
+      window.location.reload();
+    }
+  }, [getSellOrderData, transactionSuccess]);
 
   return orders;
 };

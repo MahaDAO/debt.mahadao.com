@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { styled } from "@mui/material/styles";
 import useCore from "@/hooks/useCore";
 import useDebtOrders from "@/hooks/callbacks/useDebtOrders";
@@ -7,25 +7,37 @@ import { getDisplayBalance } from "@/utils/formatBalance";
 import { BigNumber } from "ethers";
 import Numeral from "numeral";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { useActivePopups } from "@/state/application/hooks";
 
 interface IProps {
   selectQuoteToken: string;
+  sellResponseHash?: string;
 }
 
 const SellOrdersCard = (props: IProps) => {
-  const { selectQuoteToken } = props;
+  const { selectQuoteToken, sellResponseHash } = props;
 
   const core = useCore();
 
-  const sellOrderData = useDebtOrders(selectQuoteToken);
+  const sellOrderData = useDebtOrders(selectQuoteToken, sellResponseHash);
   const [cancelId, setCancelId] = useState<number>(0);
   const owner = core.myAccount;
+  const activePopups = useActivePopups();
+  const [transactionHash, setTransactionHash] = useState<string>();
+
+  const currentPopup = activePopups.find(
+    (popup) => popup.content.txn?.hash === transactionHash
+  );
+
+  const transactionSuccess = !!currentPopup?.content.txn?.success;
 
   const sellOrderAction = useCancelOffer(cancelId);
 
   const handleCancelOrder = (id: number) => {
     setCancelId(id);
-    sellOrderAction(id);
+    sellOrderAction(id, (responseHash) => {
+      setTransactionHash(responseHash);
+    });
   };
 
   const tokenAddr = core.tokens[selectQuoteToken].address;
@@ -46,6 +58,12 @@ const SellOrdersCard = (props: IProps) => {
         }),
     [sellOrderData, tokenAddr]
   );
+
+  useEffect(() => {
+    if (transactionSuccess) {
+      window.location.reload();
+    }
+  }, [transactionSuccess]);
 
   return (
     <CardContent>

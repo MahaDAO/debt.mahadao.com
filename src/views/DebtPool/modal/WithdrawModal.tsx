@@ -7,6 +7,7 @@ import useWithdraw from "@/hooks/callbacks/useWithdraw";
 import useCore from "@/hooks/useCore";
 import useGetDepositBalance from "@/hooks/useGetDepositBalance";
 import ERC20 from "@/protocol/ERC20";
+import { useActivePopups } from "@/state/application/hooks";
 import { formatToBN, getDisplayBalance } from "@/utils/formatBalance";
 import { useMediaQuery } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -19,6 +20,15 @@ const WithdrawModal = (props: any) => {
   const [val, setVal] = useState("");
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const [withdrawing, setWithdrawing] = useState<boolean>(false);
+  const activePopups = useActivePopups();
+
+  const [responseHash, setResponseHash] = useState<string>();
+
+  const currentPopup = activePopups.find(
+    (popup) => popup.content.txn?.hash === responseHash
+  );
+
+  const transactionLoading = !!currentPopup?.content.txn?.loading;
 
   useEffect(() => {
     setVal("0");
@@ -32,10 +42,12 @@ const WithdrawModal = (props: any) => {
 
   const withdrawAction = useWithdraw(val);
 
-  const handleWithdraw = () => {
-    withdrawAction(() => {
-      // props.onCancel();
+  const handleWithdraw = async () => {
+    setWithdrawing(true);
+    await withdrawAction((responseHash) => {
+      setResponseHash(responseHash);
     });
+    setWithdrawing(false);
   };
 
   const isAmountGreaterThanBalance = useMemo(() => {
@@ -46,7 +58,10 @@ const WithdrawModal = (props: any) => {
   return (
     <Modal
       closeButton
-      handleClose={onModalClose}
+      handleClose={() => {
+        setVal("");
+        onModalClose();
+      }}
       open={openModal}
       title="Withdraw your debt tokens"
       subTitle="You can withdraw your debt token from this model and use it to sell it for other tokens in the buy/sell seciton below."
@@ -92,7 +107,10 @@ const WithdrawModal = (props: any) => {
               variant="transparent"
               text="Cancel"
               size="lg"
-              onClick={onModalClose}
+              onClick={() => {
+                setVal("");
+                onModalClose();
+              }}
               tracking_id="stake_withdraw"
               tracking_params={{
                 action: "cancel",
@@ -103,9 +121,14 @@ const WithdrawModal = (props: any) => {
           </Grid>
           <Grid size={{ lg: 6, md: 6, sm: 12, xs: 12 }}>
             <Button
-              disabled={isInputFieldError || !Number(val) || withdrawing}
+              disabled={
+                isInputFieldError ||
+                !Number(val) ||
+                withdrawing ||
+                transactionLoading
+              }
               text={"Withdraw"}
-              loading={withdrawing}
+              loading={withdrawing || transactionLoading}
               size={"lg"}
               onClick={handleWithdraw}
               tracking_id={"stake_withdraw"}

@@ -15,6 +15,7 @@ import useGetStakingRewardsSupply from "@/hooks/state/useGetStakingRewardsSupply
 import useClaimReward from "@/hooks/callbacks/useClaimReward";
 import useGetEarnedRewards from "@/hooks/callbacks/useGetEarnedRewards";
 import { getDisplayBalance } from "@/utils/formatBalance";
+import { useActivePopups } from "@/state/application/hooks";
 // import { useMediaQuery } from "react-responsive";
 
 // import { getDisplayBalance } from '../../../utils/formatBalance';
@@ -54,8 +55,18 @@ const DebtCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
   const totalDepositedByUser = useGetDepositBalance(core.myAccount);
   const totalDeposited = useGetStakingRewardsSupply();
 
+  const [claiming, setClaiming] = useState(false);
+  const [claimTransactionHash, setClaimTransactionHash] = useState<string>();
+
   const claimCallback = useClaimReward();
   const earnedRewards = useGetEarnedRewards();
+
+  const activePopups = useActivePopups();
+
+  const currentPopup = activePopups.find(
+    (popup) => popup.content.txn?.hash === claimTransactionHash
+  );
+  const transactionLoading = !!currentPopup?.content.txn?.loading;
 
   const depositShare = useMemo(() => {
     if (
@@ -77,8 +88,12 @@ const DebtCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
     );
   }, [arthBalanceOf, arthTotalSupply]);
 
-  const handleGetRewards = () => {
-    claimCallback(() => {});
+  const handleGetRewards = async () => {
+    setClaiming(true);
+    await claimCallback((responseHash) => {
+      setClaimTransactionHash(responseHash);
+    });
+    setClaiming(false);
   };
 
   const disableRewardBtn = Number(getDisplayBalance(earnedRewards.value)) > 0;
@@ -195,8 +210,11 @@ const DebtCard: React.FC<DeptCardProps> = ({ price, symbol }) => {
             />
           </ButtonToBottom>
           <Button
-            disabled={earnedRewards.value.eq(0)}
+            disabled={
+              earnedRewards.value.eq(0) || transactionLoading || claiming
+            }
             text="Claim USDC"
+            loading={transactionLoading || claiming}
             onClick={handleGetRewards}
           />
         </CardContent>

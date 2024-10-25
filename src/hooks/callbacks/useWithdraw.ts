@@ -30,7 +30,7 @@ const useWithdraw = (amount: string) => {
   const contract = core.contracts["Staking-RewardsV2"];
 
   const action = useCallback(
-    async (callback?: () => void): Promise<void> => {
+    async (callback?: (responseHash?: string) => void): Promise<void> => {
       try {
         const response = await contract.withdraw(bnAmount);
         addTransaction(response, {
@@ -39,7 +39,7 @@ const useWithdraw = (amount: string) => {
           ).format("0,0.00a")} ARTH-DP`,
         });
 
-        if (callback) callback();
+        if (callback) callback(response.hash);
       } catch (e: any) {
         console.log("useWithdraw e", e);
         addPopup({

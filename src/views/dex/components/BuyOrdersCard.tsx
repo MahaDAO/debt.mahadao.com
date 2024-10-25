@@ -6,21 +6,32 @@ import { styled } from "@mui/material/styles";
 import { BigNumber } from "ethers";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Numeral from "numeral";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useActivePopups } from "@/state/application/hooks";
 
 interface IProps {
   selectQuoteToken: string;
+  buyResponseHash?: string;
 }
 
 const BuyOrdersCard = (props: IProps) => {
-  const { selectQuoteToken } = props;
+  const { selectQuoteToken, buyResponseHash } = props;
 
   const core = useCore();
 
   const [cancelId, setCancelId] = useState<number>(0);
   const owner = core.myAccount;
 
-  const buyOrderData = useDebtOrders(selectQuoteToken);
+  const buyOrderData = useDebtOrders(selectQuoteToken, buyResponseHash);
+  const activePopups = useActivePopups();
+
+  const [transactionHash, setTransactionHash] = useState<string>();
+
+  const currentPopup = activePopups.find(
+    (popup) => popup.content.txn?.hash === transactionHash
+  );
+
+  const transactionSuccess = !!currentPopup?.content.txn?.success;
 
   const tokenAddr = core.tokens[selectQuoteToken].address;
   const sortedorders = useMemo(
@@ -45,8 +56,16 @@ const BuyOrdersCard = (props: IProps) => {
 
   const handleCancelOrder = (id: number) => {
     setCancelId(id);
-    cancelOrderAction(id);
+    cancelOrderAction(id, (responseHash) => {
+      setTransactionHash(responseHash);
+    });
   };
+
+  useEffect(() => {
+    if (transactionSuccess) {
+      window.location.reload();
+    }
+  }, [transactionSuccess]);
 
   return (
     <CardContent>
@@ -67,10 +86,10 @@ const BuyOrdersCard = (props: IProps) => {
               {Numeral(price).format("0.000")}
             </CardColumn1>
             <CardColumn2 className={"table-border single-line-center-center"}>
-              {Numeral(payAmt).format("0.000")}
+              {Numeral(buyAmt).format("0.000")}
             </CardColumn2>
             <CardColumn3 className={"table-border single-line-center-center"}>
-              {Numeral(buyAmt).format("0.000")}
+              {Numeral(payAmt).format("0.000")}
             </CardColumn3>
             {owner.toLowerCase() === order.owner.toLowerCase() ? (
               <div

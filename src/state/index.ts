@@ -16,6 +16,9 @@ const store = configureStore({
     token,
   },
   middleware: (getDefaultMiddleware: any) => {
+    if (typeof window === "undefined") {
+      return getDefaultMiddleware({ serializableCheck: false, thunk: false });
+    }
     return isProduction
       ? getDefaultMiddleware({ serializableCheck: false, thunk: false }).concat(
           save({ states: PERSISTED_KEYS })
@@ -24,7 +27,8 @@ const store = configureStore({
           .concat(save({ states: PERSISTED_KEYS }))
           .concat(createLogger());
   },
-  preloadedState: load({ states: PERSISTED_KEYS }),
+  preloadedState:
+    typeof window !== "undefined" && load({ states: PERSISTED_KEYS }),
 });
 
 export default store;

@@ -1,6 +1,6 @@
 import mixpanel from "mixpanel-browser";
 
-export const isProduction = process.env.REACT_APP_NETWORK === "matic";
+export const isProduction = process.env.NEXT_PUBLIC_NETWORK === "matic";
 
 if (isProduction) {
   mixpanel.init("03bbfe0aa232fddaa505db6eb2699b62");

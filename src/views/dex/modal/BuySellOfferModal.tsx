@@ -5,6 +5,7 @@ import useBuyoffer from "@/hooks/state/useBuyOffer";
 import useSellOffer from "@/hooks/state/useSellOffer";
 import useCore from "@/hooks/useCore";
 import ERC20 from "@/protocol/ERC20";
+import { useActivePopups } from "@/state/application/hooks";
 import { formatToBN } from "@/utils/formatBalance";
 import { useMediaQuery } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -12,7 +13,17 @@ import { styled } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 
 const BuySellOfferModal = (props: any) => {
-  const { openModal, onModalClose, action, tableData, subTitle } = props;
+  const {
+    openModal,
+    onModalClose,
+    action,
+    tableData,
+    subTitle,
+    buyResponseHash,
+    setBuyResponseHash,
+    sellResponseHash,
+    setSellResponseHash,
+  } = props;
 
   const core = useCore();
   const isMobile = useMediaQuery("(max-width: 600px)");
@@ -22,6 +33,19 @@ const BuySellOfferModal = (props: any) => {
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const [depositing, setDepositing] = useState<boolean>(false);
   const [tokenToApprove, setTokenToApprove] = useState<ERC20>(core.tokens.USDC);
+
+  const [transactionLoading, setTransactionLoading] = useState<boolean>(false);
+  const activePopups = useActivePopups();
+
+  const currentBuyPopup = activePopups.find(
+    (popup) => popup.content.txn?.hash === buyResponseHash
+  );
+  const buyTransactionLoading = currentBuyPopup?.content.txn?.loading;
+
+  const currentSellPopup = activePopups.find(
+    (popup) => popup.content.txn?.hash === sellResponseHash
+  );
+  const sellTransactionLoading = currentSellPopup?.content.txn?.loading;
 
   useEffect(() => {
     setQuoteToken(tableData.quote);
@@ -49,10 +73,13 @@ const BuySellOfferModal = (props: any) => {
     tableData.selectQuoteToken.name
   );
 
-  function handleBuyOffer() {
-    buyOfferAction(() => {
+  async function handleBuyOffer() {
+    setTransactionLoading(true);
+    await buyOfferAction((responseHash) => {
+      setBuyResponseHash(responseHash);
       // props.onCancel();
     });
+    setTransactionLoading(false);
   }
 
   const sellOfferAction = useSellOffer(
@@ -62,10 +89,13 @@ const BuySellOfferModal = (props: any) => {
     tableData.selectQuoteToken.name
   );
 
-  function handleSellOffer() {
-    sellOfferAction(() => {
+  async function handleSellOffer() {
+    setTransactionLoading(true);
+    await sellOfferAction((responseHash) => {
+      setSellResponseHash(responseHash);
       // props.onCancel();
     });
+    setTransactionLoading(false);
   }
 
   const isApproved = approveStatus === ApprovalState.APPROVED;
@@ -129,10 +159,18 @@ const BuySellOfferModal = (props: any) => {
                     isInputFieldError ||
                     !Number(quoteToken) ||
                     !Number(baseToken) ||
-                    depositing
+                    depositing ||
+                    buyTransactionLoading ||
+                    sellTransactionLoading ||
+                    transactionLoading
                   }
                   text={`${action}`}
-                  loading={depositing}
+                  loading={
+                    depositing ||
+                    buyTransactionLoading ||
+                    sellTransactionLoading ||
+                    transactionLoading
+                  }
                   size={"lg"}
                   onClick={action === "Buy" ? handleBuyOffer : handleSellOffer}
                   // tracking_id={'stake_deposit'}

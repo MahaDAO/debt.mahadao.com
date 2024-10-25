@@ -9,6 +9,10 @@ import { getDisplayBalance } from "@/utils/formatBalance";
 interface IProps {
   baseTokenBalance: any;
   action: string;
+  buyResponseHash?: string;
+  setBuyResponseHash: React.Dispatch<React.SetStateAction<string | undefined>>;
+  sellResponseHash?: string;
+  setSellResponseHash: React.Dispatch<React.SetStateAction<string | undefined>>;
   selectQuoteToken: {
     name: string;
     balance: any;
@@ -16,7 +20,15 @@ interface IProps {
 }
 
 const BuySellTable = (props: IProps) => {
-  const { action, selectQuoteToken, baseTokenBalance } = props;
+  const {
+    action,
+    selectQuoteToken,
+    baseTokenBalance,
+    setBuyResponseHash,
+    setSellResponseHash,
+    buyResponseHash,
+    sellResponseHash,
+  } = props;
   const [quoteToken, setQuoteToken] = useState<string>("");
   const [baseToken, setBaseToken] = useState<string>("");
   const [buyTotal, setBuyTotal] = useState<string>("0");
@@ -109,7 +121,8 @@ const BuySellTable = (props: IProps) => {
                 msg={"Enter a price to unlock amount"}
               />
             )
-          ) : Number(baseToken) > Number("231273892") ? (
+          ) : Number(baseToken) >
+            Number(getDisplayBalance(baseTokenBalance.value)) ? (
             <InfoTip
               type={"Error"}
               msg={`You don't have enough ARTH-DP tokens`}
@@ -121,7 +134,7 @@ const BuySellTable = (props: IProps) => {
         <CardColumn1></CardColumn1>
         <CardColumn3 style={{ textAlign: "center" }}>
           <Button
-            disabled={false}
+            disabled={actionButton}
             text={`${action}`}
             onClick={() => setOpenOfferModal(true)}
           />
@@ -130,7 +143,17 @@ const BuySellTable = (props: IProps) => {
       <BuySellOfferModal
         subTitle={`Here you can place an order to ${action.toLowerCase()} debt tokens.`}
         openModal={openOfferModal}
-        onModalClose={() => setOpenOfferModal(false)}
+        buyResponseHash={buyResponseHash}
+        setBuyResponseHash={setBuyResponseHash}
+        sellResponseHash={sellResponseHash}
+        setSellResponseHash={setSellResponseHash}
+        onModalClose={() => {
+          setQuoteToken("");
+          setBaseToken("");
+          setBuyTotal("0");
+          setSellTotal("0");
+          setOpenOfferModal(false);
+        }}
         action={action}
         tableData={{
           quote: quoteToken,

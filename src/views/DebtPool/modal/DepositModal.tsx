@@ -8,6 +8,7 @@ import useDeposit from "@/hooks/callbacks/useDeposit";
 import useCore from "@/hooks/useCore";
 import useTokenBalanceOf from "@/hooks/useTokenBalanceOf";
 import ERC20 from "@/protocol/ERC20";
+import { useActivePopups } from "@/state/application/hooks";
 import { formatToBN, getDisplayBalance } from "@/utils/formatBalance";
 import { useMediaQuery } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -19,6 +20,14 @@ const DepositModal = (props: any) => {
   const [val, setVal] = useState("");
   const [isInputFieldError, setIsInputFieldError] = useState<boolean>(false);
   const [depositing, setDepositing] = useState<boolean>(false);
+  const activePopups = useActivePopups();
+  const [responseHash, setResponseHash] = useState<string>();
+
+  const currentPopup = activePopups.find(
+    (popup) => popup.content.txn?.hash === responseHash
+  );
+
+  const transactionLoading = !!currentPopup?.content.txn?.loading;
 
   const core = useCore();
 
@@ -35,8 +44,12 @@ const DepositModal = (props: any) => {
 
   const depositAction = useDeposit(val);
 
-  const handleDeposit = () => {
-    depositAction(() => {});
+  const handleDeposit = async () => {
+    setDepositing(true);
+    await depositAction((responseHash) => {
+      setResponseHash(responseHash);
+    });
+    setDepositing(false);
   };
 
   const isApproved = approveStatus === ApprovalState.APPROVED;
@@ -50,7 +63,10 @@ const DepositModal = (props: any) => {
   return (
     <Modal
       closeButton
-      handleClose={onModalClose}
+      handleClose={() => {
+        setVal("");
+        onModalClose();
+      }}
       open={openModal}
       title="Stake your token"
       subTitle="lorem ispum lorem ipsum lorem ipsum"
@@ -95,7 +111,10 @@ const DepositModal = (props: any) => {
               variant="transparent"
               text="Cancel"
               size="lg"
-              onClick={onModalClose}
+              onClick={() => {
+                setVal("");
+                onModalClose();
+              }}
               tracking_id={"stake_deposit"}
               tracking_params={{
                 action: "cancel",
@@ -123,10 +142,11 @@ const DepositModal = (props: any) => {
                   isInputFieldError ||
                   !Number(val) ||
                   depositing ||
-                  isAmountGreaterThanBalance
+                  isAmountGreaterThanBalance ||
+                  transactionLoading
                 }
                 text={"Deposit"}
-                loading={depositing}
+                loading={depositing || transactionLoading}
                 size={"lg"}
                 onClick={handleDeposit}
                 tracking_id={"stake_deposit"}

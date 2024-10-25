@@ -57,3 +57,5 @@ const MobileProjectRoutes = (props: Iprops) => {
     </Modal>
   );
 };
+
+export default MobileProjectRoutes;

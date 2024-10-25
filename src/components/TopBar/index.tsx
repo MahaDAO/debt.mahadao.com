@@ -7,19 +7,31 @@ import IconLoader from "../IconLoader/IconLoader";
 import ConnectWalletButton from "./components/ConnectWalletButton/ConnectWalletButton";
 import MobileNav from "./components/MobileNav";
 import useGaTracker from "@/analytics/useGATracker.js";
+import AlertSnackbar from "../AlertSnackbar";
+import config from "@/config";
+import { useAccount, useChainId } from "wagmi";
+import MobileTransactionInfo from "./components/modal/Transaction/MobileTransactionInfo";
+import DesktopTransactionInfo from "./components/modal/Transaction/DesktopTransactionInfo";
+import MobileProjectRoutes from "./components/modal/ProjectRoutes/MobileProjectRoute";
+import DesktopProjectRoutes from "./components/modal/ProjectRoutes/DesktopProjectRoute";
+import TextWrapper from "../TextWrapper.tsx/TextWrapper";
+import theme from "@/customTheme";
 
 const Topbar = () => {
+  const chainId = useChainId();
   const isMobile = useMediaQuery("(max-width: 600px)");
   const [showTxModal, setShowTxModal] = useState<boolean>(false);
   const [showMobileMenu, toggleMobileMenu] = useState(false);
-  const [showWarning, setShowWarning] = React.useState<boolean>(false);
+  const [showProjectModal, setShowProjectModal] = useState<boolean>(false);
+  const showWarning = chainId !== config.chainId;
+  const account = useAccount();
 
   useGaTracker();
 
   return (
     <TopBarContainer>
       <div id="showWarning" style={{ display: "none" }}></div>
-      {/* {isMobile ? (
+      {isMobile ? (
         <MobileTransactionInfo
           openModal={showTxModal}
           onDismiss={() => setShowTxModal(false)}
@@ -40,34 +52,33 @@ const Topbar = () => {
           openModal={showProjectModal}
           onDismiss={() => setShowProjectModal(false)}
         />
-      )} */}
+      )}
 
-      {/* <AlertSnackbar
+      <AlertSnackbar
         open={showWarning}
-        title={'Wrong Network!'}
+        title={"Wrong Network!"}
         subTitle={`You are on the wrong network, switch/add ${config.networkName} Network to use the app.`}
       />
-      {!account && <WarningMsg id={"WarningMsg"}>
-        <div className={"single-line-center-center mo-single-line-column"}>
-          <TextWrapper
-            text={`Please make sure you are connected to a wallet on ${config.networkName}.`}
-            align={"center"}
-          />
-          {
-
-            config.networkSetupDocLink && <div
-              onClick={() => window.open(config.networkSetupDocLink)}
-            >
-              <TextWrapper
-                text={"Check RPC details here."}
-                Fcolor={theme.color.primary[300]}
-                className={"m-l-4 pointer"}
-                align={"center"}
-              />
-            </div>
-          }
-        </div>
-      </WarningMsg>} */}
+      {!account.address && (
+        <WarningMsg id={"WarningMsg"}>
+          <div className={"single-line-center-center mo-single-line-column"}>
+            <TextWrapper
+              text={`Please make sure you are connected to a wallet on ${config.networkName}.`}
+              align={"center"}
+            />
+            {config.networkSetupDocLink && (
+              <div onClick={() => window.open(config.networkSetupDocLink)}>
+                <TextWrapper
+                  text={"Check RPC details here."}
+                  Fcolor={theme.color.primary[300]}
+                  className={"m-l-4 pointer"}
+                  align={"center"}
+                />
+              </div>
+            )}
+          </div>
+        </WarningMsg>
+      )}
       <StyledTopBar>
         <StyledTopBarInner>
           <HideonPhone>

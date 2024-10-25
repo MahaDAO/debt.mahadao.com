@@ -16,11 +16,16 @@ const Dex = () => {
   const core = useCore();
   const baseTokenBalance = useTokenBalance(core.tokens["ARTH-DP"]);
   const quoteTokenBalance = useTokenBalance(core.tokens["USDC"]);
-  let arthUsdcPairStatus = localStorage.getItem("selectorQToken") || "usdc";
+  let arthUsdcPairStatus =
+    (typeof window !== "undefined" && localStorage.getItem("selectorQToken")) ||
+    "usdc";
 
   const [selectQuoteToken, setSelectQuoteToken] = useState<string>("USDC");
   const [selectorQToken, setSelectorQToken] =
     useState<string>(arthUsdcPairStatus);
+
+  const [buyResponseHash, setBuyResponseHash] = useState<string>();
+  const [sellResponseHash, setSellResponseHash] = useState<string>();
 
   const usdcbal = useTokenBalance(core.tokens["USDC"]);
   const mahabal = useTokenBalance(core.tokens["MAHA"]);
@@ -79,6 +84,60 @@ const Dex = () => {
         style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}
       >
         <Wrapper>
+          <Card className={"material-primary"}>
+            <CardHeader>BUY DEBT</CardHeader>
+            <CardSubHeader>
+              Buy debt tokens using {selectQuoteToken}
+            </CardSubHeader>
+            <CardSection
+              style={{ marginBottom: "20px", fontWeight: "bold" }}
+              className={"alignItemsCenter"}
+            >
+              <CardColumn1 className="text-center">AVAILABLE</CardColumn1>
+              <CardColumn2 className="text-right">
+                {selectQuoteToken == "USDC"
+                  ? Number(
+                      getDisplayBalance(usdcbal.value, 6, 3)
+                    ).toLocaleString("en-US", { minimumFractionDigits: 3 })
+                  : selectQuoteToken == "MAHA"
+                  ? Number(
+                      getDisplayBalance(mahabal.value, 18, 3)
+                    ).toLocaleString("en-US", { minimumFractionDigits: 3 })
+                  : Number(
+                      getDisplayBalance(sclpbal.value, 18, 3)
+                    ).toLocaleString("en-US", { minimumFractionDigits: 3 })}
+              </CardColumn2>
+              <CardColumn3 className="text-center">
+                {selectQuoteToken}
+              </CardColumn3>
+            </CardSection>
+            <BuySellTable
+              baseTokenBalance={baseTokenBalance}
+              buyResponseHash={buyResponseHash}
+              setBuyResponseHash={setBuyResponseHash}
+              sellResponseHash={sellResponseHash}
+              setSellResponseHash={setSellResponseHash}
+              // quoteTokenBalance={quoteTokenBalance}
+              action={"Buy"}
+              selectQuoteToken={{
+                name: selectQuoteToken,
+                balance:
+                  selectQuoteToken == "USDC"
+                    ? Number(
+                        getDisplayBalance(usdcbal.value, 6, 3)
+                      ).toLocaleString("en-US", { minimumFractionDigits: 3 })
+                    : selectQuoteToken == "MAHA"
+                    ? Number(
+                        getDisplayBalance(mahabal.value, 18, 3)
+                      ).toLocaleString("en-US", { minimumFractionDigits: 3 })
+                    : Number(
+                        getDisplayBalance(sclpbal.value, 18, 3)
+                      ).toLocaleString("en-US", { minimumFractionDigits: 3 }),
+              }}
+            />
+          </Card>
+        </Wrapper>
+        <Wrapper>
           <Card className="material-primary">
             <CardHeader>SELL DEBT</CardHeader>
             <CardSubHeader>
@@ -98,6 +157,10 @@ const Dex = () => {
             </CardSection>
             <BuySellTable
               baseTokenBalance={baseTokenBalance}
+              buyResponseHash={buyResponseHash}
+              setBuyResponseHash={setBuyResponseHash}
+              sellResponseHash={sellResponseHash}
+              setSellResponseHash={setSellResponseHash}
               // quoteTokenBalance={quoteTokenBalance}
               action={"Sell"}
               selectQuoteToken={{
@@ -126,7 +189,10 @@ const Dex = () => {
           <Card className={"material-primary"}>
             <CardHeader>Buy Orders</CardHeader>
             <CardSubHeader>All orders buying debt tokens</CardSubHeader>
-            <BuyOrdersCard selectQuoteToken={selectQuoteToken} />
+            <BuyOrdersCard
+              selectQuoteToken={selectQuoteToken}
+              buyResponseHash={buyResponseHash}
+            />
           </Card>
         </Wrapper>
 
@@ -134,7 +200,10 @@ const Dex = () => {
           <Card className={"material-primary"}>
             <CardHeader>Sell Orders</CardHeader>
             <CardSubHeader>All orders selling debt tokens</CardSubHeader>
-            <SellOrdersCard selectQuoteToken={selectQuoteToken} />
+            <SellOrdersCard
+              selectQuoteToken={selectQuoteToken}
+              sellResponseHash={sellResponseHash}
+            />
           </Card>
         </Wrapper>
       </div>
