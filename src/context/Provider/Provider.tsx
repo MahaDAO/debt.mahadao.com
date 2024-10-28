@@ -1,17 +1,25 @@
-import { useWallet } from 'use-wallet';
-import React, { createContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { createContext, useEffect, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 
-import config from '../../config';
-import Protocol from '../../protocol';
-import { ProtocolContext } from '../../utils/interface';
+import { useEthersProvider, useEthersSigner } from "@/ethers";
+import { useAccount } from "wagmi";
+import config from "../../config";
+import Protocol from "../../protocol";
+import { ProtocolContext } from "../../utils/interface";
 
-export const Context = createContext<ProtocolContext>({ core: new Protocol(config) });
+export const Context = createContext<ProtocolContext>({
+  core: new Protocol(config),
+});
 
 export const ProtocolProvider = ({ children }: any) => {
-  const [core, setCore] = useState<Protocol>(new Protocol(config));
+  const provider = useEthersProvider();
+  const signer = useEthersSigner();
 
-  const { ethereum, account } = useWallet();
+  const [core, setCore] = useState<Protocol>(new Protocol(config, provider));
+
+  // const { ethereum, account } = useWallet();
+  const { address: account } = useAccount();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,15 +27,23 @@ export const ProtocolProvider = ({ children }: any) => {
       const newCore = new Protocol(config);
       if (account) {
         // Wallet was unlocked at initialization.
-        newCore.unlockWallet(ethereum, account, dispatch);
-        console.log('unlockWallet newCore')
+        newCore.unlockWallet(provider, account, dispatch, signer);
+        console.log("unlockWallet newCore");
       }
       setCore(newCore);
     } else if (account) {
-      core.unlockWallet(ethereum, account, dispatch);
-      console.log('unlockWallet oldCore')
+      core.unlockWallet(provider, account, dispatch, signer);
+      console.log("unlockWallet oldCore");
     }
-  }, [account, core, ethereum]);
+  }, [account, core, signer, provider]);
 
-  return <Context.Provider value={{ core }}>{children}</Context.Provider>;
+  const memoizedCore = useMemo(() => {
+    return core;
+  }, [core]);
+
+  return (
+    <Context.Provider value={{ core: memoizedCore }}>
+      {children}
+    </Context.Provider>
+  );
 };

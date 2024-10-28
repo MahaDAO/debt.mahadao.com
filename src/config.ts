@@ -1,31 +1,27 @@
-import { Configuration } from './utils/interface';
+import { Configuration } from "./utils/interface";
 
 const configurations: { [env: string]: Configuration } = {
   137: {
-    networkName: 'Matic Mainnet',
-    networkDisplayName: 'Polygon',
+    networkName: "Matic Mainnet",
+    networkDisplayName: "Polygon",
     chainId: 137,
-    etherscanUrl: 'https://polygonscan.com',
+    etherscanUrl: "https://polygonscan.com",
     defaultProvider:
-      'https://polygon-rpc.com/',
-    deployments: require('./protocol/deployments/matic.json'),
+      "https://polygon-mainnet.g.alchemy.com/v2/tHGWQIfQJXs1x3MLBehKqWiCe51nVHmO",
+    deployments: require("./protocol/deployments/matic.json"),
     refreshInterval: 10000,
     gasLimitMultiplier: 1.1,
-    blockchainToken: 'MATIC',
-    blockchainTokenName: 'MATIC',
+    blockchainToken: "MATIC",
+    blockchainTokenName: "MATIC",
     blockchainTokenDecimals: 18,
-    networkSetupDocLink: 'https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/',
-    supportedTokens: [
-      'ARTH-DP',
-      'USDC',
-      'MAHA',
-      'SCLP'
-    ],
+    networkSetupDocLink:
+      "https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/",
+    supportedTokens: ["ARTH-DP", "USDC", "MAHA", "SCLP"],
     decimalOverrides: {
-      'ARTH-DP': 18,
-      'USDC': 6
+      "ARTH-DP": 18,
+      USDC: 6,
     },
-  }
+  },
 };
 
 export default configurations[137];

@@ -1,13 +1,11 @@
-import { BigNumber, Contract, ethers, Overrides } from 'ethers';
+import { BigNumber, Contract, ethers, Overrides, providers } from "ethers";
 
-import ERC20 from './ERC20';
-import ABIS from './deployments/abi';
-import { Configuration } from '../utils/interface';
-import { getDefaultProvider } from '../utils/provider';
-import Multicall from './Multicall';
-import * as tokenState from '../state/token/controller';
-
-
+import ERC20 from "./ERC20";
+import ABIS from "./deployments/abi";
+import { Configuration } from "../utils/interface";
+import { getDefaultProvider } from "../utils/provider";
+import Multicall from "./Multicall";
+import * as tokenState from "../state/token/controller";
 
 /**
  * An API module of ARTH contracts.
@@ -32,12 +30,9 @@ export class Protocol {
 
   multicall!: { [chainId: number]: Multicall };
 
-  constructor(cfg: Configuration) {
-
+  constructor(cfg: Configuration, provider?: any) {
     const { deployments, supportedTokens } = cfg;
-    console.log("deployments", deployments)
-
-    const provider = getDefaultProvider(cfg);
+    console.log("deployments", deployments);
 
     // @ts-ignore
     this.multicall = { 137: {} };
@@ -46,62 +41,78 @@ export class Protocol {
     this.tokens = {};
     for (const [name, deployment] of Object.entries(deployments)) {
       if (!deployment.abi) continue;
-      this.contracts[name] = new Contract(deployment.address, ABIS[deployment.abi], provider);
+      this.contracts[name] = new Contract(
+        deployment.address,
+        ABIS[deployment.abi],
+        provider
+      );
       if (supportedTokens.includes(name)) {
         this.tokens[name] = new ERC20(
           deployments[name].address,
           provider,
           name,
-          cfg.decimalOverrides[name] || 18,
+          cfg.decimalOverrides[name] || 18
         );
       }
 
       this.multicall[137] = new Multicall(
         cfg.defaultProvider,
-        deployments[name].address,
+        deployments[name].address
       );
     }
 
     this.config = cfg;
     this.provider = provider;
-  };
+  }
 
   /**
    * @param provider From an unlocked wallet. (e.g. Metamask)
    * @param account An address of unlocked wallet account.
    */
-  async unlockWallet(provider: any, account: string, dispatch: any) {
-    const newProvider = new ethers.providers.Web3Provider(provider, this.config.chainId);
-    await newProvider.send("eth_requestAccounts", []);
-    this.signer = newProvider.getSigner()
+  async unlockWallet(
+    provider: any,
+    account: string,
+    dispatch: any,
+    signer?: providers.JsonRpcSigner
+  ) {
+    const newProvider = new ethers.providers.Web3Provider(
+      provider,
+      this.config.chainId
+    );
+
+    // await newProvider.send("eth_requestAccounts", []);
+    this.signer = signer;
     this.myAccount = account;
 
-    console.log('window.ethereum', window.ethereum)
-    console.log('newProvider', newProvider)
-    console.log('this.signer', this.signer)
-    console.log("Account:", await this.signer.getAddress());
+    console.log("newProvider", newProvider);
+    console.log("this.signer", this.signer);
 
     for (const [name, contract] of Object.entries(this.contracts)) {
-      this.contracts[name] = contract.connect(this.signer);
+      this.contracts[name] = contract.connect(
+        this.signer as providers.JsonRpcSigner
+      );
     }
 
     for (const token of Object.values(this.tokens)) {
-      if (token && token.address) token.connect(this.signer);
+      if (token && token.address)
+        token.connect(this.signer as providers.JsonRpcSigner);
     }
 
-    tokenState.initUser(this, dispatch, 137);
+    console.log("about to call init user");
 
-  };
+    tokenState.initUser(this, dispatch, 137);
+  }
 
   get isUnlocked(): boolean {
     return !!this.myAccount;
-  };
+  }
 
-  gasOptions(gas: BigNumber = BigNumber.from('6000000')): Overrides {
-    const multiplied = Math.floor(gas.toNumber() * this.config.gasLimitMultiplier);
+  gasOptions(gas: BigNumber = BigNumber.from("6000000")): Overrides {
+    const multiplied = Math.floor(
+      gas.toNumber() * this.config.gasLimitMultiplier
+    );
     return {
       gasLimit: BigNumber.from(multiplied),
     };
-  };
-
+  }
 }

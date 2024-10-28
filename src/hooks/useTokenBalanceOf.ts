@@ -1,12 +1,12 @@
-import { BigNumber } from 'ethers';
-import { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useWallet } from 'use-wallet';
+import { BigNumber } from "ethers";
+import { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import ERC20 from '../protocol/ERC20';
-import { AppState } from '../state';
-import { useBlockNumber } from '../state/application/hooks';
-import useCore from './useCore';
+import ERC20 from "../protocol/ERC20";
+import { AppState } from "../state";
+import { useBlockNumber } from "../state/application/hooks";
+import useCore from "./useCore";
+import { useAccount } from "wagmi";
 
 type State = {
   isLoading: boolean;
@@ -14,23 +14,24 @@ type State = {
 };
 
 const useTokenBalanceOf = (token: ERC20, address: string) => {
-  const [balance, setBalance] = useState<State>({ isLoading: true, value: BigNumber.from(0) });
+  const [balance, setBalance] = useState<State>({
+    isLoading: true,
+    value: BigNumber.from(0),
+  });
 
   const balanceOf = useSelector(
-    (state: AppState) => state.token.balanceOf[token?.address || ''],
+    (state: AppState) => state.token.balanceOf[token?.address || ""]
   );
 
   const core = useCore();
-  const { account } = useWallet();
+  const { address: account } = useAccount();
   const blockNumber = useBlockNumber();
-
 
   const fetchBalance = useCallback(async () => {
     if (!account) {
       setBalance({ isLoading: false, value: BigNumber.from(0) });
       return;
     }
-
 
     if (balanceOf && balanceOf[core.myAccount] && core.myAccount === address) {
       setBalance({ isLoading: false, value: balanceOf[core.myAccount] });
@@ -47,8 +48,8 @@ const useTokenBalanceOf = (token: ERC20, address: string) => {
     } else if (core.isUnlocked && address) {
       fetchBalance().catch((err) =>
         console.error(
-          `Failed to fetch token balance of ${address} for ${token.address}: ${err.stack} `,
-        ),
+          `Failed to fetch token balance of ${address} for ${token.address}: ${err.stack} `
+        )
       );
     }
   }, [address, blockNumber, account, core.isUnlocked, fetchBalance, token]);

@@ -1,5 +1,5 @@
-import { BigNumber } from 'ethers';
-import Protocol from '../protocol';
+import { BigNumber } from "ethers";
+import Protocol from "../protocol";
 
 export type BasicState = {
   isLoading: boolean;
@@ -9,7 +9,7 @@ export type BasicState = {
 export type BasicStateString = {
   isLoading: boolean;
   value: string;
-}
+};
 
 export type IModalProps = {
   openModal: boolean;
@@ -72,7 +72,7 @@ export type Configuration = {
   defaultProvider: string;
   deployments: Deployments;
   config?: EthereumConfig;
-  blockchainToken: 'MATIC'
+  blockchainToken: "MATIC";
   refreshInterval: number;
   gasLimitMultiplier: number;
   blockchainTokenName: string;
@@ -80,18 +80,18 @@ export type Configuration = {
   networkSetupDocLink?: string;
   supportedTokens: string[];
   decimalOverrides: { [name: string]: number };
-}
+};
 
 export interface IMulticallInput {
   key: string;
   target: string;
   call: (string | number)[];
   convertResult: (val: any) => any;
-};
+}
 
 export type DateInput = {
-  startDate: any,
-  endDate: any
+  startDate: any;
+  endDate: any;
 };
 
 export type PopupContent = {
@@ -119,7 +119,7 @@ export interface ApplicationState {
   popupList: PopupList;
   walletModalOpen: boolean;
   settingsMenuOpen: boolean;
-};
+}
 
 export interface TransactionDetails {
   hash: string;
@@ -130,13 +130,13 @@ export interface TransactionDetails {
   addedTime: number;
   confirmedTime?: number;
   from: string;
-};
+}
 
 export interface TransactionState {
   [chainId: number]: {
     [txHash: string]: TransactionDetails;
   };
-};
+}
 
 export interface SerializableTransactionReceipt {
   to: string;
@@ -147,17 +147,17 @@ export interface SerializableTransactionReceipt {
   transactionHash: string;
   blockNumber: number;
   status?: number;
-};
+}
 
 export interface ModalsContext {
-  content?: React.ReactNode,
-  isOpen?: boolean,
-  onPresent: (content: React.ReactNode) => void,
-  onDismiss: () => void
-};
+  content?: React.ReactNode;
+  isOpen?: boolean;
+  onPresent: (content: React.ReactNode) => void;
+  onDismiss: () => void;
+}
 
 export interface ProtocolContext {
   core: Protocol;
-};
+}
 
 export type SingleDateInput = Date | number | string;

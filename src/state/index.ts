@@ -1,32 +1,34 @@
-import { createLogger } from 'redux-logger';
-import { save, load } from 'redux-localstorage-simple';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
+import { load, save } from "redux-localstorage-simple";
+import { createLogger } from "redux-logger";
 
-import {isProduction} from "../analytics/Mixpanel";
-import application from './application/reducer';
-import transactions from './transactions/reducer';
-import token from './token/reducer';
+import { isProduction } from "../analytics/Mixpanel";
+import application from "./application/reducer";
+import transactions from "./transactions/reducer";
+import token from "./token/reducer";
 
-const PERSISTED_KEYS: string[] = ['transactions', 'slippage',];
+const PERSISTED_KEYS: string[] = ["transactions", "slippage"];
 
 const store = configureStore({
   reducer: {
     application,
     transactions,
-    token
+    token,
   },
-  middleware: isProduction
-    ? [
-      ...getDefaultMiddleware({ serializableCheck: false, thunk: false }),
-      save({ states: PERSISTED_KEYS }),
-    ]
-    : [
-      ...getDefaultMiddleware({ serializableCheck: false, thunk: false }),
-      save({ states: PERSISTED_KEYS }),
-      createLogger(),
-    ]
-  ,
-  preloadedState: load({ states: PERSISTED_KEYS }),
+  middleware: (getDefaultMiddleware: any) => {
+    if (typeof window === "undefined") {
+      return getDefaultMiddleware({ serializableCheck: false, thunk: false });
+    }
+    return isProduction
+      ? getDefaultMiddleware({ serializableCheck: false, thunk: false }).concat(
+          save({ states: PERSISTED_KEYS })
+        )
+      : getDefaultMiddleware({ serializableCheck: false, thunk: false })
+          .concat(save({ states: PERSISTED_KEYS }))
+          .concat(createLogger());
+  },
+  preloadedState:
+    typeof window !== "undefined" && load({ states: PERSISTED_KEYS }),
 });
 
 export default store;

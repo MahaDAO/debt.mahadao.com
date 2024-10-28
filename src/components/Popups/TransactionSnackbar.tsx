@@ -1,18 +1,21 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import Slide from '@material-ui/core/Slide';
-import Snackbar from '@material-ui/core/Snackbar';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { TransitionProps } from '@material-ui/core/transitions';
+import React, { useEffect } from "react";
+// import styled from 'styled-components';
+// import Slide from '@material-ui/core/Slide';
+// import Snackbar from '@material-ui/core/Snackbar';
+// import { makeStyles, Theme } from '@material-ui/core/styles';
+// import { TransitionProps } from '@material-ui/core/transitions';
 
-import theme from '../../theme';
-import '../../customCss/Custom-Snackbar.css';
+// import theme from '../../theme';
+import customTheme from "@/customTheme";
+import "../../customCss/Custom-Snackbar.css";
 
-import IconLoader from '../IconLoader';
-import TextWrapper from '../TextWrapper';
-
-import config from '../../config';
-import { PopupContent } from '../../utils/interface';
+import config from "../../config";
+import { PopupContent } from "../../utils/interface";
+import { TransitionProps } from "@mui/material/transitions";
+import { styled } from "@mui/material/styles";
+import { Slide, SlideProps, Snackbar } from "@mui/material";
+import IconLoader from "../IconLoader/IconLoader";
+import TextWrapper from "../TextWrapper.tsx/TextWrapper";
 
 interface TxButtonProps {
   notificationCount?: number;
@@ -22,51 +25,56 @@ interface TxButtonProps {
   handleCancel?: Function;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
-  },
-}));
+// const useStyles = makeStyles((theme: Theme) => ({
+//   root: {
+//     width: '100%',
+//     '& > * + *': {
+//       marginTop: theme.spacing(2),
+//     },
+//   },
+// }));
 
 const CustomizedSnackbars: React.FC<TxButtonProps> = ({
   open,
   content,
   handleCancel,
 }) => {
-
-  const classes = useStyles();
+  // const classes = useStyles();
   const [openSnackbar, setOpen] = React.useState(open);
 
   const isScucess = content?.txn?.success;
   const isLoading = content?.txn?.loading;
 
   useEffect(() => {
-    setOpen(true)
+    setOpen(true);
 
-    if(isScucess){
-      setTimeout(() => {window.location.reload()}, 7000)
+    // if (isScucess) {
+    //   setTimeout(() => {
+    //     window.location.reload();
+    //   }, 7000);
+    // }
+  }, [isScucess, isLoading]);
 
-    }
-  }, [isScucess, isLoading])
-
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') return;
+  const handleClose = (
+    event?: Event | React.SyntheticEvent<any, Event>,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") return;
 
     setOpen(false);
     if (handleCancel) handleCancel();
   };
 
-  function SlideTransition(props: TransitionProps) {
+  function SlideTransition(props: SlideProps) {
     return <Slide {...props} direction="left" />;
   }
 
   const SnackHeader = () => {
     if (isLoading) {
       return (
-        <SnackBarInnerContainer style={{ background: theme.color.yellow[500] }}>
+        <SnackBarInnerContainer
+          style={{ background: customTheme.color.yellow[500] }}
+        >
           <div className="single-line-center-start">
             <IconLoader
               iconName={"Pending"}
@@ -84,10 +92,12 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
             onClick={handleClose}
           />
         </SnackBarInnerContainer>
-      )
+      );
     } else if (isScucess) {
       return (
-        <SnackBarInnerContainer style={{ background: theme.color.green[500] }}>
+        <SnackBarInnerContainer
+          style={{ background: customTheme.color.green[500] }}
+        >
           <div className="single-line-center-start">
             <IconLoader
               iconName={"Success"}
@@ -105,10 +115,12 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
             onClick={handleClose}
           />
         </SnackBarInnerContainer>
-      )
+      );
     } else {
       return (
-        <SnackBarInnerContainer style={{ background: theme.color.red[500] }}>
+        <SnackBarInnerContainer
+          style={{ background: customTheme.color.red[500] }}
+        >
           <div className="single-line-center-start">
             <IconLoader
               iconName={"Alert"}
@@ -126,9 +138,9 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
             onClick={handleClose}
           />
         </SnackBarInnerContainer>
-      )
+      );
     }
-  }
+  };
 
   const SnackBody = () => {
     return (
@@ -141,41 +153,39 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
           }
           fontWeight={300}
         />
-        {
-          config.etherscanUrl !== '' && content?.txn?.hash && (
-            <AnchorTag
-              href={`${config.etherscanUrl}/tx/${content?.txn?.hash}`}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <TextWrapper
-                text={'View on Explorer'}
-                fontWeight={300}
-                Fcolor={theme.color.transparent[200]}
-              />
-              <IconLoader
-                iconName={"ArrowLink"}
-                iconType={"arrow"}
-                width={24}
-                className="pointer m-l-2 "
-                onClick={handleClose}
-              />
-            </AnchorTag>
-          )
-        }
+        {config.etherscanUrl !== "" && content?.txn?.hash && (
+          <AnchorTag
+            href={`${config.etherscanUrl}/tx/${content?.txn?.hash}`}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <TextWrapper
+              text={"View on Explorer"}
+              fontWeight={300}
+              Fcolor={customTheme.color.transparent[200]}
+            />
+            <IconLoader
+              iconName={"ArrowLink"}
+              iconType={"arrow"}
+              width={24}
+              className="pointer m-l-2 "
+              onClick={handleClose}
+            />
+          </AnchorTag>
+        )}
       </SnackBarBody>
-    )
-  }
+    );
+  };
 
   return (
-    <div className={classes.root}>
+    <Root>
       {openSnackbar && (
         <Snackbar
           open={openSnackbar}
           autoHideDuration={3000}
           TransitionComponent={SlideTransition}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          onClose={(e, r) => handleClose(e, r)}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
         >
           <SnackBarParent>
             {SnackHeader()}
@@ -183,59 +193,61 @@ const CustomizedSnackbars: React.FC<TxButtonProps> = ({
           </SnackBarParent>
         </Snackbar>
       )}
-    </div>
+    </Root>
   );
 };
 
-const AnchorTag = styled.a`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 4px;
-  &:hover {
-    text-decoration: none;
-  }
-`;
+const Root = styled("div")(({ theme }) => ({
+  width: "100%",
+  "& > * + *": {
+    marginTop: theme.spacing(2),
+  },
+}));
 
-const SnackBarInnerContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height:  50px;
-  padding: 0 12px 0 18px;
-  justify-content: space-between;
-  border-radius: 4px 4px 0 0;
-`;
+const AnchorTag = styled("a")({
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  marginTop: "4px",
+  "&:hover": {
+    textDecoration: "none",
+  },
+});
 
-const SnackBarBody = styled.div`
-  background: ${theme.color.dark[300]};
-  backdrop-filter: blur(70px);
-  border-radius: 0 0 4px 4px;
-  padding: 12px 12px 12px 52px;
-  font-weight: 600;
-  font-size: 14px;
-  width: 100%;
-`;
+const SnackBarInnerContainer = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  width: "100%",
+  height: "50px",
+  padding: "0 12px 0 18px",
+  justifyContent: "space-between",
+  borderRadius: "4px 4px 0 0",
+});
 
-const SnackBarParent = styled.div`
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(70px);
-  border-radius: 4px 4px 0 0;
-  border: 1px solid;
-  width: 378px;
-  border-image-source: linear-gradient(
-    180deg,
-    rgba(255, 116, 38, 0.1) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  color: #ffffff;
-  opacity: 0.88;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
-  @media (max-width: 600px) {
-    width: 100%;
-  }
-`;
+const SnackBarBody = styled("div")({
+  background: customTheme.color.dark[300],
+  backdropFilter: "blur(70px)",
+  borderRadius: "0 0 4px 4px",
+  padding: "12px 12px 12px 52px",
+  fontWeight: 600,
+  fontSize: "14px",
+  width: "100%",
+});
+
+const SnackBarParent = styled("div")({
+  background: "rgba(255, 255, 255, 0.02)",
+  backdropFilter: "blur(70px)",
+  borderRadius: "4px 4px 0 0",
+  border: "1px solid",
+  width: "378px",
+  borderImageSource:
+    "linear-gradient(\n    180deg,\n    rgba(255, 116, 38, 0.1) 0%,\n    rgba(255, 255, 255, 0) 100%\n  )",
+  color: "#ffffff",
+  opacity: 0.88,
+  fontWeight: 600,
+  fontSize: "14px",
+  lineHeight: "20px",
+  "@media (max-width: 600px)": { width: "100%" },
+});
 
 export default CustomizedSnackbars;

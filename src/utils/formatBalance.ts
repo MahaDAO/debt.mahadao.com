@@ -1,16 +1,13 @@
-import { BigNumber } from 'ethers';
-import { formatUnits, parseUnits } from 'ethers/lib/utils';
+import { BigNumber } from "ethers";
+import { formatUnits, parseUnits } from "ethers/lib/utils";
 
-export function getBalance(
-  balance: BigNumber,
-  decimals = 18
-): string {
+export function getBalance(balance: BigNumber, decimals = 18): string {
   try {
     return formatUnits(balance, decimals);
   } catch (err) {
-    return '0';
+    return "0";
   }
-};
+}
 
 export const getDisplayBalance = (
   balance: BigNumber,
@@ -19,15 +16,18 @@ export const getDisplayBalance = (
 ): string => {
   try {
     const formattedBalance: string = getBalance(balance, decimals);
-    const decimalsPointIndex = formattedBalance.indexOf('.');
+    const decimalsPointIndex = formattedBalance.indexOf(".");
     if (decimalsPointIndex === -1) return formattedBalance;
     return (
       formattedBalance.slice(0, decimalsPointIndex) +
-      '.' +
-      formattedBalance.slice(decimalsPointIndex + 1, decimalsPointIndex + 1 + fractionDigits)
+      "." +
+      formattedBalance.slice(
+        decimalsPointIndex + 1,
+        decimalsPointIndex + 1 + fractionDigits
+      )
     );
   } catch (error) {
-    return '0';
+    return "0";
   }
 };
 
@@ -36,14 +36,14 @@ export const formatToBN = (
   decimals = 18
 ): BigNumber => {
   try {
-    const [beforeDecimals, afterDecimal] = `${value}`.split('.');
+    const [beforeDecimals, afterDecimal] = `${value}`.split(".");
 
-    const beforeDecimalsPrecisionText = beforeDecimals?.slice(0, 18) || '0';
-    const afterDecimalsPrecisionText = afterDecimal?.slice(0, decimals) || '0';
+    const beforeDecimalsPrecisionText = beforeDecimals?.slice(0, 18) || "0";
+    const afterDecimalsPrecisionText = afterDecimal?.slice(0, decimals) || "0";
     const fixedPrecisionValue = `${beforeDecimalsPrecisionText}.${afterDecimalsPrecisionText}`;
 
     return BigNumber.from(parseUnits(`${fixedPrecisionValue}`, decimals));
   } catch (error) {
-    return BigNumber.from('0');
+    return BigNumber.from("0");
   }
 };

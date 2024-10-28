@@ -1,5 +1,4 @@
 import { BigNumber } from "ethers";
-import { useWallet } from "use-wallet";
 import { useCallback, useEffect, useState } from "react";
 
 import useCore from "../useCore";
@@ -10,27 +9,26 @@ import {
 } from "../../utils/constants";
 import { useSelector } from "react-redux";
 import { AppState } from "../../state";
+import { useAccount } from "wagmi";
 
 const useGetEarnedRewards = () => {
   const [state, setState] = useState<BasicState>(LOADING_DEFAULT_BASIC_STATE);
   const core = useCore();
-  const { account } = useWallet();
+  const { address: account } = useAccount();
 
-  const rewardsOf = useSelector(
-    (state: AppState) => state.token.yourRewards
-  )
- 
+  const rewardsOf = useSelector((state: AppState) => state.token.yourRewards);
+
   const action = useCallback(async () => {
-    if(!account) {
-      setState({isLoading: false, value: BigNumber.from(0)})
-      return
+    if (!account) {
+      setState({ isLoading: false, value: BigNumber.from(0) });
+      return;
     }
-    if(rewardsOf && account && rewardsOf[account]){
-      setState({isLoading: false, value: rewardsOf[account]})
-      return
+    if (rewardsOf && account && rewardsOf[account]) {
+      setState({ isLoading: false, value: rewardsOf[account] });
+      return;
     }
 
-    const contract = core.contracts["Staking-RewardsV2"]
+    const contract = core.contracts["Staking-RewardsV2"];
     const response: BigNumber = await contract.earned(account);
     const newState: BasicState = {
       isLoading: false,

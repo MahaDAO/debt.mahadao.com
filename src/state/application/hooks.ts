@@ -1,19 +1,21 @@
-import { useWallet } from 'use-wallet';
-import { useCallback, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useCallback, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   addPopup,
   removePopup,
   toggleWalletModal,
   toggleSettingsMenu,
-} from './actions';
-import { AppState } from '../index';
-import { PopupContent } from '../../utils/interface';
+} from "./actions";
+import { AppState } from "../index";
+import { PopupContent } from "../../utils/interface";
+import { useChainId } from "wagmi";
 
 export function useBlockNumber(): number | undefined {
-  const { chainId } = useWallet();
-  return useSelector((state: AppState) => state.application.blockNumber[chainId ?? -1]);
+  const chainId = useChainId();
+  return useSelector(
+    (state: AppState) => state.application.blockNumber[chainId ?? -1]
+  );
 }
 
 export function useWalletModalOpen(): boolean {
@@ -42,7 +44,7 @@ export function useAddPopup(): (content: PopupContent, key?: string) => void {
     (content: PopupContent, key?: string) => {
       dispatch(addPopup({ content, key }));
     },
-    [dispatch],
+    [dispatch]
   );
 }
 
@@ -53,12 +55,12 @@ export function useRemovePopup(): (key: string) => void {
     (key: string) => {
       dispatch(removePopup({ key }));
     },
-    [dispatch],
+    [dispatch]
   );
 }
 
 // Get the list of active popups.
-export function useActivePopups(): AppState['application']['popupList'] {
+export function useActivePopups(): AppState["application"]["popupList"] {
   const list = useSelector((state: AppState) => state.application.popupList);
   return useMemo(() => list.filter((item) => item.show), [list]);
 }

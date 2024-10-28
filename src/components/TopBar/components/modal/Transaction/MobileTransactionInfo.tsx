@@ -1,27 +1,22 @@
-import TxModal from './TxModal';
-import Modal from "../../../../Modal";
+import Modal from "@/components/Modal/Modal";
+import React from "react";
+import TxModal from "./TxModal";
 
 interface Iprops {
   openModal: boolean;
   onDismiss: () => void;
 }
 
-const DesktopTransactionInfo = (props: Iprops) => {
-  const {
-    openModal,
-    onDismiss,
-  } = props;
+const MobileTransactionInfo = (props: Iprops) => {
+  const { onDismiss, openModal } = props;
 
   if (!openModal) return null;
 
   return (
-    <Modal
-      open={openModal}
-      handleClose={() => onDismiss()}
-    >
+    <Modal open={openModal} handleClose={() => onDismiss()}>
       <TxModal openModal={openModal} onDismiss={() => onDismiss()} />
     </Modal>
-  )
+  );
 };
 
-export default DesktopTransactionInfo;
+export default MobileTransactionInfo;

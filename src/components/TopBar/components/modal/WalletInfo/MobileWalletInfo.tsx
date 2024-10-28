@@ -1,7 +1,6 @@
+import Modal from "@/components/Modal/Modal";
 import React from "react";
-
-import Modal from "../../../../Modal";
-import WalletInfo from "./index";
+import WalletInfo from ".";
 
 interface MobileWalletInfoProps {
   modalOpen: boolean;
@@ -9,22 +8,15 @@ interface MobileWalletInfoProps {
 }
 
 const MobileWalletInfo = (props: MobileWalletInfoProps) => {
-  const {
-    modalOpen,
-    onClose,
-  } = props;
+  const { modalOpen, onClose } = props;
 
   return (
-    <Modal
-      closeButton
-      handleClose={() => onClose()}
-      open={modalOpen}
-    >
+    <Modal closeButton handleClose={() => onClose()} open={modalOpen}>
       <div>
-        <WalletInfo />
+        <WalletInfo onClose={onClose} />
       </div>
     </Modal>
   );
-}
+};
 
 export default MobileWalletInfo;

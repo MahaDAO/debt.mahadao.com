@@ -11,9 +11,9 @@ const useClaimReward = () => {
   const addTransaction = useTransactionAdder();
 
   const action = useCallback(
-    async (callback?: () => void): Promise<void> => {
+    async (callback?: (responseHash?: string) => void): Promise<void> => {
       try {
-        const contract = core.contracts["Staking-RewardsV2"]
+        const contract = core.contracts["Staking-RewardsV2"];
 
         const response = await contract.getReward();
 
@@ -21,7 +21,7 @@ const useClaimReward = () => {
           summary: `Claimed rewards successfully!`,
         });
 
-        if (callback) callback();
+        if (callback) callback(response.hash);
       } catch (e: any) {
         console.log(e);
         addPopup({

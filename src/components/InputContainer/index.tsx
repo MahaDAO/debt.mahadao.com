@@ -1,10 +1,8 @@
-import styled from "styled-components";
 import React, { CSSProperties } from "react";
-import Loader from 'react-spinners/BeatLoader';
-
-import theme from "../../theme";
-
-import TextWrapper from "../TextWrapper";
+import { styled } from "@mui/material/styles";
+import TextWrapper from "../TextWrapper.tsx/TextWrapper";
+import Loader from "react-spinners/BeatLoader";
+import customTheme from "@/customTheme";
 
 interface InputContainerProps {
   label: string;
@@ -19,24 +17,24 @@ interface InputContainerProps {
 const InputContainer = (props: InputContainerProps) => {
   const {
     dataValueLoading = false,
-    label = '',
-    dataLabel = '',
-    dataValue = '',
+    label = "",
+    dataLabel = "",
+    dataValue = "",
     dontShowBackground = false,
     className = "",
     children,
   } = props;
 
   const IContainerStyle = () => {
-    let returnObj: CSSProperties = {}
+    let returnObj: CSSProperties = {};
 
     if (dontShowBackground) {
-      returnObj['padding'] = '0px';
-      returnObj['backgroundColor'] = 'transparent';
+      returnObj["padding"] = "0px";
+      returnObj["backgroundColor"] = "transparent";
     }
 
     return returnObj;
-  }
+  };
 
   return (
     <IContainer style={IContainerStyle()} className={className}>
@@ -44,31 +42,29 @@ const InputContainer = (props: InputContainerProps) => {
         <TextWrapper
           text={label}
           fontWeight={600}
-          Fcolor={theme.color.transparent[100]}
+          Fcolor={customTheme.color.transparent[100]}
           className="p-r-8"
         />
-        {
-          dataValueLoading
-            ? <Loader color={'#ffffff'} loading={true} size={4} margin={2} />
-            : (
-              <TextWrapper
-                text={`${dataLabel} ${dataValue}`}
-                fontWeight={600}
-                Fcolor={theme.color.transparent[100]}
-                align={"right"}
-              />
-            )
-        }
+        {dataValueLoading ? (
+          <Loader color="#ffffff" loading={true} size={4} margin={2} />
+        ) : (
+          <TextWrapper
+            text={`${dataLabel} ${dataValue}`}
+            fontWeight={600}
+            Fcolor={customTheme.color.transparent[100]}
+            align="right"
+          />
+        )}
       </div>
       {children}
     </IContainer>
   );
-}
+};
+
+const IContainer = styled("div")({
+  background: "rgba(255, 255, 255, 0.08)",
+  borderRadius: "8px",
+  padding: "12px",
+});
 
 export default InputContainer;
-
-const IContainer = styled.div`
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 12px;
-`;

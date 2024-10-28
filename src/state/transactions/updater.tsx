@@ -1,16 +1,17 @@
-import { useWallet } from 'use-wallet';
-import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import config from '../../config';
-import { AppDispatch, AppState } from '../index';
-import { getDefaultProvider } from '../../utils/provider';
-import { useAddPopup, useBlockNumber } from '../application/hooks';
-import { checkedTransaction, finalizeTransaction } from './actions';
+import config from "../../config";
+import { AppDispatch, AppState } from "../index";
+import { getDefaultProvider } from "../../utils/provider";
+import { useAddPopup, useBlockNumber } from "../application/hooks";
+import { checkedTransaction, finalizeTransaction } from "./actions";
+import { useChainId } from "wagmi";
+import { useEthersProvider } from "@/ethers";
 
 export function shouldCheck(
   lastBlockNumber: number,
-  tx: { addedTime: number; receipt?: {}; lastCheckedBlockNumber?: number },
+  tx: { addedTime: number; receipt?: {}; lastCheckedBlockNumber?: number }
 ): boolean {
   if (tx.receipt) return false;
   if (!tx.lastCheckedBlockNumber) return true;
@@ -30,24 +31,31 @@ export function shouldCheck(
 }
 
 export default function Updater(): null {
-  const { chainId, ethereum } = useWallet();
+  const chainId = useChainId();
+  // const ethereum = useEthersProvider();
 
   const lastBlockNumber = useBlockNumber();
+  const provider = useEthersProvider();
 
   const dispatch = useDispatch<AppDispatch>();
-  const state = useSelector<AppState, AppState['transactions']>((state) => state.transactions);
+  const state = useSelector<AppState, AppState["transactions"]>(
+    (state) => state.transactions
+  );
 
-  const transactions = useMemo(() => chainId ? state[chainId] ?? {} : {}, [chainId, state]);
+  const transactions = useMemo(
+    () => (chainId ? state[chainId] ?? {} : {}),
+    [chainId, state]
+  );
 
   // Show d on confirm.
   const addPopup = useAddPopup();
 
   useEffect(() => {
-    if (!chainId || !ethereum || !lastBlockNumber) {
+    if (!chainId || !provider || !lastBlockNumber) {
       return;
     }
 
-    const provider = getDefaultProvider(config);
+    // const provider = getDefaultProvider(config);
     Object.keys(transactions)
       .filter((hash) => shouldCheck(lastBlockNumber, transactions[hash]))
       .forEach((hash) => {
@@ -69,7 +77,7 @@ export default function Updater(): null {
                     transactionHash: receipt.transactionHash,
                     transactionIndex: receipt.transactionIndex,
                   },
-                }),
+                })
               );
 
               addPopup(
@@ -80,17 +88,23 @@ export default function Updater(): null {
                     summary: transactions[hash]?.summary,
                   },
                 },
-                hash,
+                hash
               );
             } else {
-              dispatch(checkedTransaction({ chainId, hash, blockNumber: lastBlockNumber }));
+              dispatch(
+                checkedTransaction({
+                  chainId,
+                  hash,
+                  blockNumber: lastBlockNumber,
+                })
+              );
             }
           })
           .catch((error) => {
             console.error(`failed to check transaction hash: ${hash}`, error);
           });
       });
-  }, [chainId, ethereum, transactions, lastBlockNumber, dispatch, addPopup]);
+  }, [chainId, provider, transactions, lastBlockNumber, dispatch, addPopup]);
 
   return null;
 }

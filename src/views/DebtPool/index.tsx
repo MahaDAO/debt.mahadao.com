@@ -1,66 +1,48 @@
-import styled from 'styled-components';
-import { useMediaQuery } from 'react-responsive';
-import ContractBalanceContainer from './components/ContractBalanceContainer';
-import DebtCard from './components/DebtCard';
-
-// import LockerGraph from './components/LockerGraph';
+"use client";
+import React from "react";
+import { styled } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
+import DebtCard from "./components/DebtCard";
+import ContractBalanceContainer from "./components/ContractBalanceContainer";
 
 const LockDeposit = () => {
-  const isMobile = useMediaQuery({ maxWidth: '680px' })
+  const isMobile = useMediaQuery("(max-width: 680px)");
 
   return (
-    <div className='custom-container' style={{ marginTop: '110px', }}>
+    <div className="custom-container" style={{ marginTop: "110px" }}>
       <div className="m-b-40">
         <CardSubHeader>
-          The payback pool is a platform for holders to get reimbursed from protocol revenue. You can burn your debt tokens for USDC that gets collected from the protocol's revenue at a 1:1 ratio. Or you can choose
-          to sell your debt tokens for either USDC or MAHA at a price you choose.
+          The payback pool is a platform for holders to get reimbursed from
+          protocol revenue. You can burn your debt tokens for USDC that gets
+          collected from the protocol's revenue at a 1:1 ratio. Or you can
+          choose to sell your debt tokens for either USDC or MAHA at a price you
+          choose.
         </CardSubHeader>
       </div>
-      <DebtContainer style={{ flexDirection: isMobile ? 'column' : 'row' }}>
-        <DebtCard price={1} symbol={'ARTH-DP'} />
+      <DebtContainer style={{ flexDirection: isMobile ? "column" : "row" }}>
+        <DebtCard price={1} symbol={"ARTH-DP"} />
         <ContractBalanceContainer />
       </DebtContainer>
-      {/* <LockerGraph /> */}
     </div>
-  )
-}
+  );
+};
+
+const DebtContainer = styled("div")({
+  display: "flex",
+  marginBottom: "50px",
+});
+
+const CardSubHeader = styled("div")(() => ({
+  color: "#999",
+  display: "flex",
+  fontSize: "16px",
+  justifyContent: "start",
+  alignItems: "center",
+  padding: "0 0px 30px 0px",
+  borderBottom: "1px solid #ffffff20",
+  "@media (max-width: 600px)": {
+    padding: "16px",
+  },
+}));
 
 export default LockDeposit;
-
-const DebtContainer = styled.div`
-  display: flex;
-  margin-bottom: 50px;
-`
-
-const PageHeading = styled.p`
-  font-family: Syne;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 29px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 8px;
-`;
-
-const InfoHeader = styled.div`
-  // max-width: 450px;
-  margin-left: auto;
-  margin-right: auto;
-`
-
-const CardSubHeader = styled.div`
-  color: #999;
-  display: flex;
-  font-size: 16px;
-  justify-content: start;
-  align-items: center;
-  // text-align: center;
-  padding: 0 0px 30px 0px;
-  border-bottom: 1px solid #FFFFFF20;
-  @media (max-width: 600px) {
-    padding: 16px;
-  }
-`

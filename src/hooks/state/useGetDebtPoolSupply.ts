@@ -10,32 +10,38 @@ import {
 } from "../../utils/constants";
 import { useSelector } from "react-redux";
 import { AppState } from "../../state";
-import { useWallet } from "use-wallet";
+import { useAccount } from "wagmi";
 
 const useGetDebtPoolSupply = (symbol: string | null) => {
   const core = useCore();
   const blockNumber = useBlockNumber();
-  const { account } = useWallet();
+  const { address: account } = useAccount();
 
   const [state, setState] = useState<BasicState>(LOADING_DEFAULT_BASIC_STATE);
 
   const totalSupplyState = useSelector(
     (state: AppState) => state.token.totalSupply
-  )
+  );
 
   // console.log("useTotalSupply", totalSupply)
 
   const action = useCallback(async () => {
     let contract;
-    contract = core.contracts["ARTH-DP"]
+    contract = core.contracts["ARTH-DP"];
 
     if (!account) {
       setState({ isLoading: false, value: BigNumber.from(0) });
       return;
     }
 
-    if(totalSupplyState && totalSupplyState[core.contracts["ARTH-DP"].address]){
-      setState({ isLoading: false, value: totalSupplyState[core.contracts["ARTH-DP"].address] });
+    if (
+      totalSupplyState &&
+      totalSupplyState[core.contracts["ARTH-DP"].address]
+    ) {
+      setState({
+        isLoading: false,
+        value: totalSupplyState[core.contracts["ARTH-DP"].address],
+      });
       return;
     }
 

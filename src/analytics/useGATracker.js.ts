@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { isProduction } from "./Mixpanel";
 import ReactGA from "react-ga";
-import { isProduction } from './Mixpanel';
+import { usePathname } from "next/navigation";
 
 const useGaTracker = () => {
-  const location = useLocation();
+  const pathname = usePathname();
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
@@ -19,9 +19,9 @@ const useGaTracker = () => {
 
   useEffect(() => {
     if (initialized) {
-      ReactGA.pageview(location.pathname);
+      ReactGA.pageview(pathname);
     }
-  }, [initialized, location]);
+  }, [initialized, pathname]);
 };
 
 export default useGaTracker;

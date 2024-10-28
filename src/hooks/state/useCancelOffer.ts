@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 
 import useCore from "../useCore";
-import { useTransactionAdder } from '../../state/transactions/hooks';
-import { useAddPopup } from '../../state/application/hooks';
-import formatErrorMessage from '../../utils/formatErrorMessage';
+import { useTransactionAdder } from "../../state/transactions/hooks";
+import { useAddPopup } from "../../state/application/hooks";
+import formatErrorMessage from "../../utils/formatErrorMessage";
 import { BigNumber } from "ethers";
 
 const useCancelOffer = (id: number) => {
@@ -12,17 +12,22 @@ const useCancelOffer = (id: number) => {
   const addPopup = useAddPopup();
   const contract = core.contracts["MatchingMarket"];
 
-  const action =  async (id: number) => {
-
+  const action = async (
+    id: number,
+    callback?: (responseHash?: string) => void
+  ) => {
     try {
-      const response = await contract["cancel(uint256)"](BigNumber.from(`${id}`))
+      const response = await contract["cancel(uint256)"](
+        BigNumber.from(`${id}`)
+      );
       addTransaction(response, {
         summary: `Cancel Offer ${id}`,
       });
 
+      if (callback) callback(response.hash);
     } catch (e: any) {
-      console.log('useCancelOffer e', e)
-     
+      console.log("useCancelOffer e", e);
+
       addPopup({
         error: {
           message: formatErrorMessage(e?.data?.message || e?.message),
@@ -30,9 +35,9 @@ const useCancelOffer = (id: number) => {
         },
       });
     }
-  }
-  
+  };
+
   return action;
-}
+};
 
 export default useCancelOffer;

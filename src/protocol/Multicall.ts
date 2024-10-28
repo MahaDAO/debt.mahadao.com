@@ -1,7 +1,7 @@
-import { EventEmitter } from 'events';
-import { IMulticallInput } from '../utils/interface';
+import { EventEmitter } from "events";
+import { IMulticallInput } from "../utils/interface";
 
-const multicall = require('@makerdao/multicall');
+const multicall = require("@makerdao/multicall");
 
 export default class Multicall extends EventEmitter {
   watcher: any;
@@ -56,12 +56,16 @@ export default class Multicall extends EventEmitter {
     const config = {
       rpcUrl: this.rpcUrl,
       multicallAddress: this.address,
+      interval: 5000,
     };
 
-    this.watcher = multicall.createWatcher(this._getMutlicallCalls(this.calls), config);
+    this.watcher = multicall.createWatcher(
+      this._getMutlicallCalls(this.calls),
+      config
+    );
     this.watcher.subscribe(this._processUpdates);
 
     // Start the watcher polling.
     this.watcher.start();
   };
-};
+}
