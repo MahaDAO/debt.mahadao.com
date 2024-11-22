@@ -16,7 +16,7 @@ const Dex = () => {
   const core = useCore();
   const baseTokenBalance = useTokenBalance(core.tokens["ARTH-DP"]);
   const quoteTokenBalance = useTokenBalance(core.tokens["USDC"]);
-  let arthUsdcPairStatus =
+  const arthUsdcPairStatus =
     (typeof window !== "undefined" && localStorage.getItem("selectorQToken")) ||
     "usdc";
 
@@ -83,7 +83,7 @@ const Dex = () => {
       <div
         style={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}
       >
-        <Wrapper>
+        {/* <Wrapper>
           <Card className={"material-primary"}>
             <CardHeader>BUY DEBT</CardHeader>
             <CardSubHeader>
@@ -136,7 +136,7 @@ const Dex = () => {
               }}
             />
           </Card>
-        </Wrapper>
+        </Wrapper> */}
         <Wrapper>
           <Card className="material-primary">
             <CardHeader>SELL DEBT</CardHeader>
@@ -168,13 +168,13 @@ const Dex = () => {
                 balance:
                   selectQuoteToken == "USDC"
                     ? Number(
-                        getDisplayBalance(usdcbal.value, 6, 3)
-                      ).toLocaleString("en-US", { minimumFractionDigits: 3 })
+                      getDisplayBalance(usdcbal.value, 6, 3)
+                    ).toLocaleString("en-US", { minimumFractionDigits: 3 })
                     : selectQuoteToken == "MAHA"
-                    ? Number(
+                      ? Number(
                         getDisplayBalance(mahabal.value, 18, 3)
                       ).toLocaleString("en-US", { minimumFractionDigits: 3 })
-                    : Number(
+                      : Number(
                         getDisplayBalance(sclpbal.value, 18, 3)
                       ).toLocaleString("en-US", { minimumFractionDigits: 3 }),
               }}

@@ -89,7 +89,7 @@ const SellOrdersCard = (props: IProps) => {
             <CardColumn3 className={"table-border single-line-center-center"}>
               {Numeral(payAmt).format("0.000")}
             </CardColumn3>
-            {owner.toLowerCase() === order.owner.toLowerCase() ? (
+            {owner && owner.toLowerCase() === order.owner.toLowerCase() ? (
               <div
                 className={"single-line-center-center pointer"}
                 onClick={() => {

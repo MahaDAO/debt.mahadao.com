@@ -25,9 +25,7 @@ import { createClient, http } from "viem";
 import { polygon } from "viem/chains";
 import { createConfig } from "wagmi";
 
-const WALLETCONNECT_PROJECT_ID = process.env
-  .NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID as string;
-
+const WALLETCONNECT_PROJECT_ID = "ebd671c34120033073ea8c98274b161c";
 const connectors = connectorsForWallets(
   [
     {

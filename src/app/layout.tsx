@@ -5,8 +5,8 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { ThemeProvider } from "@mui/material";
 import theme from "@/theme";
 import { inter, nunito, syne } from "./fonts";
-import Topbar from "@/components/Topbar";
-import Providers from "@/components/Providers";
+import Topbar from "../components/TopBar";
+import Providers from "../components/Providers";
 
 export const metadata: Metadata = {
   title: "MahaDAO | Payback Pool",
